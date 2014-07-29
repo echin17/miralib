@@ -22,9 +22,9 @@ public class BinOptimizer {
   static final int MAX_BIN_COUNT       = 0;
   static final int SIMULATED_ANNEALING = 1;
   
-  static int EXHAUSTIVE_SERCH_SIZE = 1000;
+  static int EXHAUSTIVE_SERCH_SIZE = 100000;
   static int MINIMZATION_METHOD = MAX_BIN_COUNT; 
-  static int MAX_HIST_BINS = 1000;
+  static int MAX_HIST_BINS = 100;
   static int MAX_RES_SAMPLE_SIZE = 10;
   static int MAX_HIST_SAMPLE_SIZE = 10000;
   static boolean PRINT_ERRORS = false;
@@ -64,7 +64,10 @@ public class BinOptimizer {
         double k = res[0];
         double v = res[1];    
 
-        float c = (float)((2 * k - v) / (bsize * bsize));
+//        float c = (float)((2 * k - v) / (bsize * bsize));
+        int m = slice.values.size();
+        float c = (float)((2 * k - v) / (m * m * bsize * bsize));
+        
         cost[n - minNBins] = new IndexedValue(c, n, false);
       }
       Arrays.sort(cost);
@@ -151,7 +154,8 @@ public class BinOptimizer {
           double k = res[0];
           double v = res[1];
 
-          float c = (float)((2 * k - v) / (barea * barea));
+          int m = slice.values.size();
+          float c = (float)((2 * k - v) / (m * m * barea * barea));
 
           int n = (n0 - minNBins0) * blen1 + (n1 - minNBins1);        
           cost[n] = new IndexedValue(c, n, false);
