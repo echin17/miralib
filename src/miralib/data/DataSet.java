@@ -277,9 +277,9 @@ public class DataSet {
     if (query.equals("")) return new Variable[0];
     
     Collections.fill(selected, new Boolean(false));    
-    if (1000 < tree.variables.size()) {
+    if (5000 < tree.variables.size()) {
       int proc = Runtime.getRuntime().availableProcessors();
-      ExecutorService pool = Executors.newFixedThreadPool(PApplet.min(1, proc - 1));
+      ExecutorService pool = Executors.newFixedThreadPool(PApplet.min(1, proc));
       for (int i = 0; i < tree.variables.size(); i++) {
         final String str = query;
         final int idx = i;
