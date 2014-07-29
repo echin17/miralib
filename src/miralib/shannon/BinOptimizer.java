@@ -62,7 +62,7 @@ public class BinOptimizer {
 //        double v = countsDev(counts, k);
         double[] res = countsMeanDev(counts);
         double k = res[0];
-        double v = res[1];      
+        double v = res[1];    
 
         float c = (float)((2 * k - v) / (bsize * bsize));
         cost[n - minNBins] = new IndexedValue(c, n, false);
@@ -243,23 +243,38 @@ public class BinOptimizer {
     return counts; 
   }
 
-//  static protected double countsMean(double[] counts) {
-//    int n = counts.length;
-//    double sum = 0;  
-//    for (int i = 0; i < n; i++) {
-//      sum += counts[i];   
-//    }
-//    return sum / n;  
-//  }
-//
-//  static protected double countsDev(double[] counts, double mean) {
-//    int n = counts.length;
-//    double sum = 0;  
-//    for (int i = 0; i < n; i++) {
-//      sum += (counts[i] - mean) * (counts[i] - mean);
-//    }
-//    return sum / n;  
-//  }
+  static protected double countsMean(double[] counts) {
+    int n = counts.length;
+    double sum = 0;  
+    for (int i = 0; i < n; i++) {
+      sum += counts[i];   
+    }
+    return sum / n;  
+  }
+
+  static protected double countsDev(double[] counts, double mean) {
+    int n = counts.length;
+    double sum = 0;  
+    for (int i = 0; i < n; i++) {
+      sum += (counts[i] - mean) * (counts[i] - mean);
+    }
+    return sum / n;  
+  }
+  
+  static protected double[] countsMeanDev(double[] counts) {
+    int n = counts.length;
+    double sum = 0;  
+    double sumsq = 0;
+    for (int i = 0; i < n; i++) {
+      double count = counts[i];
+      sum += count;
+      sumsq += count * count; 
+    }
+    double mean = sum / n;
+    double meansq = sumsq / n;
+    double dev = Math.max(0, meansq - mean * mean);    
+    return new double[] {mean, dev};    
+  }    
   
   static protected double res(ArrayList<Value1D> values) {
     double res = Double.POSITIVE_INFINITY;
@@ -275,84 +290,49 @@ public class BinOptimizer {
       }
     }    
     return Math.max(res, 1.0d / MAX_HIST_BINS);
-    
-//  double res = Double.POSITIVE_INFINITY; 
-//  for (int i = 0; i < values.size(); i++) {
-//    Value1D vali = values.get(i);
-//    for (int j = i + 1; j < values.size(); j++) {
-//      Value1D valj = values.get(j); 
-//      double diff = Math.abs(valj.x - vali.x);
-//      if (0 < diff) {
-//        res = Math.min(res, diff);
-//      }
-//    }
-//  }
-//  return res;
-  
-  /*
-  if (0 < values.size()) {
-    // Calculate the mean, and then find the smallest, non-zero distance with 
-    // all values.
-    double mean = 0;
-    for (int i = 0; i < values.size(); i++) {
-      mean += values.get(i).x;   
-    }
-    mean /= values.size();
-    
-    double res = Double.POSITIVE_INFINITY; 
-    for (int i = 0; i < values.size(); i++) {
-      double diff = Math.abs(values.get(i).x - mean);
-      if (0 < diff) {
-        res = Math.min(res, diff);
+  } 
+
+  static protected double countsMean(double[][] counts) {
+    int ni = counts.length;
+    int nj = counts[0].length;
+    double sum = 0;  
+    for (int i = 0; i < ni; i++) {
+      for (int j = 0; j < nj; j++) {
+        sum += counts[i][j];   
       }
     }
-    return res;      
-  } else {
-    return 0;
-  }  
-  */
-    
-//    return 0.01d;
-  } 
-  
-  static protected double[] countsMeanDev(double[] counts) {
-    int n = counts.length;
-    double sum = 0;  
-    double sumsq = 0;
-    for (int i = 0; i < n; i++) {
-      double count = counts[i];
-      sum += count;
-      sumsq += count * count; 
-    }
-    double mean = sum / n;
-    double meansq = sumsq / n;
-    double dev = Math.sqrt(Math.max(0, meansq - mean * mean));    
-    return new double[] {mean, dev};    
-  }  
+    return sum / (ni * nj);  
+  }
 
-//  static protected double countsMean(double[][] counts) {
-//    int ni = counts.length;
-//    int nj = counts[0].length;
-//    double sum = 0;  
-//    for (int i = 0; i < ni; i++) {
-//      for (int j = 0; j < nj; j++) {
-//        sum += counts[i][j];   
-//      }
-//    }
-//    return sum / (ni * nj);  
-//  }
-//
-//  static protected double countsDev(double[][] counts, double mean) {
-//    int ni = counts.length;
-//    int nj = counts[0].length;
-//    double sum = 0;  
-//    for (int i = 0; i < ni; i++) {
-//      for (int j = 0; j < nj; j++) {
-//        sum += (counts[i][j] - mean) * (counts[i][j] - mean);
-//      }    
-//    }
-//    return sum / (ni * nj);  
-//  }
+  static protected double countsDev(double[][] counts, double mean) {
+    int ni = counts.length;
+    int nj = counts[0].length;
+    double sum = 0;  
+    for (int i = 0; i < ni; i++) {
+      for (int j = 0; j < nj; j++) {
+        sum += (counts[i][j] - mean) * (counts[i][j] - mean);
+      }    
+    }
+    return sum / (ni * nj);  
+  }
+    
+  static protected double[] countsMeanDev(double[][] counts) {
+    int ni = counts.length;
+    int nj = counts[0].length;
+    double sum = 0;
+    double sumsq = 0;
+    for (int i = 0; i < ni; i++) {
+      for (int j = 0; j < nj; j++) {
+        double count = counts[i][j];
+        sum += count;
+        sumsq += count * count; 
+      }
+    }
+    double mean = sum / (ni * nj);
+    double meansq = sumsq / (ni * nj);
+    double dev = Math.max(0, meansq - mean * mean);    
+    return new double[] {mean, dev};
+  }  
   
   static protected double resx(ArrayList<Value2D> values) {
     double res = Double.POSITIVE_INFINITY;
@@ -368,58 +348,6 @@ public class BinOptimizer {
       }
     }
     return Math.max(res, 1.0d / MAX_HIST_BINS);
-    
-//  double res = Double.POSITIVE_INFINITY;
-//  for (int i = 0; i < values.size(); i++) {
-//    Value2D vali = values.get(i);
-//    for (int j = i + 1; j < values.size(); j++) {
-//      Value2D valj = values.get(j); 
-//      double diff = Math.abs(valj.x - vali.x);
-//      if (0 < diff) {
-//        res = Math.min(res, diff);
-//      }
-//    }
-//  }
-//  return res;
-//  return 0.01d;
-  
-  
-  /*
-  if (0 < values.size()) {
-    // Calculate the mean, and then find the smallest, non-zero distance with 
-    // all values.
-    double mean = 0;
-    for (int i = 0; i < values.size(); i++) {
-      mean += values.get(i).x;   
-    }
-    mean /= values.size();
-    
-    double res = Double.POSITIVE_INFINITY;
-    for (int i = 0; i < values.size(); i++) {
-      double diff = Math.abs(values.get(i).x - mean);
-      if (0 < diff) {
-        res = Math.min(res, diff);
-      }
-    }
-
-    return Math.max(0.01d, res);
-  } else {
-    return 0;
-  }
-      */
-      
-//  double res = Double.POSITIVE_INFINITY; 
-//  for (int i = 0; i < values.size(); i++) {
-//    Value2D vali = values.get(i);
-//    for (int j = i + 1; j < values.size(); j++) {
-//      Value2D valj = values.get(j); 
-//      double diff = Math.abs(valj.x - vali.x);
-//      if (0 < diff) {
-//        res = Math.min(res, diff);
-//      }
-//    }
-//  }
-//  return res;
   }  
 
   static protected double resy(ArrayList<Value2D> values) {
@@ -436,64 +364,7 @@ public class BinOptimizer {
       }
     }    
     return Math.max(res, 1.0d / MAX_HIST_BINS);
-
-    
-  /*
-  if (0 < values.size()) {    
-    // Calculate the mean, and then find the smallest, non-zero distance with 
-    // all values.
-    double mean = 0;
-    for (int i = 0; i < values.size(); i++) {
-      mean += values.get(i).y;   
-    }
-    mean /= values.size();
-    
-    double res = Double.POSITIVE_INFINITY; 
-    for (int i = 0; i < values.size(); i++) {
-      double diff = Math.abs(values.get(i).y - mean);
-      if (0 < diff) {
-        res = Math.min(res, diff);
-      }
-    }
-    return Math.max(0.01d, res);
-  } else {
-    return 0;
-  }
-*/
-  
-  
-//  double res = Double.POSITIVE_INFINITY; 
-//  for (int i = 0; i < values.size(); i++) {
-//    Value2D vali = values.get(i);
-//    for (int j = i + 1; j < values.size(); j++) {
-//      Value2D valj = values.get(j); 
-//      double diff = Math.abs(valj.y - vali.y);
-//      if (0 < diff) {
-//        res = Math.min(res, diff);
-//      }
-//    }
-//  }
-//  return res;
-//  return 0.01d;
   }  
-    
-  static protected double[] countsMeanDev(double[][] counts) {
-    int ni = counts.length;
-    int nj = counts[0].length;
-    double sum = 0;
-    double sumsq = 0;
-    for (int i = 0; i < ni; i++) {
-      for (int j = 0; j < nj; j++) {
-        double count = counts[i][j];
-        sum += count;
-        sumsq += count * count; 
-      }
-    }
-    double mean = sum / (ni * nj);
-    double meansq = sumsq / (ni * nj);
-    double dev = Math.sqrt(Math.max(0, meansq - mean * mean));    
-    return new double[] {mean, dev};
-  }
   
   static protected class IndexedValue implements Comparable<IndexedValue> {
     public float value;
