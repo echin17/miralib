@@ -3,8 +3,6 @@
 package miralib.shannon;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import miralib.data.DataSlice1D;
 import miralib.data.DataSlice2D;
 import miralib.data.Value1D;
@@ -19,20 +17,18 @@ import processing.core.PApplet;
  */
 
 public class BinOptimizer {
-  static final int MAX_BIN_COUNT       = 0;
-  static final int SIMULATED_ANNEALING = 1;
-  
-  static int EXHAUSTIVE_SERCH_SIZE = 100000;
-  static int MINIMZATION_METHOD = MAX_BIN_COUNT; 
-  static int MAX_HIST_BINS = 100;
-  static int MAX_RES_SAMPLE_SIZE = 10;
-  static int MAX_HIST_SAMPLE_SIZE = 10000;
+  // These parameters dramatically affect the performance of the optimization algorithm
+  static int MAX_SEARCH_SAMPLE_SIZE = 1000; // Won't evaluate more than this number of bins while searching for the optimal size
+  static int MAX_HIST_BINS = 100;           // No more than this number of bins per variable.
+  static int MAX_RES_SAMPLE_SIZE = 10;      // Number of values sampled to search for minimum difference
+  static int MAX_HIST_SAMPLE_SIZE = 10000;  // number of values used to estimate the histograms during optimization
   static boolean PRINT_ERRORS = false;
   
   static public int calculate(DataSlice1D slice) {
     if (slice.varx.categorical()) return (int)slice.countx;
       
-    int hsize = slice.values.size() / 2;
+    int size = slice.values.size();
+    int hsize = size / 2;
         
     int minNBins, maxNBins;
     if (slice.countx < 5) {
@@ -44,7 +40,9 @@ public class BinOptimizer {
       float res = (float)res(slice.values);
       maxNBins = PApplet.min((int)(1.0f/res) + 1, icount, hsize);
     }
+    
     int numValues = maxNBins - minNBins + 1;
+    
     if (minNBins <= 0 || maxNBins <= 0 || numValues <= 0) {
       if (PRINT_ERRORS) {
         Log.message("Unexpected error number of bin values is negative. Bin limits: " + 
@@ -52,43 +50,25 @@ public class BinOptimizer {
       }
       return 1;
     }
-    if (numValues <= EXHAUSTIVE_SERCH_SIZE) {
-      IndexedValue[] cost = new IndexedValue[numValues];
-      for (int n = minNBins; n <= maxNBins; n++) {
-        float bsize = 1.0f / n; 
-        double[] counts = hist1D(slice.values, n);
-
-//        double k = countsMean(counts);    
-//        double v = countsDev(counts, k);
-        double[] res = countsMeanDev(counts);
-        double k = res[0];
-        double v = res[1];    
-
-//        float c = (float)((2 * k - v) / (bsize * bsize));
-        int m = slice.values.size();
-        float c = (float)((2 * k - v) / (m * m * bsize * bsize));
-        
-        cost[n - minNBins] = new IndexedValue(c, n, false);
-      }
-      Arrays.sort(cost);
-      if (cost[0] != null) {
-        int n = cost[0].index;
-        return n;
-      } else {
-        if (PRINT_ERRORS) {
-          Log.message("Unexpected error cost array has null 0th element after sorting. Bin limits: " + 
-                      "[" + minNBins + ", " + maxNBins + "]");
-          Log.message("Cost array:");
-          Log.message(cost.toString());
-        }
-        return (minNBins + maxNBins)/2;
-      }      
-    } else {
-      if (MINIMZATION_METHOD == SIMULATED_ANNEALING) {
-        // TODO: implement this!  
-      }
-      return maxNBins;
+    
+    int minn = (minNBins + maxNBins)/2;
+    
+    float minc = Float.MAX_VALUE;
+    int mod = PApplet.max(1, numValues / MAX_SEARCH_SAMPLE_SIZE);
+    for (int i = 0; i < numValues; i += mod) {
+      int n = minNBins + i;
+      float bsize = 1.0f / n;
+      double[] counts = hist1D(slice.values, n);
+      double[] res = countsMeanDev(counts);
+      double k = res[0];
+      double v = res[1];
+      float c = (float)((2 * k - v) / (size * size * bsize * bsize));        
+      if (c < minc) {
+        minc = c;
+        minn = n;
+      }           
     }
+    return minn;
   }
 
   static public int[] calculate(DataSlice2D slice) {
@@ -96,7 +76,8 @@ public class BinOptimizer {
       return new int[] {(int)slice.countx, (int)slice.county};
     }
     
-    int sqsize = (int)PApplet.sqrt(slice.values.size() / 2);
+    int size = slice.values.size();
+    int sqsize = (int)PApplet.sqrt(size / 2);
     
     int minNBins0, maxNBins0;
     if (slice.varx.categorical()) {
@@ -137,56 +118,29 @@ public class BinOptimizer {
       }
       return new int[] {1, 1};
     }
-    
-    if (numValues <= EXHAUSTIVE_SERCH_SIZE) {
-      IndexedValue[] cost = new IndexedValue[numValues];
-      //    String[] values = new String[numValues];
-      for (int n0 = minNBins0; n0 <= maxNBins0; n0++) {
-        for (int n1 = minNBins1; n1 <= maxNBins1; n1++) {
-          float bsize0 = 1.0f / n0; 
-          float bsize1 = 1.0f / n1;     
-          float barea = bsize0 * bsize1;
-          double[][] counts = hist2D(slice.values, n0, n1);
-
-          //        double k = countsMean(counts);    
-          //        double v = countsDev(counts, k);        
-          double[] res = countsMeanDev(counts);
-          double k = res[0];
-          double v = res[1];
-
-          int m = slice.values.size();
-          float c = (float)((2 * k - v) / (m * m * barea * barea));
-
-          int n = (n0 - minNBins0) * blen1 + (n1 - minNBins1);        
-          cost[n] = new IndexedValue(c, n, false);
-          //        values[n] = "" + c;
-        }
-      }
-      //    PApplet.saveStrings(new File("./values"), values);
-      //    System.exit(0);    
-      Arrays.sort(cost);
-      if (cost[0] != null) {
-        int n = cost[0].index;    
-        int n0 = n / blen1 + minNBins0;
-        int n1 = n % blen1 + minNBins1;      
-//        System.err.println(maxNBins0 + " " + maxNBins1 + " | " + n0 + " " + n1);
-        return new int[] {n0, n1};
-      } else {
-        if (PRINT_ERRORS) {
-          Log.message("Unexpected error cost array has null 0th element after sorting. Bin limits: " + 
-              "[" + minNBins0 + ", " + maxNBins0 + "] x " + 
-              "[" + minNBins1 + ", " + maxNBins1 + "]");
-          Log.message("Cost array:");
-          Log.message(cost.toString());
-        }
-        return new int[] {(minNBins0 + maxNBins0)/2, (minNBins1 + maxNBins1)/2};
-      }
-    } else {
-      if (MINIMZATION_METHOD == SIMULATED_ANNEALING) {
-        // TODO: implement this!  
-      }
-      return new int[] {maxNBins0, maxNBins1};      
-    }    
+      
+    int minn0 = (minNBins0 + maxNBins0)/2;
+    int minn1 = (minNBins1 + maxNBins1)/2;
+    float minc = Float.MAX_VALUE;
+    int mod = PApplet.max(1, numValues / MAX_SEARCH_SAMPLE_SIZE);
+    for (int i = 0; i < numValues; i += mod) {
+      int n0 = i / blen1 + minNBins0;
+      int n1 = i % blen1 + minNBins1;
+      float bsize0 = 1.0f / n0; 
+      float bsize1 = 1.0f / n1;
+      float barea = bsize0 * bsize1;          
+      double[][] counts = hist2D(slice.values, n0, n1);
+      double[] res = countsMeanDev(counts);
+      double k = res[0];
+      double v = res[1];
+      float c = (float)((2 * k - v) / (size * size * barea * barea));
+      if (c < minc) {
+        minc = c;
+        minn0 = n0;
+        minn1 = n1;
+      }           
+    }
+    return new int[] {minn0, minn1};
   } 
   
   // Converts the 1D histogram defined by the equally-sized numBins bins, into
@@ -221,7 +175,6 @@ public class BinOptimizer {
   static public double[] hist1D(ArrayList<Value1D> values, int bnum) {    
     double[] counts = new double[bnum];
     float bsize = 1.0f / bnum;
-//    for (Value1D value: values) {
     int mod = PApplet.max(1, values.size() / MAX_HIST_SAMPLE_SIZE);
     for (int i = 0; i < values.size(); i += mod) {
       Value1D value = values.get(i);
@@ -236,7 +189,6 @@ public class BinOptimizer {
     double[][] counts = new double[bnumx][bnumy];
     float bsizex = 1.0f / bnumx; 
     float bsizey = 1.0f / bnumy; 
-//    for (Value2D value: values) {
     int mod = PApplet.max(1, values.size() / MAX_HIST_SAMPLE_SIZE);
     for (int i = 0; i < values.size(); i += mod) {
       Value2D value = values.get(i);
@@ -247,24 +199,6 @@ public class BinOptimizer {
     return counts; 
   }
 
-  static protected double countsMean(double[] counts) {
-    int n = counts.length;
-    double sum = 0;  
-    for (int i = 0; i < n; i++) {
-      sum += counts[i];   
-    }
-    return sum / n;  
-  }
-
-  static protected double countsDev(double[] counts, double mean) {
-    int n = counts.length;
-    double sum = 0;  
-    for (int i = 0; i < n; i++) {
-      sum += (counts[i] - mean) * (counts[i] - mean);
-    }
-    return sum / n;  
-  }
-  
   static protected double[] countsMeanDev(double[] counts) {
     int n = counts.length;
     double sum = 0;  
@@ -274,6 +208,8 @@ public class BinOptimizer {
       sum += count;
       sumsq += count * count; 
     }
+    // VERY IMPORTANT: Do NOT use a variance that uses N-1 to divide the sum of 
+    // squared errors. Use the biased variance in the method.
     double mean = sum / n;
     double meansq = sumsq / n;
     double dev = Math.max(0, meansq - mean * mean);    
@@ -295,34 +231,11 @@ public class BinOptimizer {
     }    
     return Math.max(res, 1.0d / MAX_HIST_BINS);
   } 
-
-  static protected double countsMean(double[][] counts) {
-    int ni = counts.length;
-    int nj = counts[0].length;
-    double sum = 0;  
-    for (int i = 0; i < ni; i++) {
-      for (int j = 0; j < nj; j++) {
-        sum += counts[i][j];   
-      }
-    }
-    return sum / (ni * nj);  
-  }
-
-  static protected double countsDev(double[][] counts, double mean) {
-    int ni = counts.length;
-    int nj = counts[0].length;
-    double sum = 0;  
-    for (int i = 0; i < ni; i++) {
-      for (int j = 0; j < nj; j++) {
-        sum += (counts[i][j] - mean) * (counts[i][j] - mean);
-      }    
-    }
-    return sum / (ni * nj);  
-  }
     
   static protected double[] countsMeanDev(double[][] counts) {
     int ni = counts.length;
     int nj = counts[0].length;
+    int n = ni * nj;
     double sum = 0;
     double sumsq = 0;
     for (int i = 0; i < ni; i++) {
@@ -332,8 +245,10 @@ public class BinOptimizer {
         sumsq += count * count; 
       }
     }
-    double mean = sum / (ni * nj);
-    double meansq = sumsq / (ni * nj);
+    // VERY IMPORTANT: Do NOT use a variance that uses N-1 to divide the sum of 
+    // squared errors. Use the biased variance in the method.    
+    double mean = sum / n;
+    double meansq = sumsq / n;
     double dev = Math.max(0, meansq - mean * mean);    
     return new double[] {mean, dev};
   }  
@@ -369,50 +284,4 @@ public class BinOptimizer {
     }    
     return Math.max(res, 1.0d / MAX_HIST_BINS);
   }  
-  
-  static protected class IndexedValue implements Comparable<IndexedValue> {
-    public float value;
-    public int index;
-    public boolean up;
-    
-    public IndexedValue(float value, int index) {
-      this(value, index, true);
-    }
-    
-    public IndexedValue(float value, int index, boolean up) {
-      this.value = value; // Assuming value is normalized (0, 1, -1 for missing data).
-      this.index = index;
-      this.up = up;
-    }
-    
-    // Returns a negative integer, zero, or a positive integer as this object is 
-    // less than, equal to, or greater than the specified object.
-    public int compareTo(IndexedValue obj) {
-      float a = this.value;
-      float b = obj.value;
-      
-      boolean bErr = b == -1 || Float.isNaN(b);
-      boolean aErr = a == -1 || Float.isNaN(a);
-      
-      if (bErr || aErr) {
-        // Missing/NaN data always at the bottom:
-        if (bErr && aErr) {
-          return 0;
-        } else if (bErr) {
-          return -1;
-        } else {
-          return +1; 
-        }
-      }
-      
-      if (!up) {
-        a = -a;
-        b = -b;
-      }
-      
-      if (a < b) return +1;
-      else if (b < a) return -1;
-      else return 0;
-    }
-  }
 }
