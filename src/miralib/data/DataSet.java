@@ -365,10 +365,12 @@ public class DataSet {
     prof.setColumnType(1, Table.STRING);
     prof.setColumnType(2, Table.FLOAT);
     for (Variable var: selvars) {
+      int idx = getColumn(var);
+      if (idx == -1) continue;
       TableRow row = prof.addRow();
       row.setString(0, var.getName());
       row.setString(1, var.getAlias());
-      row.setFloat(2, getScore(getColumn(var)));      
+      row.setFloat(2, getScore(getColumn(var)));
     }
     return prof;
   }
