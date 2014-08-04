@@ -135,6 +135,13 @@ public class Project {
         }
       }
       
+      if (dictFile.equals("") && codeFile.equals("") && !dataFile.equals(inFile.getName())) {
+        // The input folder contains several csv files, but none of them it is         
+        // neither a dictionary nor a codebook, so let's just use the original
+        // file the user selected
+        dataFile = inFile.getName();
+      }
+      
       dataTitle = dataFile; 
       dataURL = "";
       // Using the defaults for the parameters

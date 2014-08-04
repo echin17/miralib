@@ -717,7 +717,8 @@ public class DataSet {
         tree.addGroup(groupName, tableCount0, tableCount - 1);
       }
       
-    } else {
+    }
+    if (tree.groups.size() == 0 || tree.tables.size() == 0 || tree.variables.size() == 0) {
       Log.message("No groups found, building default tree...");
       tree = new DataTree(allvars);
     }    
@@ -1033,7 +1034,6 @@ public class DataSet {
         if (name == null || name.equals("")) continue;
         CodebookPage pg = codebook.get(name);
         if (pg == null) {
-          System.err.println(i + " " + table.getColumnTitle(i));
           int guess = guessColumnType(table, i, missing);
           table.setColumnType(i, guess);
         } else {
