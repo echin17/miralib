@@ -718,7 +718,9 @@ public class DataSet {
       }
       
     }
-    if (tree.groups.size() == 0 || tree.tables.size() == 0 || tree.variables.size() == 0) {
+    if (tree == null || tree.groups.size() == 0 || 
+                        tree.tables.size() == 0 || 
+                        tree.variables.size() == 0) {
       Log.message("No groups found, building default tree...");
       tree = new DataTree(allvars);
     }    
