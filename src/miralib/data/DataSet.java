@@ -5,7 +5,6 @@ package miralib.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -36,7 +35,7 @@ import miralib.utils.Project;
 public class DataSet {
   protected Project project;
   
-  protected Table data;
+  protected MiraTable data;
   
   protected DataTree tree; 
   protected HashMap<String, CodebookPage> codebook;
@@ -827,19 +826,19 @@ public class DataSet {
   
   //////////////////////////////////////////////////////////////////////////////
   
-  protected Data loadTable(String filename, String options, String missingStr) {
+  protected MiraTable loadTable(String filename, String options, String missingStr) {
     try {
       String optionStr = Table.extensionOptions(true, filename, options);
       String[] optionList = PApplet.trim(PApplet.split(optionStr, ','));
 
-      Data dict = null;
+      MiraTable dict = null;
       for (String opt : optionList) {
         if (opt.startsWith("dictionary=")) {
           dict = loadDict(opt.substring(opt.indexOf('=') + 1));
-          return Data.typedParse(createInput(filename), dict, optionStr, missingStr);
+          return MiraTable.typedParse(createInput(filename), dict, optionStr, missingStr);
         }
       }
-      return new Data(createInput(filename), optionStr);
+      return new MiraTable(createInput(filename), optionStr);
 
     } catch (IOException e) {
       Log.error("Cannot load data file", e);
@@ -864,23 +863,23 @@ public class DataSet {
     return new File(filename);
   }
   
-  protected Table loadTable(String filename) {
+  protected MiraTable loadTable(String filename) {
     return loadTable(filename, null);
   } 
   
-  protected Table loadTable(String filename, String options) {
+  protected MiraTable loadTable(String filename, String options) {
     try {
       String optionStr = Table.extensionOptions(true, filename, options);
       String[] optionList = PApplet.trim(PApplet.split(optionStr, ','));
 
-      Table dictionary = null;
+      MiraTable dictionary = null;
       for (String opt : optionList) {
         if (opt.startsWith("dictionary=")) {
           dictionary = loadTable(opt.substring(opt.indexOf('=') + 1), "tsv");
           return dictionary.typedParse(createInput(filename), optionStr);
         }
       }
-      return new Table(createInput(filename), optionStr);
+      return new MiraTable(createInput(filename), optionStr);
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -939,21 +938,22 @@ public class DataSet {
    
   //////////////////////////////////////////////////////////////////////////////
   
-  protected Data loadTableNoDict(String filename, String options, String missingStr) {
+  protected MiraTable loadTableNoDict(String filename, String options, String missingStr) {
     String optionStr = Table.extensionOptions(true, filename, options);
-    return Data.guessedParse(createInput(filename), codebook, optionStr, missingStr);      
+    return MiraTable.guessedParse(createInput(filename), codebook, optionStr, missingStr);      
   }
   
-  protected Data loadDict(String filename) {
+  protected MiraTable loadDict(String filename) {
     try {
       String optionStr = Table.extensionOptions(true, filename, null);
-      return new Data(createInput(filename), optionStr);
+      return new MiraTable(createInput(filename), optionStr);
     } catch (IOException e) {
       Log.error("Cannot load dictionary file", e);      
       return null;
     }
   } 
   
+  /*
   static protected class Data extends Table {
     final static protected int[] CHECK_FRACTION = {1, 2, 10, 100};
     final static protected int STRING_CATEGORICAL_MAX_COUNT = 100;
@@ -1152,6 +1152,7 @@ public class DataSet {
       }  
     }    
   }
+  */
   
   protected class CodebookPage {
     String name;
