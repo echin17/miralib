@@ -5,7 +5,6 @@ package miralib.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.zip.GZIPInputStream;
@@ -273,34 +272,12 @@ public class DataSet {
     
   public Variable[] getVariables(String query) {
     query = query.trim();
-    if (query.equals("")) return new Variable[0];
-    
+    if (query.equals("")) return new Variable[0];    
     Collections.fill(selected, new Boolean(false));    
-    if (5000 < tree.variables.size()) {
-      int proc = Runtime.getRuntime().availableProcessors();
-      ExecutorService pool = Executors.newFixedThreadPool(PApplet.min(1, proc));
-      for (int i = 0; i < tree.variables.size(); i++) {
-        final String str = query;
-        final int idx = i;
-        final Variable var = tree.getVariable(i);
-        pool.execute(new Runnable() {
-          public void run() {
-            if (var.matchName(str) || var.matchAlias(str)) {
-              selected.set(idx, true);
-            }
-          }
-        });      
-      }      
-      pool.shutdown();
-      while (!pool.isTerminated()) {
-        Thread.yield();
-      }            
-    } else {
-      for (int i = 0; i < tree.variables.size(); i++) {
-        Variable var = tree.getVariable(i);
-        if (var.matchName(query) || var.matchAlias(query)) {
-          selected.set(i, true);
-        }
+    for (int i = 0; i < tree.variables.size(); i++) {
+      Variable var = tree.getVariable(i);
+      if (var.matchName(query) || var.matchAlias(query)) {
+        selected.set(i, true);
       }
     }
     int count = 0;
