@@ -722,11 +722,11 @@ public class DataSet {
           } else {
             // Getting range string
             String range = row.getString(2);
-            var.initValues(range);
+            if (range != null) var.initValues(range);            
             if (3 < count) {            
               // Getting weighting information
               String weight = row.getString(3);
-              initWeight(var, weight);
+              if (weight != null) initWeight(var, weight);
             }            
           }
         }
