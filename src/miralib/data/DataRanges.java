@@ -74,18 +74,17 @@ public class DataRanges extends HashMap<Variable, Range> {
         return "{}";
 
     StringBuilder sb = new StringBuilder();
-    sb.append('{');
     for (;;) {
       Entry<Variable, Range> e = i.next();
       Variable var = e.getKey();
       Range range = e.getValue();
-      sb.append(var.getName());
-      sb.append('=');
-      sb.append(var.formatRange(range, false));
+      sb.append(var.getName() + ":" + var.getAlias().replace("'", "\\'"));
+      sb.append(" = ");
+      sb.append(var.formatRange(range, true));
       if (!i.hasNext()) {
-        return sb.append('}').toString();
+        return sb.toString();
       }
-      sb.append(',').append(' ');
+      sb.append('\n').append(' ');
     }
   }
 }
