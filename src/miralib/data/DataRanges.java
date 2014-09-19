@@ -71,7 +71,7 @@ public class DataRanges extends HashMap<Variable, Range> {
   public String toString() {
     Iterator<Entry<Variable, Range>> i = entrySet().iterator();
     if (!i.hasNext())
-        return "{}";
+        return "";
 
     StringBuilder sb = new StringBuilder();
     for (;;) {
