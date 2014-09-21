@@ -35,7 +35,7 @@ public class CategoricalVariable extends Variable {
     ArrayList<String> values = range.getValues();
     ArrayList<String> ordered = new ArrayList<String>();
     for (int i = 0; i < categories.length; i++) {
-      String[] parts = categories[i].split(":");
+      String[] parts = categories[i].split(":", 2);
       if (parts.length != 2) {
         throw new RuntimeException("Malformed category string for variable " + 
                                    name + " (" + alias + ")");   
