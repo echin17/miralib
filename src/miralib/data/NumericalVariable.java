@@ -166,7 +166,7 @@ public class NumericalVariable extends Variable {
       if (ival == MISSING_INT || specialValue(ival)) return "missing";
       return nfc(ival);
     } else if (type == Table.LONG) {
-      long lval = normalized ? (long)Math.round(range.denormalize(value)) : (long)Math.round(value);
+      long lval = normalized ? Math.round(range.denormalize(value)) : Math.round(value);
       if (lval == MISSING_LONG || specialValue(lval)) return "missing";
       return nfc(lval);
     } else if (type == Table.FLOAT) {
@@ -188,7 +188,7 @@ public class NumericalVariable extends Variable {
       if (ival == MISSING_INT || specialValue(ival)) return "missing";
       return nfc(ival);
     } else if (type == Table.LONG) {
-      long lval = sel == null ? (long)Math.round(range.denormalize(value)) : (long)Math.round(sel.denormalize(value));
+      long lval = sel == null ? Math.round(range.denormalize(value)) : Math.round(sel.denormalize(value));
       if (lval == MISSING_LONG || specialValue(lval)) return "missing";
       return nfc(lval);
     } else if (type == Table.FLOAT) {
@@ -216,7 +216,7 @@ public class NumericalVariable extends Variable {
         if (type == Table.INT) {
           return range.normalize((int)Math.round(denorm));  
         } else if (type == Table.LONG) {
-          return range.normalize((long)Math.round(denorm));
+          return range.normalize(Math.round(denorm));
         } else {
           return range.normalize(denorm);
         }
@@ -225,7 +225,7 @@ public class NumericalVariable extends Variable {
         if (type == Table.INT) {
           return sel.normalize((int)Math.round(denorm));  
         } else if (type == Table.LONG) {
-          return sel.normalize((long)Math.round(denorm));
+          return sel.normalize(Math.round(denorm));
         } else {
           return sel.normalize(denorm);
         }        
