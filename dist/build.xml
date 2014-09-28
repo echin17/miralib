@@ -4,6 +4,16 @@
 		Simple ant build file that generates the miralib jar file
 		to include in other Java applications or packages.
 -->
+
+    <condition property="props.present">
+      <available file="dist/local.properties" />
+    </condition>
+
+    <fail unless="props.present" 
+        message="To make the build work, create a file named local.properties, 
+(inside the dist folder), one line that reads processing.dir=/path/to/processing-git 
+with the path to where you have the code for processing checked out.
+inside that folder, it will expect to find 'core' and 'pdf'." />	
 	
 	<property name="project.target" value="1.6"/>	
 	<property name="project.name" value="miralib"/>	
@@ -12,8 +22,9 @@
 	<property name="project.bin" location="bin"/>
 	<property name="project.dist" location="dist"/>
 	<property name="project.lib" location="lib"/>
-
-	<path id="classpath">
+	<property file="dist/local.properties" />
+  	
+	<path id="classpath">	   
 		<fileset dir="${project.lib}" includes="**/*.jar" />
 	</path>		
 
@@ -23,17 +34,22 @@
 	</target>
 	
 	<target name="compile">
-	  <javac srcdir="${project.src}" destdir="${project.bin}" source="${project.target}" target="${project.target}" includeantruntime="false">
-			<classpath>
-				<path refid="classpath"/>
-			</classpath>
+	  <javac srcdir="${project.src}" 
+	         destdir="${project.bin}" 
+	         source="${project.target}" 
+	         target="${project.target}"
+	         classpath="${processing.dir}/core/bin:${project.lib}/commons-math3-3.2.jar" 
+	         includeantruntime="false">
 			<compilerarg value="-Xlint"/>	  
 	  	<include name="**/*.java" />
 	  </javac>	
 	</target>
 			
 	<target name="makejar">
-	  <jar jarfile="${project.dist}/${project.jar.name}" basedir="${project.bin}"/>
+	  <jar jarfile="${project.dist}/${project.jar.name}" basedir="${project.bin}">
+        <fileset dir="bin" />
+        <fileset dir="${processing.dir}/core/bin"/>	      
+	  </jar>	  
 	</target>
 	
 	<target name="dist">
