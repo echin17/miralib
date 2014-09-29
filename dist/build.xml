@@ -15,7 +15,7 @@
 with the path to where you have the code for processing checked out.
 inside that folder, it will expect to find 'core' and 'pdf'." />	
 	
-	<property name="project.target" value="1.6"/>	
+	<property name="project.target" value="1.7"/>	
 	<property name="project.name" value="miralib"/>	
 	<property name="project.jar.name" value="${project.name}.jar"/>
 	<property name="project.src" location="src"/>
