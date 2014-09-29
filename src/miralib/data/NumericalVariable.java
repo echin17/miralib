@@ -3,8 +3,7 @@
 package miralib.data;
 
 import java.util.ArrayList;
-
-import processing.core.PApplet;
+import miralib.math.Numbers;
 import processing.data.Table;
 import processing.data.TableRow;
 
@@ -48,22 +47,22 @@ public class NumericalVariable extends Variable {
       if (type == Table.INT) {        
         spValInt = new int[spval.length];
         for (int i = 0; i < spval.length; i++) {
-          spValInt[i] = PApplet.parseInt(spval[i]);     
+          spValInt[i] = Numbers.parseInt(spval[i]);     
         }
       } else if (type == Table.LONG) {
         spValLong = new long[spval.length];
         for (int i = 0; i < spval.length; i++) {
-          spValLong[i] = parseLong(spval[i]);     
+          spValLong[i] = Numbers.parseLong(spval[i]);     
         }
       } else if (type == Table.FLOAT) {
         spValFloat = new float[spval.length];
         for (int i = 0; i < spval.length; i++) {
-          spValFloat[i] = PApplet.parseFloat(spval[i]);     
+          spValFloat[i] = Numbers.parseFloat(spval[i]);     
         }      
       } else if (type == Table.DOUBLE) {
         spValDouble = new double[spval.length];
         for (int i = 0; i < spval.length; i++) {
-          spValDouble[i] = parseDouble(spval[i]);     
+          spValDouble[i] = Numbers.parseDouble(spval[i]);     
         }      
       }      
     }

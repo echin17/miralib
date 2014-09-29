@@ -4,7 +4,7 @@ package miralib.shannon;
 
 import miralib.data.DataSlice2D;
 import miralib.data.Value2D;
-import processing.core.PApplet;
+import miralib.math.Numbers;
 
 /**
  * Calculation of the joint entropy of a 2D slice.
@@ -26,8 +26,8 @@ public class JointEntropy {
     
     double total = 0;
     for (Value2D value: slice.values) {
-      int bx = PApplet.constrain((int)(value.x / sbinx), 0, nbinx - 1);  
-      int by = PApplet.constrain((int)(value.y / sbiny), 0, nbiny - 1);  
+      int bx = Numbers.constrain((int)(value.x / sbinx), 0, nbinx - 1);  
+      int by = Numbers.constrain((int)(value.y / sbiny), 0, nbiny - 1);  
       counts[bx][by] += value.w;
       total += value.w;
     }

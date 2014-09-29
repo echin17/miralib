@@ -7,7 +7,7 @@ import java.awt.Font;
 import java.io.*;
 import java.util.*;
 
-import processing.core.PApplet;
+import miralib.math.Numbers;
 
 /**
  * Generic class to store program preferences.
@@ -30,7 +30,7 @@ public class Settings {
   }
 
   public void load() {
-    String[] lines = PApplet.loadStrings(file);
+    String[] lines = Fileu.loadStrings(file);
     for (String line : lines) {
       if ((line.length() == 0) || (line.charAt(0) == '#')) continue;
 
@@ -45,7 +45,7 @@ public class Settings {
   }
 
   public void save() {
-    PrintWriter writer = PApplet.createWriter(file);
+    PrintWriter writer = Fileu.createWriter(file);
 
     cleanup();
     for (String key : attribs) {
@@ -146,7 +146,7 @@ public class Settings {
   }
 
   public void setColor(String attr, Color what) {
-    set(attr, "#" + PApplet.hex(what.getRGB() & 0xffffff, 6));
+    set(attr, "#" + hex(what.getRGB() & 0xffffff, 6));
   }
 
   public Font getFont(String attr, String dflt) {
@@ -157,12 +157,10 @@ public class Settings {
       replace = true;
     }
 
-    String[] pieces = PApplet.split(value, ',');
+    String[] pieces = value.split(",");
     if (pieces.length != 3) {
       value = dflt;
-      //System.out.println("reset 2 for " + attr);
-      pieces = PApplet.split(value, ',');
-      //PApplet.println(pieces);
+      pieces = value.split(",");
       replace = true;
     }
 
@@ -174,16 +172,30 @@ public class Settings {
     if (pieces[1].indexOf("italic") != -1) {
       style |= Font.ITALIC;
     }
-    int size = PApplet.parseInt(pieces[2], 12);
+    int size = Numbers.parseInt(pieces[2], 12);
     Font font = new Font(name, style, size);
 
     // replace bad font with the default
     if (replace) {
-      //System.out.println(attr + " > " + value);
-      //setString(attr, font.getName() + ",plain," + font.getSize());
       set(attr, value);
     }
 
     return font;
   }
+  
+  static final public String hex(int value, int digits) {
+    String stuff = Integer.toHexString(value).toUpperCase();
+    if (digits > 8) {
+      digits = 8;
+    }
+
+    int length = stuff.length();
+    if (length > digits) {
+      return stuff.substring(length - digits);
+
+    } else if (length < digits) {
+      return "00000000".substring(8 - (digits-length)) + stuff;
+    }
+    return stuff;
+  }  
 }

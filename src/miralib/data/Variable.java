@@ -6,9 +6,9 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import miralib.math.Numbers;
 import miralib.shannon.BinOptimizer;
 import miralib.utils.Log;
-import processing.core.PApplet;
 import processing.data.Table;
 import processing.data.TableRow;
 
@@ -108,7 +108,7 @@ abstract public class Variable implements DataTree.Item {
     Arrays.fill(weightSum, 0);
     double totWeight = 0;
     for (Value1D value: slice.values) {      
-      int bin = PApplet.constrain((int)(value.x / bsize), 0, bcount - 1);      
+      int bin = Numbers.constrain((int)(value.x / bsize), 0, bcount - 1);      
       weightSum[bin] += value.w;
       totWeight += value.w;
     }
@@ -395,31 +395,4 @@ abstract public class Variable implements DataTree.Item {
     nfd.setMaximumFractionDigits(decimals);
     return nfd.format(num);
   }
-  
-  static protected long parseLong(String what) {
-    return parseLong(what, 0);
-  }  
-  
-  static protected long parseLong(String what, int otherwise) {
-    try {
-      int offset = what.indexOf('.');
-      if (offset == -1) {
-        return Long.parseLong(what);
-      } else {
-        return Long.parseLong(what.substring(0, offset));
-      }
-    } catch (NumberFormatException e) { }
-    return otherwise;
-  }  
-  
-  static protected double parseDouble(String what) {
-    return parseDouble(what, Double.NaN);
-  }
-
-  static protected double parseDouble(String what, double otherwise) {
-    try {
-      return new Double(what).doubleValue();
-    } catch (NumberFormatException e) { }
-    return otherwise;
-  }  
 }

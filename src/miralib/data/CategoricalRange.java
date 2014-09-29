@@ -5,8 +5,7 @@ package miralib.data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-
-import processing.core.PApplet;
+import miralib.math.Numbers;
 import processing.data.TableRow;
 
 /**
@@ -126,7 +125,7 @@ public class CategoricalRange extends Range {
     double min = getMin(); 
     double max = getMax() + 1;
     int val = (int)Math.floor(min + value * (max - min));
-    val = PApplet.constrain(val, (int)min, (int)max);
+    val = Numbers.constrain(val, (int)min, (int)max);
     return val;    
   } 
     

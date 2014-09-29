@@ -4,7 +4,7 @@ package miralib.shannon;
 
 import miralib.data.DataSlice1D;
 import miralib.data.Value1D;
-import processing.core.PApplet;
+import miralib.math.Numbers;
 
 /**
  * Calculation of the marginal entropy of a 1D slice.
@@ -25,7 +25,7 @@ public class MarginalEntropy {
     
     double total = 0;
     for (Value1D value: slice.values) {
-      int bx = PApplet.constrain((int)(value.x / sbin), 0, nbin - 1);    
+      int bx = Numbers.constrain((int)(value.x / sbin), 0, nbin - 1);    
       counts[bx] += value.w;
       total += value.w;
     }

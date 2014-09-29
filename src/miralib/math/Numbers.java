@@ -72,5 +72,94 @@ public class Numbers {
   static public boolean whole(double a) {
     return equal(a, (int)a);
   }
+  
+  static public float map(float value, float start1, float stop1,
+                                       float start2, float stop2) {
+    return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
+  }
+  
+  static public double map(double value, double start1, float stop1,
+                                         double start2, float stop2) {
+    return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
+  }
+  
+  static public int constrain(int amt, int low, int high) {
+    return (amt < low) ? low : ((amt > high) ? high : amt);
+  }
+  
+  static public float constrain(float amt, float low, float high) {
+    return (amt < low) ? low : ((amt > high) ? high : amt);
+  }  
+  
+  static public double constrain(double amt, double low, double high) {
+    return (amt < low) ? low : ((amt > high) ? high : amt);
+  }
+  
+  static public final int min(int a, int b, int c) {
+    return (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c);
+  }  
+  
+  static public final float min(float a, float b, float c) {
+    return (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c);
+  }
+  
+  static public final double min(double a, double b, double c) {
+    return (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c);
+  }
+  
+  static final public int parseInt(String what) {
+    return parseInt(what, 0);
+  }
+
+  static final public int parseInt(String what, int otherwise) {
+    try {
+      int offset = what.indexOf('.');
+      if (offset == -1) {
+        return Integer.parseInt(what);
+      } else {
+        return Integer.parseInt(what.substring(0, offset));
+      }
+    } catch (NumberFormatException e) { }
+    return otherwise;
+  } 
+  
+  static final public float parseFloat(String what) {
+    return parseFloat(what, Float.NaN);
+  }
+
+  static final public float parseFloat(String what, float otherwise) {
+    try {
+      return new Float(what).floatValue();
+    } catch (NumberFormatException e) { }
+
+    return otherwise;
+  }  
+  
+  static public long parseLong(String what) {
+    return parseLong(what, 0);
+  }  
+  
+  static public long parseLong(String what, int otherwise) {
+    try {
+      int offset = what.indexOf('.');
+      if (offset == -1) {
+        return Long.parseLong(what);
+      } else {
+        return Long.parseLong(what.substring(0, offset));
+      }
+    } catch (NumberFormatException e) { }
+    return otherwise;
+  }  
+  
+  static public double parseDouble(String what) {
+    return parseDouble(what, Double.NaN);
+  }
+
+  static public double parseDouble(String what, double otherwise) {
+    try {
+      return new Double(what).doubleValue();
+    } catch (NumberFormatException e) { }
+    return otherwise;
+  }  
 }
 

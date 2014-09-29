@@ -16,12 +16,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-
-import processing.core.PApplet;
 import processing.data.Table;
 import processing.data.TableRow;
 import processing.data.XML;
+import miralib.math.Numbers;
 import miralib.shannon.Similarity;
+import miralib.utils.Fileu;
 import miralib.utils.Log;
 import miralib.utils.Project;
 
@@ -492,7 +492,7 @@ public class DataSet {
     threadedSort = true;
     if (clear) Collections.fill(scores, new Float(-1f));
     int proc = Runtime.getRuntime().availableProcessors();
-    scorePool = (ThreadPoolExecutor)Executors.newFixedThreadPool(PApplet.min(1, proc - 1));
+    scorePool = (ThreadPoolExecutor)Executors.newFixedThreadPool(Math.min(1, proc - 1));
     for (int i = 0; i < columns.size(); i++) {
       if (-1 < scores.get(i)) continue; 
       final int col = i;
@@ -521,14 +521,14 @@ public class DataSet {
     if (threadedSort) {
       if (scorePool != null && !scorePool.isTerminated()) {
         float f = (float)scorePool.getCompletedTaskCount() / (scorePool.getTaskCount());
-        return PApplet.map(f, 0, 1, 0, 0.99f);
+        return Numbers.map(f, 0, 1, 0, 0.99f);
       } else if (sortTask != null && sortTask.isAlive()) {
         return 0.99f;  
       } else {
         return 1f;
       }      
     } else {
-      return PApplet.constrain((float)nonthreadedCount / (float)scores.size(), 0, 1);
+      return Numbers.constrain((float)nonthreadedCount / (float)scores.size(), 0, 1);
     }
   }
   
@@ -609,7 +609,7 @@ public class DataSet {
 
       if ((new File(dictPath)).exists()) {
         // Fast (typed) loading
-        data = loadTable(dataPath, "header,dictionary=" + dictPath, project.missingString); 
+        data = loadTable(dataPath, "header,dictionary=" + dictPath, project.missingString);
       } else {
         // Uses the codebook, or guess types from the values, which could be 
         // potentially very slow for large tables
@@ -800,11 +800,12 @@ public class DataSet {
   }
   
   //////////////////////////////////////////////////////////////////////////////
+
   
   protected MiraTable loadTable(String filename, String options, String missingStr) {
     try {
       String optionStr = Table.extensionOptions(true, filename, options);
-      String[] optionList = PApplet.trim(PApplet.split(optionStr, ','));
+      String[] optionList = splitOptions(optionStr);  
 
       MiraTable dict = null;
       for (String opt : optionList) {
@@ -834,10 +835,10 @@ public class DataSet {
   protected File saveFile(String where) {
     if (where == null) return null;
     String filename = where;
-    PApplet.createPath(filename);
+    Fileu.createPath(new File(filename));
     return new File(filename);
   }
-  
+    
   protected MiraTable loadTable(String filename) {
     return loadTable(filename, null);
   } 
@@ -845,7 +846,7 @@ public class DataSet {
   protected MiraTable loadTable(String filename, String options) {
     try {
       String optionStr = Table.extensionOptions(true, filename, options);
-      String[] optionList = PApplet.trim(PApplet.split(optionStr, ','));
+      String[] optionList = splitOptions(optionStr);
 
       MiraTable dictionary = null;
       for (String opt : optionList) {
@@ -911,6 +912,18 @@ public class DataSet {
     return null;
   }  
    
+  static protected String[] splitOptions(String str) {
+//  PApplet.trim(PApplet.split(optionStr, ','));
+    String[] array = str.split(",");
+    String[] outgoing = new String[array.length];
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] != null) {
+        outgoing[i] = array[i].replace('\u00A0', ' ').trim();
+      }
+    }
+    return outgoing;    
+  }  
+  
   //////////////////////////////////////////////////////////////////////////////
   
   protected MiraTable loadTableNoDict(String filename, String options, String missingStr) {

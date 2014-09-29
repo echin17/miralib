@@ -9,9 +9,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
 import miralib.shannon.Similarity;
-import processing.core.PApplet;
 
 /**
  * Mirador project information.
@@ -70,7 +68,7 @@ public class Project {
     File[] prjFiles = filePath.toFile().listFiles();
     
     for (File f: prjFiles) {
-      String ext = PApplet.checkExtension(f.toString());
+      String ext = Fileu.checkExtension(f.toString());
       if (ext != null && ext.equals("mira")) {
         cfgFile = f;
         break;
@@ -111,7 +109,7 @@ public class Project {
       
       for (File f: prjFiles) {
         String name = f.getName();
-        String ext = PApplet.checkExtension(name);
+        String ext = Fileu.checkExtension(name);
         if (ext == null) continue;
         if (ext.equals("bin")) {
           binFile = name;

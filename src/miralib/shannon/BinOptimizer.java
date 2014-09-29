@@ -7,8 +7,8 @@ import miralib.data.DataSlice1D;
 import miralib.data.DataSlice2D;
 import miralib.data.Value1D;
 import miralib.data.Value2D;
+import miralib.math.Numbers;
 import miralib.utils.Log;
-import processing.core.PApplet;
 
 /**
  * Optimal Histogram bin size calculation from Shimazaki and Shinomoto:
@@ -38,7 +38,7 @@ public class BinOptimizer {
       long lcount = slice.countx;
       int icount = Integer.MAX_VALUE < lcount ? Integer.MAX_VALUE : (int)lcount;
       float res = (float)res(slice.values);
-      maxNBins = PApplet.min((int)(1.0f/res) + 1, icount, hsize);
+      maxNBins = Numbers.min((int)(1.0f/res) + 1, icount, hsize);
     }
     
     int numValues = maxNBins - minNBins + 1;
@@ -54,7 +54,7 @@ public class BinOptimizer {
     int minn = (minNBins + maxNBins)/2;
     
     float minc = Float.MAX_VALUE;
-    int mod = PApplet.max(1, numValues / MAX_SEARCH_SAMPLE_SIZE);
+    int mod = Math.max(1, numValues / MAX_SEARCH_SAMPLE_SIZE);
     for (int i = 0; i < numValues; i += mod) {
       int n = minNBins + i;
       float bsize = 1.0f / n;
@@ -77,7 +77,7 @@ public class BinOptimizer {
     }
     
     int size = slice.values.size();
-    int sqsize = (int)PApplet.sqrt(size / 2);
+    int sqsize = (int)Math.sqrt(size / 2);
     
     int minNBins0, maxNBins0;
     if (slice.varx.categorical()) {
@@ -89,7 +89,7 @@ public class BinOptimizer {
       long lcount = slice.countx;
       int icount = Integer.MAX_VALUE < lcount ? Integer.MAX_VALUE : (int)lcount;
       float res = (float)resx(slice.values);   
-      maxNBins0 = PApplet.min((int)(1.0f/res) + 1, icount, sqsize);
+      maxNBins0 = Numbers.min((int)(1.0f/res) + 1, icount, sqsize);
     }
     
     int minNBins1, maxNBins1;
@@ -102,7 +102,7 @@ public class BinOptimizer {
       long lcount = slice.county;
       int icount = Integer.MAX_VALUE < lcount ? Integer.MAX_VALUE : (int)lcount;
       float res = (float)resy(slice.values);            
-      maxNBins1 = PApplet.min((int)(1.0f/res) + 1, icount, sqsize);
+      maxNBins1 = Numbers.min((int)(1.0f/res) + 1, icount, sqsize);
     }
     
     int blen0 = maxNBins0 - minNBins0 + 1;
@@ -122,7 +122,7 @@ public class BinOptimizer {
     int minn0 = (minNBins0 + maxNBins0)/2;
     int minn1 = (minNBins1 + maxNBins1)/2;
     float minc = Float.MAX_VALUE;
-    int mod = PApplet.max(1, numValues / MAX_SEARCH_SAMPLE_SIZE);
+    int mod = Math.max(1, numValues / MAX_SEARCH_SAMPLE_SIZE);
     for (int i = 0; i < numValues; i += mod) {
       int n0 = i / blen1 + minNBins0;
       int n1 = i % blen1 + minNBins1;
@@ -168,17 +168,17 @@ public class BinOptimizer {
   static public double uniformTransform1D(double x, float[] ubins) {
     int bnum = ubins.length - 1;
     float bsize = 1.0f / bnum;    
-    int bin = PApplet.constrain((int)(x / bsize), 0, bnum - 1);    
+    int bin = Numbers.constrain((int)(x / bsize), 0, bnum - 1);    
     return ubins[bin] + Math.random() * (ubins[bin + 1] - ubins[bin]); 
   }
 
   static public double[] hist1D(ArrayList<Value1D> values, int bnum) {    
     double[] counts = new double[bnum];
     float bsize = 1.0f / bnum;
-    int mod = PApplet.max(1, values.size() / MAX_HIST_SAMPLE_SIZE);
+    int mod = Math.max(1, values.size() / MAX_HIST_SAMPLE_SIZE);
     for (int i = 0; i < values.size(); i += mod) {
       Value1D value = values.get(i);
-      int bin = PApplet.constrain((int)(value.x / bsize), 0, bnum - 1);
+      int bin = Numbers.constrain((int)(value.x / bsize), 0, bnum - 1);
       counts[bin] += value.w;
     }
     return counts; 
@@ -189,11 +189,11 @@ public class BinOptimizer {
     double[][] counts = new double[bnumx][bnumy];
     float bsizex = 1.0f / bnumx; 
     float bsizey = 1.0f / bnumy; 
-    int mod = PApplet.max(1, values.size() / MAX_HIST_SAMPLE_SIZE);
+    int mod = Math.max(1, values.size() / MAX_HIST_SAMPLE_SIZE);
     for (int i = 0; i < values.size(); i += mod) {
       Value2D value = values.get(i);
-      int binx = PApplet.constrain((int)(value.x / bsizex), 0, bnumx - 1);
-      int biny = PApplet.constrain((int)(value.y / bsizey), 0, bnumy - 1);    
+      int binx = Numbers.constrain((int)(value.x / bsizex), 0, bnumx - 1);
+      int biny = Numbers.constrain((int)(value.y / bsizey), 0, bnumy - 1);    
       counts[binx][biny] += value.w;
     }
     return counts; 
@@ -218,7 +218,7 @@ public class BinOptimizer {
   
   static protected double res(ArrayList<Value1D> values) {
     double res = Double.POSITIVE_INFINITY;
-    int mod = PApplet.max(1, values.size() / MAX_RES_SAMPLE_SIZE);
+    int mod = Math.max(1, values.size() / MAX_RES_SAMPLE_SIZE);
     for (int i = 0; i < values.size(); i += mod) {
       Value1D vali = values.get(i);
       for (int j = 0; j < values.size(); j++) {
@@ -255,7 +255,7 @@ public class BinOptimizer {
   
   static protected double resx(ArrayList<Value2D> values) {
     double res = Double.POSITIVE_INFINITY;
-    int mod = PApplet.max(1, values.size() / MAX_RES_SAMPLE_SIZE);
+    int mod = Math.max(1, values.size() / MAX_RES_SAMPLE_SIZE);
     for (int i = 0; i < values.size(); i += mod) {
       Value2D vali = values.get(i);
       for (int j = 0; j < values.size(); j++) {
@@ -271,7 +271,7 @@ public class BinOptimizer {
 
   static protected double resy(ArrayList<Value2D> values) {
     double res = Double.POSITIVE_INFINITY;
-    int mod = PApplet.max(1, values.size() / MAX_RES_SAMPLE_SIZE);
+    int mod = Math.max(1, values.size() / MAX_RES_SAMPLE_SIZE);
     for (int i = 0; i < values.size(); i += mod) {
       Value2D vali = values.get(i);
       for (int j = 0; j < values.size(); j++) {

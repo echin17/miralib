@@ -8,10 +8,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import miralib.data.DataSet.CodebookPage;
 import miralib.utils.Log;
-import processing.core.PApplet;
 import processing.data.Table;
 import processing.data.TableRow;
 
@@ -148,7 +146,8 @@ public class MiraTable extends Table {
       else if (isLong(value)) typeCounts[Table.LONG]++;
       else if (isDouble(value)) typeCounts[Table.DOUBLE]++;
       else typeCounts[Table.STRING]++;      
-      if (strValues.size() <= PApplet.max(STRING_CATEGORICAL_MAX_COUNT, NUMERICAL_CATEGORICAL_MAX_COUNT) + 1) strValues.add(value);
+      if (strValues.size() <= Math.max(STRING_CATEGORICAL_MAX_COUNT, 
+                                       NUMERICAL_CATEGORICAL_MAX_COUNT) + 1) strValues.add(value);
     }
     
     if (count == 0) return Table.INT;

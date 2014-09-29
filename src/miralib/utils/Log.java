@@ -6,8 +6,6 @@ import java.awt.Frame;
 
 import javax.swing.JOptionPane;
 
-import processing.core.PApplet;
-
 /**
  * Message logging.
  *
@@ -49,7 +47,7 @@ public class Log {
     }
   
     public void push(String msg) {
-      PApplet.println(msg);  
+      System.out.println(msg);  
     }
   }  
 }

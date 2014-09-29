@@ -4,10 +4,7 @@ package miralib.shannon;
 
 import org.apache.commons.math3.distribution.GammaDistribution;
 import org.apache.commons.math3.distribution.NormalDistribution;
-
 import java.util.HashMap;
-
-import processing.core.PApplet;
 import miralib.data.DataSlice2D;
 import miralib.data.Variable;
 import miralib.math.Numbers;
@@ -84,7 +81,7 @@ public class Similarity {
       if (Numbers.equal(0.0, hxy)) {
         w = 0;
       } else {
-        w = PApplet.constrain(ixy / hxy, 0, 1);
+        w = Numbers.constrain(ixy / hxy, 0, 1);
         if (Float.isNaN(w)) w = 0;
       }      
       return w;
@@ -111,7 +108,7 @@ public class Similarity {
     }
     meani /= scount;
     meaniSq /= scount;
-    stdi = PApplet.sqrt(PApplet.max(0, meaniSq - meani * meani));  // TODO: fix, biased estimate!!      
+    stdi = (float)Math.sqrt(Math.max(0, meaniSq - meani * meani));  // TODO: fix, biased estimate!!      
     float zs = (ixy - meani) / stdi;
     if (Float.isNaN(zs) || Float.isInfinite(zs)) {
       return true;
@@ -133,7 +130,7 @@ public class Similarity {
         sbinx = sres[0];
         sbiny = sres[1];
       }
-      maxMI = PApplet.max(maxMI, MutualInformation.calculate(surrogate, sbinx, sbiny));
+      maxMI = Math.max(maxMI, MutualInformation.calculate(surrogate, sbinx, sbiny));
     }
     return ixy < maxMI;    
   }

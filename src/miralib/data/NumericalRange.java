@@ -5,7 +5,6 @@ package miralib.data;
 import java.util.ArrayList;
 
 import miralib.math.Numbers;
-import processing.core.PApplet;
 import processing.data.Table;
 import processing.data.TableRow;
 
@@ -90,17 +89,17 @@ public class NumericalRange extends Range {
   public void set(String... values) {
     if (values == null || values.length < 2) return;
     if (type == Table.INT) {
-      mini = PApplet.parseInt(values[0]);
-      maxi = PApplet.parseInt(values[1]);
+      mini = Numbers.parseInt(values[0]);
+      maxi = Numbers.parseInt(values[1]);
     } else if (type == Table.LONG) {
-      minl = Variable.parseLong(values[0]);
-      maxl = Variable.parseLong(values[1]);
+      minl = Numbers.parseLong(values[0]);
+      maxl = Numbers.parseLong(values[1]);
     } else if (type == Table.FLOAT) {
-      minf = PApplet.parseFloat(values[0]);
-      maxf = PApplet.parseFloat(values[1]);
+      minf = Numbers.parseFloat(values[0]);
+      maxf = Numbers.parseFloat(values[1]);
     } else if (type == Table.DOUBLE) {
-      mind = Variable.parseDouble(values[0]);
-      maxd = Variable.parseDouble(values[1]);
+      mind = Numbers.parseDouble(values[0]);
+      maxd = Numbers.parseDouble(values[1]);
     }
   }  
   
