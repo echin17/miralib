@@ -52,11 +52,29 @@ inside that folder, it will expect to find 'core' and 'pdf'." />
 	  </jar>	  
 	</target>
 	
+	<target name="gendocs" >
+		<javadoc classpath="${project.lib}" 
+				destdir="./dist/javadoc" 
+				verbose="false" 
+				stylesheetfile="./dist/stylesheet.css" 
+				doctitle="Javadocs: Miralib" 
+				public="true" version="false" 
+				windowtitle="Javadocs: Miralib"> 			
+ 			<link href="${javadoc.java.href}" />
+			<link href="${javadoc.processing.href}" />
+			<taglet name="ExampleTaglet" path="dist/code" />
+ 			<fileset dir="./src" defaultexcludes="yes">
+				<include name="**/*"/>
+			</fileset>
+	 	</javadoc>
+	</target>	
+	
 	<target name="dist">
 	  <echo>Creating mirador jar...</echo>
 	  <antcall target="init" />
 	  <antcall target="compile" />
 	  <antcall target="makejar" />
+	  <antcall target="gendocs" />	  
 	  <echo>Done.</echo>
 	</target>	
 	
