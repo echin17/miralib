@@ -36,7 +36,7 @@ public class MutualInformation {
       int by = (int)Math.min(value.y / sbiny, nbiny - 1);
       
       if (bx < 0 || by < 0) {
-        System.err.println("fuck! " + bx + " " + nbinx + "| " + by + " " + nbiny);
+        System.err.println("Error: a bin index is negative: " + bx + " " + nbinx + "| " + by + " " + nbiny);
         continue;
       }
       
