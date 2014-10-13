@@ -28,7 +28,7 @@ public class Project {
   // List of missing data thresholds  
   final static public int MISS_10     = 0;
   final static public int MISS_20     = 1;
-  final static public int MISS_40     = 2;
+  final static public int MISS_60     = 2;
   final static public int MISS_80     = 3;
   final static public int MISS_IGNORE = 4; 
   
@@ -288,8 +288,8 @@ public class Project {
       return "MISS_10";
     } else if (miss == MISS_20) {
       return "MISS_20";
-    } else if (miss == MISS_40) {
-      return "MISS_40";
+    } else if (miss == MISS_60) {
+      return "MISS_60";
     } else if (miss == MISS_80) {
       return "MISS_80";
     } else if (miss == MISS_IGNORE) {
@@ -306,8 +306,8 @@ public class Project {
       return MISS_10;
     } else if (name.equals("MISS_20")) {
       return MISS_20;
-    } else if (name.equals("MISS_40")) {
-      return MISS_40;
+    } else if (name.equals("MISS_60")) {
+      return MISS_60;
     } else if (name.equals("MISS_80")) {
       return MISS_80;
     } else if (name.equals("MISS_IGNORE")) {
@@ -330,7 +330,7 @@ public class Project {
   public float missingThreshold() {
     if (missingThreshold == MISS_10) return 0.1f;
     else if (missingThreshold == MISS_20) return 0.2f;
-    else if (missingThreshold == MISS_40) return 0.4f;
+    else if (missingThreshold == MISS_60) return 0.6f;
     else if (missingThreshold == MISS_80) return 0.8f;
     else return 1;    
   }  
