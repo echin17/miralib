@@ -298,24 +298,36 @@ public class DataSet {
     DataRanges oranges = new DataRanges(ranges);
     
     Table datatab = new Table();
-    datatab.setMissingString(project.missingString);
+    datatab.setMissingString(data.getMissingString());
+    
     for (Variable var: selvars) {
       String name = var.getName();
       datatab.addColumn(name, Table.STRING);
-    }    
+    }
+    
+    int count = 0;
+    boolean[] mask = new boolean[data.getRowCount()]; 
     for (int r = 0; r < data.getRowCount(); r++) {
-      TableRow src = data.getRow(r);       
-      if (!insideRanges(src, oranges)) continue;
-      TableRow dest = datatab.addRow();
+      TableRow src = data.getRow(r);
+      mask[r] = insideRanges(src, oranges);
+      if (mask[r]) count++;
+    }
+    datatab.setRowCount(count);
+    
+    int r1 = 0;
+    for (int r0 = 0; r0 < data.getRowCount(); r0++) {
+      if (!mask[r0]) continue;
+      TableRow src = data.getRow(r0);
+      TableRow dest = datatab.getRow(r1);
+      r1++;
+      
+      int destCol = 0;
       for (Variable var: selvars) {
-        String name = var.getName();
-        String value;
-        if (var.missing(src)) {
-          value = project.missingString;
-        } else {
-          value = src.getString(name);
-        }
-        dest.setString(name, value);
+        int srcCol = var.getIndex();
+        String value = var.missing(src) ? project.missingString :
+                                          src.getString(srcCol);
+        dest.setString(destCol, value);
+        destCol++;
       }
     }
     

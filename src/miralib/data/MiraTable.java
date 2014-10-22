@@ -187,8 +187,32 @@ public class MiraTable extends Table {
     }
     
     return Table.STRING;
-  }    
+  }
+  
+  public String getMissingString() {
+    return missingString;
+  }
    
+  public int getMissingInt() {
+    return missingInt;
+  }
+
+  public long getMissingLong() {
+    return missingLong;  
+  }
+  
+  public float getMissingFloat() {
+    return missingFloat;  
+  }
+  
+  public double getMissingDouble() {
+    return missingDouble;  
+  }
+  
+  public int getMissingCategory() {
+    return missingCategory;
+  }
+  
   static protected boolean isInt(String str) {
     try {
       new Integer(str);
