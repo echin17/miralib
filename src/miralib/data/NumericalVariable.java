@@ -39,7 +39,7 @@ public class NumericalVariable extends Variable {
       // There are special values, will override the min/max that were computed
       // directly from the data.
       String[] minmax = all[0].split(",");
-      range.set(minmax);      
+      range.set(minmax); 
       String[] spval = new String[all.length - 1];
       for (int i = 0; i < spval.length; i++) {
         spval[i] = all[i + 1].split(":")[0];
@@ -204,7 +204,7 @@ public class NumericalVariable extends Variable {
   }
   
   public boolean valueAlias(String value) {
-    return false;  
+    return false;
   }
 
   public double snapValue(double value, Range sel, boolean normalized) {

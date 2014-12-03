@@ -78,6 +78,8 @@ abstract public class Variable implements DataTree.Item {
       var = new NumericalVariable(name, index, Table.DOUBLE);
     } else if (type == Table.CATEGORY) {
       var = new CategoricalVariable(name, index);
+    } else if (type == MiraTable.DATE) {
+      var = new DateVariable(name, index);      
     } else {
       String err = "variable " + (index + 1) + " (" + name + ") is of an unsupported type: " + Variable.formatType(type);
       Log.error(err, new RuntimeException(err));

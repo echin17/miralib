@@ -23,13 +23,6 @@ public class CategoricalVariable extends Variable {
     range = new CategoricalRange(this);    
   }
   
-  public void initRange(Table data) {
-    super.initRange(data);
-    for (String cat: range.getValues()) {
-      aliases.put(cat, cat);
-    }
-  }
-  
   public void initValues(String valstr) {
     String[] categories = valstr.split(";");
     ArrayList<String> values = range.getValues();
@@ -54,6 +47,13 @@ public class CategoricalVariable extends Variable {
     }
     ordered.addAll(surplus);
     range.set(ordered);     
+  }  
+  
+  public void initRange(Table data) {
+    super.initRange(data);
+    for (String cat: range.getValues()) {
+      aliases.put(cat, cat);
+    }
   }  
   
   public int type() {

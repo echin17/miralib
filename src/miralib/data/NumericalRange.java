@@ -3,7 +3,6 @@
 package miralib.data;
 
 import java.util.ArrayList;
-
 import miralib.math.Numbers;
 import processing.data.Table;
 import processing.data.TableRow;
@@ -30,7 +29,7 @@ public class NumericalRange extends Range {
   }
   
   public NumericalRange(NumericalRange that) {
-    super(that);    
+    super(that);
     this.type = that.type;
     if (type == Table.INT) {
       this.mini = that.mini;
@@ -295,7 +294,7 @@ public class NumericalRange extends Range {
       }
       return false;
     }
-    return true;
+    return false;
   }
   
   public String toString() {
@@ -314,6 +313,6 @@ public class NumericalRange extends Range {
       val0 = String.valueOf(mind);
       val1 = String.valueOf(maxd);
     }
-    return val0 + "," + val1;    
+    return val0 + "," + val1;
   }
 }
