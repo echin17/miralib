@@ -7,7 +7,6 @@ import miralib.utils.Log;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 
 import processing.data.TableRow;
 
@@ -15,13 +14,14 @@ public class DateVariable  extends Variable {
   
   // Standard ISO8601 formatter:
   // http://en.wikipedia.org/wiki/ISO_8601
-  protected static DateTimeFormatter fmtParse = ISODateTimeFormat.dateTime();  
+//  protected static DateTimeFormatter fmtParse = ISODateTimeFormat.dateTime();  
+  protected static DateTimeFormatter fmtParse = DateTimeFormat.forPattern("yyyy-MM-dd");  
   protected static DateTimeFormatter fmtPrint = DateTimeFormat.forPattern("d MMM, y");
 
   // For Custom Formatters, check the user guide:
   // http://www.joda.org/joda-time/userguide.html
   // i.e.:
-  // DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyyMMdd");
+  // 
     
   public DateVariable(String name, int index) {
     super(name, index);
@@ -158,7 +158,9 @@ public class DateVariable  extends Variable {
     DateTime date = null;
     try {    
       date = fmtParse.parseDateTime(str);      
-    } catch (Exception e) { }
+    } catch (Exception e) { 
+//      e.printStackTrace();
+    }
     return date;    
   }
   

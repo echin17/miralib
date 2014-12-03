@@ -55,8 +55,8 @@ public class DateRange extends Range {
 
   @Override
   public void reset() {
-    if (mind == null) mind = new DateTime("1900-01-01");
-    if (maxd == null) maxd = new DateTime("2099-12-31");    
+    if (mind == null) mind = new DateTime("2099-12-31");
+    if (maxd == null) maxd = new DateTime("1900-01-01");    
   }
 
   @Override

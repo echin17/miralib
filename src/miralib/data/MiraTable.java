@@ -241,12 +241,25 @@ public class MiraTable extends Table {
       for (int n = 0; n < table.getRowCount(); n++) {
         TableRow row = table.getRow(n); 
         String value = row.getString(i);
-        if (value.equals(missing)) continue;
+        if (value == null || value.equals(missing)) continue;
+        
+        String name = table.getColumnTitle(i);
+        if (name != null && name.equals("DOOUT")) {
+          System.err.println(value + " "+ supportedDateString(value));
+        }
+        
+        
         if (supportedDateString(value)) dateCount++;
         totCount++;
         if (totCount == 10) break;
       }
-      return 0.5f < dateCount / totCount;    
+      float frac = (float)dateCount / (float)totCount;
+      boolean res = 0.5f < frac;
+//      System.err.println(table.getColumnTitle(i) + " " + frac);
+      if (res) {
+        System.err.println("Variable " + table.getColumnTitle(i) + " is date.");
+      }
+      return res;    
     } else {
       return false;
     }
