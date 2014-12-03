@@ -38,7 +38,7 @@ inside that folder, it will expect to find 'core' and 'pdf'." />
 	         destdir="${project.bin}" 
 	         source="${project.target}" 
 	         target="${project.target}"
-	         classpath="${processing.dir}/core/bin:${project.lib}/commons-math3-3.2.jar" 
+	         classpath="${processing.dir}/core/bin:${project.lib}/*.jar" 
 	         includeantruntime="false">
 			<compilerarg value="-Xlint"/>	  
 	  	<include name="**/*.java" />
