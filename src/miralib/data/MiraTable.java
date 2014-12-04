@@ -242,24 +242,12 @@ public class MiraTable extends Table {
         TableRow row = table.getRow(n); 
         String value = row.getString(i);
         if (value == null || value.equals(missing)) continue;
-        
-        String name = table.getColumnTitle(i);
-        if (name != null && name.equals("DOOUT")) {
-          System.err.println(value + " "+ supportedDateString(value));
-        }
-        
-        
         if (supportedDateString(value)) dateCount++;
         totCount++;
         if (totCount == 10) break;
       }
       float frac = (float)dateCount / (float)totCount;
-      boolean res = 0.5f < frac;
-//      System.err.println(table.getColumnTitle(i) + " " + frac);
-      if (res) {
-        System.err.println("Variable " + table.getColumnTitle(i) + " is date.");
-      }
-      return res;    
+      return 0.5f < frac;    
     } else {
       return false;
     }

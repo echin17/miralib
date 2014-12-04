@@ -71,7 +71,9 @@ abstract public class Range {
     if (that instanceof NumericalRange) {
       range = new NumericalRange((NumericalRange)that);
     } else if (that instanceof CategoricalRange) {
-      range = new CategoricalRange((CategoricalRange)that);  
+      range = new CategoricalRange((CategoricalRange)that);
+    } else if (that instanceof DateRange) {
+      range = new DateRange((DateRange)that);
     } else {
       throw new RuntimeException("Wrong range type");
     }

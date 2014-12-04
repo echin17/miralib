@@ -91,6 +91,8 @@ abstract public class Variable implements DataTree.Item {
     missingString = str;
   }
   
+  abstract public Range createRange(double val0, double val1);
+  
   public void initRange(Table data) {
     range.reset();
     for (int r = 0; r < data.getRowCount(); r++) {

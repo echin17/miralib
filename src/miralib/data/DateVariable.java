@@ -40,6 +40,13 @@ public class DateVariable  extends Variable {
   }
 
   @Override
+  public Range createRange(double val0, double val1) {
+    Range range = new DateRange(this);    
+    range.set(val0, val1);
+    return range;    
+  }   
+  
+  @Override
   public int type() {
     return MiraTable.DATE;
   }

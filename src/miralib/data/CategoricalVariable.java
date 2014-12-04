@@ -56,6 +56,12 @@ public class CategoricalVariable extends Variable {
     }
   }  
   
+  public Range createRange(double val0, double val1) {
+    Range range = new CategoricalRange(this);    
+    range.set(val0, val1);
+    return range;    
+  }  
+  
   public int type() {
     return Table.CATEGORY;
   }

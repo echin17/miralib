@@ -3,6 +3,7 @@
 package miralib.data;
 
 import java.util.ArrayList;
+
 import miralib.math.Numbers;
 import processing.data.Table;
 import processing.data.TableRow;
@@ -68,6 +69,12 @@ public class NumericalVariable extends Variable {
     }
   }
   
+  public Range createRange(double val0, double val1) {
+    Range range = new NumericalRange(this);    
+    range.set(val0, val1);
+    return range;    
+  }
+    
   public int type() {
     return type;
   }
