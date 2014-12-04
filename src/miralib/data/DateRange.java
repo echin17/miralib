@@ -8,18 +8,15 @@ import processing.data.TableRow;
 
 public class DateRange extends Range {
   protected DateTime mind, maxd;
-  protected ArrayList<String> values;
   
   public DateRange(Variable var) {
     super(var);
-    this.values = new ArrayList<String>();
   }
 
   public DateRange(DateRange that) {
     super(that);
-    this.mind = new DateTime(mind);
-    this.maxd = new DateTime(maxd);
-    this.values = new ArrayList<String>();
+    this.mind = new DateTime(that.mind).withTimeAtStartOfDay();
+    this.maxd = new DateTime(that.maxd).withTimeAtStartOfDay();
   }
   
   @Override
@@ -27,13 +24,13 @@ public class DateRange extends Range {
     if (normalized) {
       long minl = Math.round(var.range.denormalize(min));
       long maxl = Math.round(var.range.denormalize(max));
-      mind = new DateTime(minl);
-      maxd = new DateTime(maxl);
+      mind = new DateTime(minl).withTimeAtStartOfDay();
+      maxd = new DateTime(maxl).withTimeAtStartOfDay();
     } else {
       long minl = Math.round(min);
       long maxl = Math.round(max);
-      mind = new DateTime(minl);
-      maxd = new DateTime(maxl);      
+      mind = new DateTime(minl).withTimeAtStartOfDay();
+      maxd = new DateTime(maxl).withTimeAtStartOfDay();
     }    
   }
 
@@ -49,14 +46,14 @@ public class DateRange extends Range {
     if (values == null || values.length < 2) return;
     mind = DateVariable.parse(values[0]);
     maxd = DateVariable.parse(values[1]);
-    if (mind == null) mind = new DateTime("1900-01-01");
-    if (maxd == null) maxd = new DateTime("2099-12-31");    
+    if (mind == null) mind = new DateTime("1900-01-01").withTimeAtStartOfDay();
+    if (maxd == null) maxd = new DateTime("2099-12-31").withTimeAtStartOfDay();    
   }
 
   @Override
   public void reset() {
-    if (mind == null) mind = new DateTime("2099-12-31");
-    if (maxd == null) maxd = new DateTime("1900-01-01");    
+    if (mind == null) mind = new DateTime("2099-12-31").withTimeAtStartOfDay();
+    if (maxd == null) maxd = new DateTime("1900-01-01").withTimeAtStartOfDay();
   }
 
   @Override
@@ -65,8 +62,8 @@ public class DateRange extends Range {
     String value = row.getString(idx);
     DateTime dat = DateVariable.parse(value);
     if (dat != null) {
-      if (dat.compareTo(mind) < 0) mind = dat;
-      if (0 < dat.compareTo(maxd)) maxd = dat;      
+      if (dat.compareTo(mind) < 0) mind = new DateTime(dat);
+      if (0 < dat.compareTo(maxd)) maxd = new DateTime(dat);      
     }    
   }
 
@@ -75,7 +72,7 @@ public class DateRange extends Range {
     int idx = var.getIndex();
     String value = row.getString(idx);
     DateTime dat = DateVariable.parse(value);
-    if (dat != null) {      
+    if (dat != null) {
       return 0 <= dat.compareTo(mind) && dat.compareTo(maxd) <= 0;       
     }
     return false;
@@ -108,7 +105,7 @@ public class DateRange extends Range {
 
   @Override
   public ArrayList<String> getValues() {
-    values.clear();    
+    ArrayList<String> values = new ArrayList<String>();    
     values.add(DateVariable.print(mind));
     values.add(DateVariable.print(maxd));
     return values;

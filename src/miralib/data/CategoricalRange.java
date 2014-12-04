@@ -93,7 +93,7 @@ public class CategoricalRange extends Range {
   }
   
   public ArrayList<String> getValues() {
-    return catset;
+    return new ArrayList<String>(catset);
   }  
   
   public boolean inside(TableRow row) {

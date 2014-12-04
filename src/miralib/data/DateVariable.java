@@ -164,7 +164,7 @@ public class DateVariable  extends Variable {
   public static DateTime parse(String str) {
     DateTime date = null;
     try {    
-      date = fmtParse.parseDateTime(str);      
+      date = fmtParse.parseDateTime(str).withTimeAtStartOfDay();     
     } catch (Exception e) { 
 //      e.printStackTrace();
     }

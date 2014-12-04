@@ -20,12 +20,9 @@ public class NumericalRange extends Range {
   protected float minf, maxf;
   protected double mind, maxd;  
   
-  protected ArrayList<String> values;
-  
   public NumericalRange(Variable var) {
     super(var);
     this.type = var.type();
-    this.values = new ArrayList<String>();
   }
   
   public NumericalRange(NumericalRange that) {
@@ -44,7 +41,6 @@ public class NumericalRange extends Range {
       this.mind = that.mind;
       this.maxd = that.maxd;
     }
-    this.values = new ArrayList<String>();
   }
   
   public void set(double min, double max, boolean normalized) {
@@ -209,7 +205,7 @@ public class NumericalRange extends Range {
   }
   
   public ArrayList<String> getValues() {
-    values.clear();
+    ArrayList<String> values = new ArrayList<String>();
     if (type == Table.INT) {
       values.add(Variable.nfc(mini));
       values.add(Variable.nfc(maxi));
