@@ -636,6 +636,8 @@ public class DataSet {
     }
     
     Variable.setMissingString(project.missingString);
+    DateVariable.setParsePattern(project.dateParsePattern);
+    DateVariable.setPrintPattern(project.datePrintPattern);    
     allvars = new ArrayList<Variable>();  
     for (int col = 0; col < data.getColumnCount(); col++) {
       String name = data.getColumnTitle(col);      

@@ -13,7 +13,7 @@ import processing.data.Table;
 import processing.data.TableRow;
 
 /**
- * Class holding all the meta-information needed to define a varible in the 
+ * Class holding all the meta-information needed to define a variable in the 
  * dataset (name, alias, min/max range, etc.)
  *
  */

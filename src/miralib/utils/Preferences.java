@@ -18,7 +18,10 @@ public class Preferences {
   static final protected int defMissThreshold = Project.MISS_80;    
   static final protected int defDepTest = Similarity.SURROGATE_GAUSS;
   static final protected int defSurrCount = 100;
-  static final protected float defThreshold = 1E-3f;  
+  static final protected float defThreshold = 1E-3f;
+  
+  static final protected String defDateParsePattern = "yyyy-MM-dd";
+  static final protected String defDatePrintPattern = "d MMM, yyyy";
   
   public String projectFolder;
   
@@ -28,7 +31,9 @@ public class Preferences {
   public int depTest;
   public int surrCount; 
   public float threshold;
-
+  public String dateParsePattern;
+  public String datePrintPattern;  
+  
   protected Settings settings;
   
   public Preferences() throws IOException {
@@ -58,7 +63,10 @@ public class Preferences {
       depTest = Similarity.stringToAlgorithm(settings.get("correlation.algorithm", 
                 Similarity.algorithmToString(defDepTest)));
       surrCount = settings.getInteger("correlation.surrogates", defSurrCount);
-      threshold = settings.getFloat("correlation.threshold", defThreshold);      
+      threshold = settings.getFloat("correlation.threshold", defThreshold);
+      
+      dateParsePattern = settings.get("dates.parse", defDateParsePattern);
+      datePrintPattern = settings.get("dates.print", defDatePrintPattern);      
     } else {
       projectFolder = defFolder;
       pValue = defPValue;             
@@ -67,6 +75,8 @@ public class Preferences {
       depTest = defDepTest;
       surrCount = defSurrCount;
       threshold = defThreshold;
+      dateParsePattern = defDateParsePattern;
+      datePrintPattern = defDatePrintPattern;
       
       save();
     }
@@ -79,7 +89,9 @@ public class Preferences {
     settings.set("correlation.pvalue", Project.pvalueToString(pValue));
     settings.set("correlation.algorithm", Similarity.algorithmToString(depTest));
     settings.setInteger("correlation.surrogates", surrCount);
-    settings.setFloat("correlation.threshold", threshold);      
+    settings.setFloat("correlation.threshold", threshold);
+    settings.set("dates.parse", dateParsePattern);
+    settings.set("dates.print", datePrintPattern);    
     settings.save();    
   }
 }

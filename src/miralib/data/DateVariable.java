@@ -10,13 +10,13 @@ import org.joda.time.format.DateTimeFormatter;
 
 import processing.data.TableRow;
 
-public class DateVariable  extends Variable {
+public class DateVariable extends Variable {
   
   // Standard ISO8601 formatter:
   // http://en.wikipedia.org/wiki/ISO_8601
 //  protected static DateTimeFormatter fmtParse = ISODateTimeFormat.dateTime();  
   protected static DateTimeFormatter fmtParse = DateTimeFormat.forPattern("yyyy-MM-dd");  
-  protected static DateTimeFormatter fmtPrint = DateTimeFormat.forPattern("d MMM, y");
+  protected static DateTimeFormatter fmtPrint = DateTimeFormat.forPattern("d MMM, yy");
 
   // For Custom Formatters, check the user guide:
   // http://www.joda.org/joda-time/userguide.html
@@ -195,5 +195,13 @@ public class DateVariable  extends Variable {
   
   public static String print(DateTime dat) {
     return dat.toString(fmtPrint);    
-  }  
+  }
+  
+  public static void setParsePattern(String pattern) {
+    fmtParse = DateTimeFormat.forPattern(pattern);      
+  }
+  
+  public static void setPrintPattern(String pattern) {
+    fmtPrint = DateTimeFormat.forPattern(pattern);     
+  }
 }

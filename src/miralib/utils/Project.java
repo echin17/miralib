@@ -53,6 +53,9 @@ public class Project {
   public int surrCount; 
   public float threshold;
   
+  public String dateParsePattern;
+  public String datePrintPattern;  
+  
   protected File cfgFile;
   
   public Project(String filename, Preferences prefs) throws IOException {
@@ -97,7 +100,10 @@ public class Project {
       depTest = Similarity.stringToAlgorithm(settings.get("correlation.algorithm", 
                 Similarity.algorithmToString(prefs.depTest)));
       surrCount = settings.getInteger("correlation.surrogates", prefs.surrCount);
-      threshold = settings.getFloat("correlation.threshold", prefs.threshold);   
+      threshold = settings.getFloat("correlation.threshold", prefs.threshold);
+      
+      dateParsePattern = settings.get("dates.parse", prefs.dateParsePattern);
+      datePrintPattern = settings.get("dates.print", prefs.datePrintPattern);
     } else {
       // We don't have a configuration file, so trying to guess the files from  
       // the folder's contents
@@ -149,7 +155,9 @@ public class Project {
       depTest = prefs.depTest;
       surrCount = prefs.surrCount;
       threshold = prefs.threshold;
-    }    
+      dateParsePattern = prefs.dateParsePattern;
+      datePrintPattern = prefs.datePrintPattern;
+    }
   }  
   
   public Project(Project that) {
@@ -235,7 +243,11 @@ public class Project {
         settings.set("correlation.pvalue", pvalueToString(pValue));
         settings.set("correlation.algorithm", Similarity.algorithmToString(depTest));
         settings.setInteger("correlation.surrogates", surrCount);
-        settings.setFloat("correlation.threshold", threshold);        
+        settings.setFloat("correlation.threshold", threshold);   
+        
+        settings.set("dates.parse", dateParsePattern);
+        settings.set("dates.print", datePrintPattern);
+        
         settings.save();
       } catch (IOException e) {
         // TODO Auto-generated catch block
