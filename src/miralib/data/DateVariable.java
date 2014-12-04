@@ -78,6 +78,18 @@ public class DateVariable  extends Variable {
   }
 
   @Override
+  public double getValue(String str, boolean normalized) {
+    DateTime dat = parsePrint(str);    
+    if (dat == null) return -1;    
+    double value = dat.getMillis();
+    if (normalized) {
+      return range.normalize(value);              
+    } else {
+      return value;
+    }    
+  }    
+  
+  @Override
   public double getValue(TableRow row, Range sel, boolean normalized) {
     String value = row.getString(index);
     
@@ -170,6 +182,16 @@ public class DateVariable  extends Variable {
     }
     return date;    
   }
+
+  public static DateTime parsePrint(String str) {
+    DateTime date = null;
+    try {    
+      date = fmtPrint.parseDateTime(str).withTimeAtStartOfDay();     
+    } catch (Exception e) { 
+//      e.printStackTrace();
+    }
+    return date;    
+  }  
   
   public static String print(DateTime dat) {
     return dat.toString(fmtPrint);    

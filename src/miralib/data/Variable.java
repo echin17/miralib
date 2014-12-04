@@ -226,6 +226,12 @@ abstract public class Variable implements DataTree.Item {
   
   public ArrayList<String> getValues() { return range.getValues(); }
   
+  public double getValue(String str) {
+    return getValue(str, true);
+  }
+
+  abstract public double getValue(String str, boolean normalized); 
+  
   public double getValue(TableRow row, DataRanges ranges) {
     return getValue(row, ranges.get(this), true);
   }

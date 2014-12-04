@@ -113,6 +113,25 @@ public class NumericalVariable extends Variable {
     return miss;
   }
   
+  public double getValue(String str, boolean normalized) {
+    double value = 0;
+    if (type == Table.INT) {
+      value = Numbers.parseInt(str);
+    } else if (type == Table.LONG) {
+      value = Numbers.parseLong(str);
+    } else if (type == Table.FLOAT) {
+      value = Numbers.parseFloat(str);
+    } else if (type == Table.DOUBLE) {
+      value = Numbers.parseDouble(str);
+    }
+    
+    if (normalized) {
+      return range.normalize(value);        
+    } else {
+      return value;
+    }    
+  }
+  
   public double getValue(TableRow row, Range sel, boolean normalized) {
     double value = 0;
     if (type == Table.INT) {

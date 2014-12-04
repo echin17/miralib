@@ -4,7 +4,6 @@ package miralib.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import miralib.utils.Log;
 import processing.data.Table;
 import processing.data.TableRow;
@@ -87,6 +86,15 @@ public class CategoricalVariable extends Variable {
     return value == null || value.equals(missingString);
   }
 
+  public double getValue(String str, boolean normalized) {
+    int rank = range.getRank(str);
+    if (normalized) {
+      return range.normalize(rank);              
+    } else {
+      return rank;
+    }    
+  }  
+    
   public double getValue(TableRow row, Range sel, boolean normalized) {    
     String value = row.getString(index);
     if (value == null) return -1;
