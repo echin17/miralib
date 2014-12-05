@@ -126,6 +126,10 @@ public class DataSet {
     return null;
   }
   
+  public ArrayList<Variable> getVariables() {
+    return allvars;
+  }
+  
   public int getColumnCount() {
     return columns.size();    
   }

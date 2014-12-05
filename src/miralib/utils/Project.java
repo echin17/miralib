@@ -56,7 +56,7 @@ public class Project {
   public String dateParsePattern;
   public String datePrintPattern;  
   
-  protected File cfgFile;
+  public File cfgFile;
   
   public Project(String filename, Preferences prefs) throws IOException {
     File inFile = new File(filename);
