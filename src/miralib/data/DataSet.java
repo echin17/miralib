@@ -208,8 +208,13 @@ public class DataSet {
   } 
   
   public void removeColumns(ArrayList<Variable> vars) {    
+    removeColumns(vars, null);
+  }
+  
+  public void removeColumns(ArrayList<Variable> vars, Variable exvar) {    
     boolean some = false;
     for (Variable var: vars) {
+      if (var == exvar) continue;
       if (!columns.contains(var)) continue;
       some = true;
       break;
@@ -218,7 +223,7 @@ public class DataSet {
       boolean sort = sorting();
       if (sort) cancelCurrentSort();
       for (Variable var: vars) {
-        if (!columns.contains(var)) continue;
+        if (var == exvar || !columns.contains(var)) continue;
         int idx = columns.indexOf(var);      
         columns.remove(var);
         scores.remove(idx);
@@ -227,8 +232,8 @@ public class DataSet {
       }
       tree.updateColumns(); 
       if (sort) resort();
-    }
-  }
+    }    
+  }  
   
   public float getScore(Variable var) {    
     return scores.get(columns.indexOf(var));  
