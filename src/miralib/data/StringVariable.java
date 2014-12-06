@@ -39,6 +39,16 @@ public class StringVariable extends Variable {
     return true;
   }  
 
+  public Range createRange(double val0, double val1) {
+    Range range = new DummyRange(this);
+    range.set(val0, val1);
+    return range;
+  }
+
+  public double getValue(String str, boolean normalized) {
+    return 0;
+  }  
+  
   public boolean missing(TableRow row) {
     String value = row.getString(index);
     return value == null || value.equals(missingString);
