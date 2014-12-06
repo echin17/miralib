@@ -1,3 +1,5 @@
+/* COPYRIGHT (C) 2014 Fathom Information Design. All Rights Reserved. */
+
 package miralib.data;
 
 import java.util.ArrayList;
