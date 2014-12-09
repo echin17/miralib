@@ -38,7 +38,9 @@ inside that folder, it will expect to find 'core' and 'pdf'." />
 	         destdir="${project.bin}" 
 	         source="${project.target}" 
 	         target="${project.target}"
-	         classpath="${processing.dir}/core/bin:${project.lib}/*.jar" 
+	         classpath="${processing.dir}/core/bin:${project.lib}/commons-math3-3.2.jar:${project.lib}/joda-time-2.6.jar"
+	         encoding="UTF-8" 
+	         includeAntRuntime="false"
 	         includeantruntime="false">
 			<compilerarg value="-Xlint"/>	  
 	  	<include name="**/*.java" />
@@ -46,7 +48,8 @@ inside that folder, it will expect to find 'core' and 'pdf'." />
 	</target>
 			
 	<target name="makejar">
-	  <jar jarfile="${project.dist}/${project.jar.name}" basedir="${project.bin}">
+	  <jar jarfile="${project.dist}/${project.jar.name}" 
+	       basedir="${project.bin}" manifest="./manifest.txt">
         <fileset dir="bin" />
         <fileset dir="${processing.dir}/core/bin"/>	      
 	  </jar>	  
