@@ -5,6 +5,7 @@ package miralib.data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+
 import miralib.math.Numbers;
 import processing.data.TableRow;
 
@@ -50,7 +51,20 @@ public class CategoricalRange extends Range {
   }
   
   public void set(String... values) {
-    set(new ArrayList<String>(Arrays.asList(values)));    
+    if (values == null) return;
+    ArrayList<String> valarray;
+    if (values.length == 1) {
+      valarray = new ArrayList<String>();
+      String valstr = values[0];
+      String[] categories = valstr.split(";");
+      for (int i = 0; i < categories.length; i++) {
+        String[] parts = categories[i].split(":", 2);
+        valarray.add(parts[0]);        
+      }      
+    } else {
+      valarray = new ArrayList<String>(Arrays.asList(values));
+    }
+    set(valarray); 
   }
   
   public void reset() {

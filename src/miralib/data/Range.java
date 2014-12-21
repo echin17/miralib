@@ -22,6 +22,11 @@ abstract public class Range {
     this.var = another.var;
   }
   
+  public Range(Variable var, String str) {
+    this(var);
+    set(str);
+  }
+  
   public void set(double min, double max) { set(min, max, true); }
   abstract public void set(double min, double max, boolean normalized);  
   abstract public void set(ArrayList<String> values);

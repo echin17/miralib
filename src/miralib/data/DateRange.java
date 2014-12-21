@@ -45,11 +45,24 @@ public class DateRange extends Range {
 
   @Override
   public void set(String... values) {
-    if (values == null || values.length < 2) return;
-    mind = DateVariable.parse(values[0]);
-    maxd = DateVariable.parse(values[1]);
+    if (values == null) return;
+    String dat0, dat1;
+    if (values.length == 1) {      
+      String[] datarray = values[0].split(",");
+      if (datarray.length == 2) {
+        dat0 = datarray[0];
+        dat1 = datarray[1];       
+      } else {
+        dat0 = dat1 = "";
+      }      
+    } else {
+      dat0 = values[0];
+      dat1 = values[1];
+    }
+    mind = DateVariable.parse(dat0);
+    maxd = DateVariable.parse(dat1);
     if (mind == null) mind = new DateTime("1900-01-01").withTimeAtStartOfDay();
-    if (maxd == null) maxd = new DateTime("2099-12-31").withTimeAtStartOfDay();    
+    if (maxd == null) maxd = new DateTime("2099-12-31").withTimeAtStartOfDay();
   }
 
   @Override

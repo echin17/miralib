@@ -82,19 +82,32 @@ public class NumericalRange extends Range {
   }  
   
   public void set(String... values) {
-    if (values == null || values.length < 2) return;
+    if (values == null) return;
+    String val0, val1;
+    if (values.length == 1) {
+      String[] valarray = values[0].split(",");
+      if (valarray.length == 2) {
+        val0 = valarray[0];
+        val1 = valarray[1];       
+      } else {
+        val0 = val1 = "";
+      }
+    } else {
+      val0 = values[0];
+      val1 = values[1];     
+    }
     if (type == Table.INT) {
-      mini = Numbers.parseInt(values[0]);
-      maxi = Numbers.parseInt(values[1]);
+      mini = Numbers.parseInt(val0);
+      maxi = Numbers.parseInt(val1);
     } else if (type == Table.LONG) {
-      minl = Numbers.parseLong(values[0]);
-      maxl = Numbers.parseLong(values[1]);
+      minl = Numbers.parseLong(val0);
+      maxl = Numbers.parseLong(val1);
     } else if (type == Table.FLOAT) {
-      minf = Numbers.parseFloat(values[0]);
-      maxf = Numbers.parseFloat(values[1]);
+      minf = Numbers.parseFloat(val0);
+      maxf = Numbers.parseFloat(val1);
     } else if (type == Table.DOUBLE) {
-      mind = Numbers.parseDouble(values[0]);
-      maxd = Numbers.parseDouble(values[1]);
+      mind = Numbers.parseDouble(val0);
+      maxd = Numbers.parseDouble(val1);
     }
   }  
   
