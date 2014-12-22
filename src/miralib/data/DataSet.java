@@ -1030,7 +1030,6 @@ public class DataSet {
       this.order = order;
     }
     
-    @Override
     public void run() {
       // The sort task will wait for the score pool to execute all of its 
       // threads.

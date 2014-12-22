@@ -2,6 +2,8 @@
 
 package miralib.data;
 
+import java.util.ArrayList;
+
 import processing.data.Table;
 import processing.data.TableRow;
 
@@ -45,6 +47,24 @@ public class StringVariable extends Variable {
     return range;
   }
 
+  public Range createRange(double min, double max, boolean normalized) {
+    Range range = new DummyRange(this);
+    range.set(min, max, normalized);
+    return range;
+  }
+  
+  public Range createRange(ArrayList<String> values) {
+    Range range = new DummyRange(this);   
+    range.set(values);
+    return range;
+  }
+    
+  public Range createRange(String... values) {
+    Range range = new DummyRange(this);
+    range.set(values);
+    return range;
+  }    
+  
   public double getValue(String str, boolean normalized) {
     return 0;
   }  

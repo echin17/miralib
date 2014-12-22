@@ -21,7 +21,6 @@ public class DateRange extends Range {
     this.maxd = new DateTime(that.maxd).withTimeAtStartOfDay();
   }
   
-  @Override
   public void set(double min, double max, boolean normalized) {
     if (normalized) {
       long minl = Math.round(var.range.denormalize(min));
@@ -36,14 +35,12 @@ public class DateRange extends Range {
     }    
   }
 
-  @Override
   public void set(ArrayList<String> values) {
     String[] array = new String[values.size()]; 
     values.toArray(array);
     set(array);    
   }
 
-  @Override
   public void set(String... values) {
     if (values == null) return;
     String dat0, dat1;
@@ -65,13 +62,11 @@ public class DateRange extends Range {
     if (maxd == null) maxd = new DateTime("2099-12-31").withTimeAtStartOfDay();
   }
 
-  @Override
   public void reset() {
     if (mind == null) mind = new DateTime("2099-12-31").withTimeAtStartOfDay();
     if (maxd == null) maxd = new DateTime("1900-01-01").withTimeAtStartOfDay();
   }
 
-  @Override
   public void update(TableRow row) {
     int idx = var.getIndex();
     String value = row.getString(idx);
@@ -82,7 +77,6 @@ public class DateRange extends Range {
     }    
   }
 
-  @Override
   public boolean inside(TableRow row) {
     int idx = var.getIndex();
     String value = row.getString(idx);
@@ -93,32 +87,26 @@ public class DateRange extends Range {
     return false;
   }
 
-  @Override
   public double getMin() {
     return mind.getMillis();
   }
 
-  @Override
   public double getMax() {
     return maxd.getMillis();
   }
 
-  @Override
   public long getCount() {
     return Long.MAX_VALUE;
   }
 
-  @Override
   public int getRank(String value) {
     return -1;
   }
 
-  @Override
   public int getRank(String value, Range supr) {
     return -1;
   }
 
-  @Override
   public ArrayList<String> getValues() {
     ArrayList<String> values = new ArrayList<String>();    
     values.add(DateVariable.print(mind));
@@ -126,54 +114,44 @@ public class DateRange extends Range {
     return values;
   }
 
-  @Override
   public double snap(double value) {
     return constrain((long)value);
   }
 
-  @Override
   public double normalize(int value) {
     return normalizeImpl(value); 
   }
   
-  @Override
   public double normalize(long value) {
     return normalizeImpl(value); 
   }
   
-  @Override
   public double normalize(float value) {
     return normalizeImpl(value);
   }
   
-  @Override
   public double normalize(double value) {
     return normalizeImpl(value);
   }
   
-  @Override
   public double denormalize(double value) {
     double min = getMin(); 
     double max = getMax();        
     return min + value * (max - min);    
   } 
 
-  @Override
   public int constrain(int value) {
     return (int)constrainImpl(value);
   }
   
-  @Override
   public long constrain(long value) {
     return (long)constrainImpl(value);
   }
   
-  @Override
   public float constrain(float value) {
     return (float)constrainImpl(value);
   }
   
-  @Override
   public double constrain(double value) {
     return constrainImpl(value);
   }

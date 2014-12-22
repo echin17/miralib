@@ -4,6 +4,7 @@ package miralib.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import miralib.utils.Log;
 import processing.data.Table;
 import processing.data.TableRow;
@@ -59,7 +60,25 @@ public class CategoricalVariable extends Variable {
     Range range = new CategoricalRange(this);    
     range.set(val0, val1);
     return range;    
-  }  
+  }
+  
+  public Range createRange(double min, double max, boolean normalized) {
+    Range range = new CategoricalRange(this);
+    range.set(min, max, normalized);
+    return range;
+  }
+  
+  public Range createRange(ArrayList<String> values) {
+    Range range = new CategoricalRange(this);   
+    range.set(values);
+    return range;
+  }
+    
+  public Range createRange(String... values) {
+    Range range = new CategoricalRange(this);
+    range.set(values);
+    return range;
+  }
   
   public int type() {
     return Table.CATEGORY;

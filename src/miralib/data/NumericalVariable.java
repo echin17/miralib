@@ -74,7 +74,25 @@ public class NumericalVariable extends Variable {
     range.set(val0, val1);
     return range;    
   }
+  
+  public Range createRange(double min, double max, boolean normalized) {
+    Range range = new NumericalRange(this);
+    range.set(min, max, normalized);
+    return range;
+  }
+  
+  public Range createRange(ArrayList<String> values) {
+    Range range = new NumericalRange(this);   
+    range.set(values);
+    return range;
+  }
     
+  public Range createRange(String... values) {
+    Range range = new NumericalRange(this);
+    range.set(values);
+    return range;
+  }
+  
   public int type() {
     return type;
   }

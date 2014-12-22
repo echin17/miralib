@@ -30,7 +30,6 @@ public class DateVariable extends Variable {
     range = new DateRange(this);
   }
 
-  @Override
   public void initValues(String valstr) {
     String[] all = valstr.split(";");    
     if (1 < all.length) {
@@ -41,45 +40,55 @@ public class DateVariable extends Variable {
     }    
   }
 
-  @Override
   public Range createRange(double val0, double val1) {
     Range range = new DateRange(this);    
     range.set(val0, val1);
     return range;    
-  }   
+  }
   
-  @Override
+  public Range createRange(double min, double max, boolean normalized) {
+    Range range = new DateRange(this);
+    range.set(min, max, normalized);
+    return range;
+  }
+  
+  public Range createRange(ArrayList<String> values) {
+    Range range = new DateRange(this);   
+    range.set(values);
+    return range;
+  }
+    
+  public Range createRange(String... values) {
+    Range range = new DateRange(this);
+    range.set(values);
+    return range;
+  }  
+  
   public int type() {
     return MiraTable.DATE;
   }
 
-  @Override
   public boolean discrete() {
     return true;
   }
 
-  @Override
   public boolean numerical() {
     return true;
   }
 
-  @Override
   public boolean categorical() {
     return false;
   }
 
-  @Override
   public boolean string() {
     return false;
   }
 
-  @Override
   public boolean missing(TableRow row) {
     String value = row.getString(index);
     return value == null || value.equals(missingString);
   }
 
-  @Override
   public double getValue(String str, boolean normalized) {
     DateTime dat = parsePrint(str);    
     if (dat == null) return -1;    
@@ -91,7 +100,6 @@ public class DateVariable extends Variable {
     }    
   }    
   
-  @Override
   public double getValue(TableRow row, Range sel, boolean normalized) {
     String value = row.getString(index);
     
@@ -111,7 +119,6 @@ public class DateVariable extends Variable {
     }    
   }
 
-  @Override
   public String formatValue(TableRow row) {
     String value = row.getString(index);    
     DateTime date = parse(value); 
@@ -119,26 +126,22 @@ public class DateVariable extends Variable {
     return print(date);
   }
 
-  @Override
   public String formatValue(double value, boolean normalized) {    
     long millis = normalized ? Math.round(range.denormalize(value)) : (long)value;
     DateTime date = new DateTime(millis);    
     return print(date);
   }
 
-  @Override
   public String formatValue(double value, Range sel) {
     long millis = sel == null ? Math.round(range.denormalize(value)) : Math.round(sel.denormalize(value));
     DateTime date = new DateTime(millis);    
     return print(date);
   }
 
-  @Override
   public boolean valueAlias(String value) {
     return false;
   }
 
-  @Override
   public double snapValue(double value, Range sel, boolean normalized) {
     if (normalized) {
       double denorm = 0;
@@ -158,7 +161,6 @@ public class DateVariable extends Variable {
     }
   }
 
-  @Override
   public String formatRange(Range sel, boolean humanReadable) {
     ArrayList<String> values = sel == null? range.getValues() : sel.getValues();
     if (humanReadable) {
@@ -168,7 +170,6 @@ public class DateVariable extends Variable {
     } 
   }
   
-  @Override
   protected double getWeightImpl(TableRow row) {
     String msg = "Datet variable " + name + " (" + alias + ") cannot be used as a weight";
     Log.error(msg, new RuntimeException(msg));

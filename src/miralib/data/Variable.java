@@ -92,6 +92,9 @@ abstract public class Variable implements DataTree.Item {
   }
   
   abstract public Range createRange(double val0, double val1);
+  abstract public Range createRange(double min, double max, boolean normalized);  
+  abstract public Range createRange(ArrayList<String> values);
+  abstract public Range createRange(String... values);
   
   public void initRange(Table data) {
     range.reset();
