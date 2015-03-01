@@ -334,7 +334,7 @@ public class DataSet {
       int destCol = 0;
       for (Variable var: selvars) {
         int srcCol = var.getIndex();
-        String value = var.missing(src) ? project.missingString :
+        String value = var.missing(src) ? project.missString :
                                           src.getString(srcCol);
         dest.setString(destCol, value);
         destCol++;
@@ -631,11 +631,11 @@ public class DataSet {
 
       if ((new File(dictPath)).exists()) {
         // Fast (typed) loading
-        data = loadTable(dataPath, "header,dictionary=" + dictPath, project.missingString);
+        data = loadTable(dataPath, "header,dictionary=" + dictPath, project.missString);
       } else {
         // Uses the codebook, or guess types from the values, which could be 
         // potentially very slow for large tables
-        data = loadTableNoDict(dataPath, "header", project.missingString);
+        data = loadTableNoDict(dataPath, "header", project.missString);
       }
       
       if (useBinary) {
@@ -644,7 +644,7 @@ public class DataSet {
       }
     }
     
-    Variable.setMissingString(project.missingString);
+    Variable.setMissingString(project.missString);
     DateVariable.setParsePattern(project.dateParsePattern);
     DateVariable.setPrintPattern(project.datePrintPattern);    
     allvars = new ArrayList<Variable>();  

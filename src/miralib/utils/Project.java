@@ -46,8 +46,8 @@ public class Project {
   public String binFile;
   
   public int pValue;
-  public int missingThreshold;  
-  public String missingString;
+  public int missThreshold;  
+  public String missString;
   
   public int depTest;
   public int surrCount; 
@@ -91,8 +91,8 @@ public class Project {
       codeFile = settings.get("data.codebook", "");
       binFile = settings.get("data.binary", "");
 
-      missingString = settings.get("missing.string", prefs.missingString);      
-      missingThreshold = Project.stringToMissing(settings.get("missing.threshold", 
+      missString = settings.get("missing.string", prefs.missingString);      
+      missThreshold = Project.stringToMissing(settings.get("missing.threshold", 
                          Project.missingToString(prefs.missingThreshold)));
      
       pValue = Project.stringToPValue(settings.get("correlation.pvalue", 
@@ -150,8 +150,8 @@ public class Project {
       dataURL = "";
       // Using the defaults for the parameters
       pValue = prefs.pValue;
-      missingString = prefs.missingString;
-      missingThreshold = prefs.missingThreshold;
+      missString = prefs.missingString;
+      missThreshold = prefs.missingThreshold;
       depTest = prefs.depTest;
       surrCount = prefs.surrCount;
       threshold = prefs.threshold;
@@ -171,8 +171,8 @@ public class Project {
     this.codeFile = that.codeFile;
     this.binFile = that.binFile;
         
-    this.missingString = that.missingString;  
-    this.missingThreshold = that.missingThreshold;
+    this.missString = that.missString;  
+    this.missThreshold = that.missThreshold;
     
     this.pValue = that.pValue;
     this.depTest = that.depTest;
@@ -237,8 +237,8 @@ public class Project {
         settings.set("data.codebook", codeFile);      
         settings.set("data.binary", binFile);
                 
-        settings.set("missing.string", missingString);            
-        settings.set("missing.threshold", missingToString(missingThreshold));        
+        settings.set("missing.string", missString);            
+        settings.set("missing.threshold", missingToString(missThreshold));        
         
         settings.set("correlation.pvalue", pvalueToString(pValue));
         settings.set("correlation.algorithm", Similarity.algorithmToString(depTest));
@@ -340,10 +340,10 @@ public class Project {
   }  
   
   public float missingThreshold() {
-    if (missingThreshold == MISS_10) return 0.1f;
-    else if (missingThreshold == MISS_20) return 0.2f;
-    else if (missingThreshold == MISS_60) return 0.6f;
-    else if (missingThreshold == MISS_80) return 0.8f;
+    if (missThreshold == MISS_10) return 0.1f;
+    else if (missThreshold == MISS_20) return 0.2f;
+    else if (missThreshold == MISS_60) return 0.6f;
+    else if (missThreshold == MISS_80) return 0.8f;
     else return 1;    
   }  
 }
