@@ -31,6 +31,9 @@ inside that folder, it will expect to find 'core' and 'pdf'." />
 	<target name="init"> 	
 	  <delete dir="${project.bin}"/>
 	  <mkdir dir="${project.bin}"/>
+	  <copy todir="${project.dist}">
+        <fileset dir="${project.lib}"/>
+      </copy> 
 	</target>
 	
 	<target name="compile">
