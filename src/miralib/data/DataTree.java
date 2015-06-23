@@ -60,6 +60,18 @@ public class DataTree {
     initMaps();
   }
   
+  public int getGroupCount() {
+    return groups.size();
+  }
+
+  public int getTableCount() {
+    return tables.size();
+  }  
+
+  public int getVariableCount() {
+    return variables.size();
+  }    
+  
   public void addGroup(String name, int table0, int table1) {
     VariableContainer grp = new VariableContainer(name, table0, table1, GROUP_ITEM);
     groups.add(grp);
@@ -81,13 +93,25 @@ public class DataTree {
     return (VariableContainer)groups.get(i);
   }
 
+  public VariableContainer getGroup(String name) {
+    return (VariableContainer)grpmap.get(name);
+  }
+   
   public VariableContainer getTable(int i) {
     return (VariableContainer)tables.get(i);
+  }
+  
+  public VariableContainer getTable(String name) {
+    return (VariableContainer)tabmap.get(name);
   }
   
   public Variable getVariable(int i) {
     return (Variable)variables.get(i);
   }
+  
+  public Variable getVariable(String name) {
+    return (Variable)varmap.get(name);
+  }  
   
   public ArrayList<Variable> getGroupVariables(VariableContainer group) {
     ArrayList<Variable> sel = new ArrayList<Variable>();
@@ -113,6 +137,18 @@ public class DataTree {
   public void updateColumns() {
     for (Item table: tables) updateTableColumns(table);
     for (Item group: groups) updateGroupColumns(group);
+  }
+  
+  public void setColumnSelection(int sel) {
+    for (Item group: groups) group.setColumnSelection(sel);
+  }
+  
+  public void selectAllColumns() {
+    for (Item group: groups) group.selectAllColumns();
+  }
+  
+  public void deselectAllColumns() {
+    for (Item group: groups) group.deselectAllColumns();
   }
   
   protected void updateGroupColumns(Item group) {
@@ -156,7 +192,7 @@ public class DataTree {
     for (Item var: variables) {
       varmap.put(var.getName(), (Variable)var);
     }
-  }  
+  }
   
   public interface Item {
     public int getItemType();
@@ -169,5 +205,7 @@ public class DataTree {
     public void setClose();
     public int getColumnSelection();
     public void setColumnSelection(int sel);
+    public void selectAllColumns();
+    public void deselectAllColumns();
   }
 }

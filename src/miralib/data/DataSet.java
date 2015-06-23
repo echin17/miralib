@@ -20,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import processing.data.Table;
 import processing.data.TableRow;
 import processing.data.XML;
+import miralib.data.DataTree.Item;
 import miralib.math.Numbers;
 import miralib.shannon.Similarity;
 import miralib.utils.Fileu;
@@ -103,6 +104,22 @@ public class DataSet {
   
   public int getVariableCount() {
     return tree.variables.size();
+  }
+  
+  public VariableContainer getGroup(int i) {
+    return (VariableContainer)tree.groups.get(i);
+  }
+
+  public VariableContainer getGroup(String name) {
+    return (VariableContainer)tree.grpmap.get(name);
+  }
+   
+  public VariableContainer getTable(int i) {
+    return (VariableContainer)tree.tables.get(i);
+  }
+  
+  public VariableContainer getTable(String name) {
+    return (VariableContainer)tree.tabmap.get(name);
   }  
   
   public Variable getVariable(int i) {
@@ -130,6 +147,18 @@ public class DataSet {
     return allvars;
   }
   
+  public void setColumnSelection(int sel) {
+    for (Item group: tree.groups) group.setColumnSelection(sel);
+  }
+  
+  public void selectAllColumns() {
+    for (Item group: tree.groups) group.selectAllColumns();
+  }
+  
+  public void deselectAllColumns() {
+    for (Item group: tree.groups) group.deselectAllColumns();
+  }  
+  
   public int getColumnCount() {
     return columns.size();    
   }
@@ -145,6 +174,43 @@ public class DataSet {
   public ArrayList<Variable> getColumns() {
     return columns;
   }    
+  
+  public void updateColumnSelection() { 
+    ArrayList<Variable> allvars = new ArrayList<Variable>();
+    for (int i = 0; i < tree.groups.size(); i++) {
+      VariableContainer group = (VariableContainer)tree.groups.get(i);
+      ArrayList<Variable> gvars = getVariables(group);
+      if (group.getColumnSelection() == DataTree.ALL) {        
+        allvars.addAll(gvars);
+      } else if (group.getColumnSelection() == DataTree.SOME) {
+        for (int j = group.getFirstChild(); j <= group.getLastChild(); j++) {
+          VariableContainer table = (VariableContainer)tree.tables.get(j);
+          ArrayList<Variable> tvars = getVariables(table);
+          if (table.getColumnSelection() == DataTree.ALL) {            
+            allvars.addAll(tvars);
+          } else if (table.getColumnSelection() == DataTree.SOME) {
+            for (int k = table.getFirstChild(); k <= table.getLastChild(); k++) {
+              Variable var = (Variable)tree.variables.get(k);
+              if (var.column) allvars.add(var);
+            }
+          } else {
+            // Nothing selected inside this table
+            for (Variable var: tvars) var.column = false;            
+          }
+        }        
+      } else {
+        // Nothing selected inside this group
+        for (Variable var: gvars) var.column = false;
+      }
+    }
+    
+    boolean sorted = sortVar != null;
+    if (sorting()) cancelCurrentSort();    
+    columns.clear();    
+    scores.clear();
+    addColumns(allvars, false); // Because the column selection comes from the tree, no need to update it.   
+    if (sorted) resort();
+  }
   
   public int addColumn(Variable var) {
     if (!var.include) return -1;
@@ -172,6 +238,10 @@ public class DataSet {
   }
 
   public void addColumns(ArrayList<Variable> vars) {
+    addColumns(vars, true);
+  }
+  
+  public void addColumns(ArrayList<Variable> vars, boolean updateTree) {
     boolean some = false;
     boolean sorted = sortVar != null;
     for (Variable var: vars) {
@@ -194,7 +264,7 @@ public class DataSet {
     }
     if (some) {
       if (sorted) resort();   
-      tree.updateColumns();
+      if (updateTree) tree.updateColumns();
     }
   }
   

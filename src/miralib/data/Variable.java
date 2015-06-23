@@ -168,7 +168,17 @@ abstract public class Variable implements DataTree.Item {
     return column ? DataTree.ALL : DataTree.NONE;
   }
   
-  public void setColumnSelection(int sel) { }
+  public void setColumnSelection(int sel) { 
+    column = sel == DataTree.NONE ? false : true;
+  }
+  
+  public void selectAllColumns() {
+    column = true; 
+  }
+  
+  public void deselectAllColumns() {
+    column = false;
+  }  
   
   public int getIndex() {
     return index;
