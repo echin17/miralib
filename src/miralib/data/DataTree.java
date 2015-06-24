@@ -139,18 +139,6 @@ public class DataTree {
     for (Item group: groups) updateGroupColumns(group);
   }
   
-  public void setColumnSelection(int sel) {
-    for (Item group: groups) group.setColumnSelection(sel);
-  }
-  
-  public void selectAllColumns() {
-    for (Item group: groups) group.selectAllColumns();
-  }
-  
-  public void deselectAllColumns() {
-    for (Item group: groups) group.deselectAllColumns();
-  }
-  
   protected void updateGroupColumns(Item group) {
     boolean all = true;
     boolean some = false;    
@@ -205,7 +193,5 @@ public class DataTree {
     public void setClose();
     public int getColumnSelection();
     public void setColumnSelection(int sel);
-    public void selectAllColumns();
-    public void deselectAllColumns();
   }
 }

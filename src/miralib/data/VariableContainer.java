@@ -57,12 +57,4 @@ public class VariableContainer implements DataTree.Item {
   public void setColumnSelection(int sel) { 
     colsel = sel;
   }
-  
-  public void selectAllColumns() {
-    colsel = DataTree.ALL; 
-  }
-  
-  public void deselectAllColumns() {
-    colsel = DataTree.NONE;
-  }
 }
