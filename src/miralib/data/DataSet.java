@@ -129,6 +129,14 @@ public class DataSet {
   public Variable getVariable(String name) {
     return tree.varmap.get(name);
   }
+  
+  public Variable getVariableByAlias(String alias) {
+    for (int i = 0; i < getVariableCount(); i++) {
+      Variable var = getVariable(i);
+      if (var.getAlias().equals(alias)) return var;
+    }
+    return null;    
+  }  
 
   public int getVariableIndex(Variable var) {
     return tree.variables.indexOf(var); 
