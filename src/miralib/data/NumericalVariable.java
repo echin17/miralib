@@ -71,7 +71,7 @@ public class NumericalVariable extends Variable {
   
   public Range createRange(double val0, double val1) {
     Range range = new NumericalRange(this);    
-    range.set(val0, val1);
+    range.set(val0, val1, false);
     return range;    
   }
   

@@ -42,7 +42,7 @@ public class DateVariable extends Variable {
 
   public Range createRange(double val0, double val1) {
     Range range = new DateRange(this);    
-    range.set(val0, val1);
+    range.set(val0, val1, false);
     return range;    
   }
   
