@@ -21,8 +21,7 @@ public class Similarity {
   final static public int NO_TEST           = 0;
   final static public int SURROGATE_GAUSS   = 1;
   final static public int SURROGATE_GENERAL = 2;
-  final static public int NORMAL_TRANSFORM  = 3;
-  final static public int GAMMA_TEST        = 4;
+  final static public int GAMMA_TEST        = 3;
   
   protected static NormalDistribution normDist = new NormalDistribution();
   protected static HashMap<Double, Double> criticalValues = new HashMap<Double, Double>();
@@ -45,16 +44,9 @@ public class Similarity {
     } 
     
     int count = slice.values.size();
-//    DataSlice1D slicex = slice.getSliceX();
-//    DataSlice1D slicey = slice.getSliceY();
-    
     int[] res = BinOptimizer.calculate(slice);
     int binx = res[0];
     int biny = res[1]; 
-    
-//    float hx = MarginalEntropy.calculate(slicex, binx);
-//    float hy = MarginalEntropy.calculate(slicey, biny);
-//    float hxy = JointEntropy.calculate(slice, binx, biny);
     
     float ixy = MutualInformation.calculate(slice, binx, biny);
     boolean indep = false;
@@ -67,8 +59,6 @@ public class Similarity {
       indep = surrogateGauss(slice, ixy, prefs.surrCount, cval);            
     } else if (prefs.depTest == SURROGATE_GENERAL) {      
       indep = surrogateGeneral(slice, ixy, pvalue);
-    } else if (prefs.depTest == NORMAL_TRANSFORM) {
-      indep = normalTransform(slice, count, binx, biny, cval); // TODO: Doesn't work, figure out what the problem is or remove...
     } else if (prefs.depTest == GAMMA_TEST) {
       indep = gammaTest(ixy, binx, biny, count, pvalue);
     }
@@ -135,25 +125,6 @@ public class Similarity {
     return ixy < maxMI;    
   }
   
-  static protected boolean normalTransform(DataSlice2D slice, int count, int binx, int biny, double cvalue) {
-    DataSlice2D uslice = slice.uniformize(binx, biny);      
-    int B = binx * biny;    
-    int N = count;      
-    
-    // I think this is correct because the argument in the paper assumes separate bins for X and Y
-    // and then it simply takes B = b^2
-    float H = JointEntropy.calculate(uslice, binx, biny); // uses the binning that comes from separate 1D binnings    
-    
-    //System.out.println(" ---------------> " + binxy + " " + binx * biny);
-    
-    // Normally distributed statistic for independency test.
-    double Q = Math.log(B/Math.exp(H)) / (B - 1);
-    
-    double zh = Math.sqrt(B/2.0f) * (2 * N * Q - 1);    
-    
-    return -cvalue <= zh && zh <= cvalue;    
-  }
-  
   static protected boolean gammaTest(float ixy, int binx, int biny, int count, float pvalue) {
     double shapePar = (binx - 1) * (biny - 1) / 2d;
     double scalePar = 1.0d / count;
@@ -173,8 +144,6 @@ public class Similarity {
       return "SURROGATE_GAUSS";
     } else if (algo == SURROGATE_GENERAL) {
       return "SURROGATE_GENERAL";
-    } else if (algo == NORMAL_TRANSFORM) {
-      return "NORMAL_TRANSFORM";
     } else if (algo == GAMMA_TEST) {
       return "GAMMA_TEST";
     }
@@ -191,8 +160,6 @@ public class Similarity {
       return SURROGATE_GAUSS;
     } else if (name.equals("SURROGATE_GENERAL")) {
       return SURROGATE_GENERAL;
-    } else if (name.equals("NORMAL_TRANSFORM")) {
-      return NORMAL_TRANSFORM;
     } else if (name.equals("GAMMA_TEST")) {
       return GAMMA_TEST;
     } 

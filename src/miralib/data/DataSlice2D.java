@@ -8,7 +8,6 @@ import java.util.Collections;
 import processing.data.Table;
 import processing.data.TableRow;
 import miralib.math.Numbers;
-import miralib.shannon.BinOptimizer;
 
 /**
  * 2-dimensional data slice, i.e.: all the (normalized) data value pairs for two 
@@ -69,55 +68,6 @@ public class DataSlice2D {
     shuffled.county = county;
     shuffled.missing = missing;
     return shuffled;  
-  }
-  
-  public DataSlice2D uniformize(int binx, int biny) {
-    ArrayList<Value1D> valuesx = new ArrayList<Value1D>();
-    ArrayList<Value1D> valuesy = new ArrayList<Value1D>();    
-    for (Value2D val: values) {
-      valuesx.add(new Value1D(val.x, val.w));
-      valuesy.add(new Value1D(val.y, val.w));
-    }    
-    float[] ubinsx = BinOptimizer.uniformBins1D(valuesx, binx);
-    float[] ubinsy = BinOptimizer.uniformBins1D(valuesy, biny);
-    
-    DataSlice2D uniform = new DataSlice2D(varx, vary, ranges);
-    for (Value2D value: values) {
-      double ux = BinOptimizer.uniformTransform1D(value.x, ubinsx);
-      double uy = BinOptimizer.uniformTransform1D(value.y, ubinsy);
-      uniform.add(ux, uy, value.w); 
-    }    
-    
-    // Testing "uniformization"
-//  int[] countsx = Histogram.hist1D(valuesx, binx);
-//  int[] countsy = Histogram.hist1D(valuesy, biny);
-//  int[] ucountsx = Histogram.hist1D(uvaluesx, binx);
-//  int[] ucountsy = Histogram.hist1D(uvaluesy, biny);      
-//  print(" countsx: ");
-//  for (int i = 0; i < countsx.length; i++) {
-//    System.out.print(countsx[i] + " ");
-//  }
-//  println("");
-//  print("ucountsx: ");
-//  for (int i = 0; i < ucountsx.length; i++) {
-//    System.out.print(ucountsx[i] + " ");
-//  }
-//  println("");      
-//  print(" countsy: ");
-//  for (int i = 0; i < countsy.length; i++) {
-//    System.out.print(countsy[i] + " ");
-//  }            
-//  println("");
-//  print("ucountsy: ");
-//  for (int i = 0; i < ucountsy.length; i++) {
-//    System.out.print(ucountsy[i] + " ");
-//  }            
-//  println("");    
-
-    uniform.countx = countx;
-    uniform.county = county;
-    uniform.missing = missing;    
-    return uniform;
   }
   
   public void dispose() {
