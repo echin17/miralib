@@ -4,6 +4,7 @@ package miralib.shannon;
 
 import miralib.data.DataSlice2D;
 import miralib.data.Value2D;
+import miralib.utils.Project;
 
 /**
  * Calculation of the mutual information of a 2D slice.
@@ -12,8 +13,8 @@ import miralib.data.Value2D;
 
 
 public class MutualInformation {
-  static public float calculate(DataSlice2D slice) {
-    int[] nbins = BinOptimizer.calculate(slice);
+  static public float calculate(DataSlice2D slice, Project prefs) {
+    int[] nbins = BinOptimizer.calculate(slice, prefs.binAlgo);
     return calculate(slice, nbins[0], nbins[1]);    
   }
   
@@ -73,7 +74,7 @@ public class MutualInformation {
         double ibin = 0; 
         if (0 < pxy && 0 < px && 0 < py) {
           nonzero++;
-          ibin = pxy * (Math.log(pxy) - Math.log(px * py));
+          ibin = pxy * (Math.log(pxy / (px * py)));
         }
 
         information += ibin;

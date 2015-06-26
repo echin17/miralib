@@ -9,7 +9,9 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import miralib.shannon.Similarity;
+
+import miralib.shannon.BinOptimizer;
+import miralib.shannon.DependencyTest;
 
 /**
  * Mirador project information.
@@ -49,6 +51,7 @@ public class Project {
   public int missThreshold;  
   public String missString;
   
+  public int binAlgo;
   public int depTest;
   public int surrCount; 
   public float threshold;
@@ -95,10 +98,13 @@ public class Project {
       missThreshold = Project.stringToMissing(settings.get("missing.threshold", 
                          Project.missingToString(prefs.missingThreshold)));
      
+      binAlgo = BinOptimizer.stringToAlgorithm(settings.get("binning.algorithm", 
+                BinOptimizer.algorithmToString(prefs.binAlgo)));
+      
       pValue = Project.stringToPValue(settings.get("correlation.pvalue", 
-               Project.pvalueToString(prefs.pValue)));      
-      depTest = Similarity.stringToAlgorithm(settings.get("correlation.algorithm", 
-                Similarity.algorithmToString(prefs.depTest)));
+               Project.pvalueToString(prefs.pValue))); 
+      depTest = DependencyTest.stringToAlgorithm(settings.get("correlation.algorithm", 
+                DependencyTest.algorithmToString(prefs.depTest)));
       surrCount = settings.getInteger("correlation.surrogates", prefs.surrCount);
       threshold = settings.getFloat("correlation.threshold", prefs.threshold);
       
@@ -152,6 +158,7 @@ public class Project {
       pValue = prefs.pValue;
       missString = prefs.missingString;
       missThreshold = prefs.missingThreshold;
+      binAlgo = prefs.binAlgo;
       depTest = prefs.depTest;
       surrCount = prefs.surrCount;
       threshold = prefs.threshold;
@@ -175,6 +182,7 @@ public class Project {
     this.missThreshold = that.missThreshold;
     
     this.pValue = that.pValue;
+    this.binAlgo = that.binAlgo;
     this.depTest = that.depTest;
     this.surrCount = that.surrCount; 
     this.threshold = that.threshold;
@@ -240,8 +248,10 @@ public class Project {
         settings.set("missing.string", missString);            
         settings.set("missing.threshold", missingToString(missThreshold));        
         
+        settings.set("binning.algorithm", BinOptimizer.algorithmToString(binAlgo));
+        
         settings.set("correlation.pvalue", pvalueToString(pValue));
-        settings.set("correlation.algorithm", Similarity.algorithmToString(depTest));
+        settings.set("correlation.algorithm", DependencyTest.algorithmToString(depTest));
         settings.setInteger("correlation.surrogates", surrCount);
         settings.setFloat("correlation.threshold", threshold);   
         

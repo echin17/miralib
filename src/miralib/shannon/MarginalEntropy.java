@@ -5,6 +5,7 @@ package miralib.shannon;
 import miralib.data.DataSlice1D;
 import miralib.data.Value1D;
 import miralib.math.Numbers;
+import miralib.utils.Project;
 
 /**
  * Calculation of the marginal entropy of a 1D slice.
@@ -12,8 +13,8 @@ import miralib.math.Numbers;
  */
 
 public class MarginalEntropy {
-  static public float calculate(DataSlice1D slice) {
-    int nbin = BinOptimizer.calculate(slice);
+  static public float calculate(DataSlice1D slice, Project prefs) {
+    int nbin = BinOptimizer.calculate(slice, prefs.binAlgo);
     return calculate(slice, nbin);
   }
   

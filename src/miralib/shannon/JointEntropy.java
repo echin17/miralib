@@ -5,6 +5,7 @@ package miralib.shannon;
 import miralib.data.DataSlice2D;
 import miralib.data.Value2D;
 import miralib.math.Numbers;
+import miralib.utils.Project;
 
 /**
  * Calculation of the joint entropy of a 2D slice.
@@ -12,8 +13,8 @@ import miralib.math.Numbers;
  */
 
 public class JointEntropy {
-  static public float calculate(DataSlice2D slice) {
-    int[] nbins = BinOptimizer.calculate(slice);
+  static public float calculate(DataSlice2D slice, Project prefs) {
+    int[] nbins = BinOptimizer.calculate(slice, prefs.binAlgo);
     return calculate(slice, nbins[0], nbins[1]);
   }
   

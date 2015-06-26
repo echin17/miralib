@@ -5,7 +5,8 @@ package miralib.utils;
 import java.io.File;
 import java.io.IOException;
 
-import miralib.shannon.Similarity;
+import miralib.shannon.BinOptimizer;
+import miralib.shannon.DependencyTest;
 
 /**
  * Mirador preferences, that are used when no project file is provided.
@@ -15,8 +16,9 @@ import miralib.shannon.Similarity;
 public class Preferences {
   static final protected int defPValue = Project.P0_05;
   static final protected String defMissingString = "?";
-  static final protected int defMissThreshold = Project.MISS_80;    
-  static final protected int defDepTest = Similarity.SURROGATE_GAUSS;
+  static final protected int defMissThreshold = Project.MISS_80;
+  static final protected int defBinAlgo = BinOptimizer.CROSSVAL;
+  static final protected int defDepTest = DependencyTest.SURROGATE_GAUSS;
   static final protected int defSurrCount = 100;
   static final protected float defThreshold = 1E-3f;
   
@@ -27,7 +29,8 @@ public class Preferences {
   
   public int pValue;
   public String missingString; 
-  public int missingThreshold;   
+  public int missingThreshold;
+  public int binAlgo;
   public int depTest;
   public int surrCount; 
   public float threshold;
@@ -57,11 +60,14 @@ public class Preferences {
       missingString = settings.get("missing.string", defMissingString);
       missingThreshold = Project.stringToMissing(settings.get("missing.threshold", 
                          Project.missingToString(defMissThreshold)));
+
+      binAlgo = BinOptimizer.stringToAlgorithm(settings.get("binning.algorithm", 
+                BinOptimizer.algorithmToString(defBinAlgo)));
       
       pValue = Project.stringToPValue(settings.get("correlation.pvalue", 
                Project.pvalueToString(defPValue)));
-      depTest = Similarity.stringToAlgorithm(settings.get("correlation.algorithm", 
-                Similarity.algorithmToString(defDepTest)));
+      depTest = DependencyTest.stringToAlgorithm(settings.get("correlation.algorithm", 
+                DependencyTest.algorithmToString(defDepTest)));
       surrCount = settings.getInteger("correlation.surrogates", defSurrCount);
       threshold = settings.getFloat("correlation.threshold", defThreshold);
       
@@ -72,6 +78,7 @@ public class Preferences {
       pValue = defPValue;             
       missingString = defMissingString;
       missingThreshold = defMissThreshold;
+      binAlgo = defBinAlgo;
       depTest = defDepTest;
       surrCount = defSurrCount;
       threshold = defThreshold;
@@ -85,9 +92,10 @@ public class Preferences {
   public void save() {
     settings.set("data.folder", projectFolder);
     settings.set("missing.string", missingString);
-    settings.set("missing.threshold", Project.missingToString(missingThreshold));      
+    settings.set("missing.threshold", Project.missingToString(missingThreshold));    
+    settings.set("binning.algorithm", BinOptimizer.algorithmToString(binAlgo));    
     settings.set("correlation.pvalue", Project.pvalueToString(pValue));
-    settings.set("correlation.algorithm", Similarity.algorithmToString(depTest));
+    settings.set("correlation.algorithm", DependencyTest.algorithmToString(depTest));
     settings.setInteger("correlation.surrogates", surrCount);
     settings.setFloat("correlation.threshold", threshold);
     settings.set("dates.parse", dateParsePattern);

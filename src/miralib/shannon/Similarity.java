@@ -8,7 +8,6 @@ import java.util.HashMap;
 import miralib.data.DataSlice2D;
 import miralib.data.Variable;
 import miralib.math.Numbers;
-import miralib.utils.Log;
 import miralib.utils.Project;
 
 /**
@@ -17,12 +16,6 @@ import miralib.utils.Project;
  */
 
 public class Similarity {
-  // List of accepted dependency-testing algorithms
-  final static public int NO_TEST           = 0;
-  final static public int SURROGATE_GAUSS   = 1;
-  final static public int SURROGATE_GENERAL = 2;
-  final static public int GAMMA_TEST        = 3;
-  
   protected static NormalDistribution normDist = new NormalDistribution();
   protected static HashMap<Double, Double> criticalValues = new HashMap<Double, Double>();
   
@@ -44,22 +37,22 @@ public class Similarity {
     } 
     
     int count = slice.values.size();
-    int[] res = BinOptimizer.calculate(slice);
+    int[] res = BinOptimizer.calculate(slice, prefs.binAlgo);
     int binx = res[0];
-    int biny = res[1]; 
+    int biny = res[1];
     
     float ixy = MutualInformation.calculate(slice, binx, biny);
     boolean indep = false;
             
     if (Float.isNaN(ixy) || Float.isInfinite(ixy)) {
       indep = true;
-    } else if (prefs.depTest == NO_TEST || Numbers.equal(pvalue, 1)) {
+    } else if (prefs.depTest == DependencyTest.NO_TEST || Numbers.equal(pvalue, 1)) {
       indep = ixy <= prefs.threshold;
-    } else if (prefs.depTest == SURROGATE_GAUSS) {
-      indep = surrogateGauss(slice, ixy, prefs.surrCount, cval);            
-    } else if (prefs.depTest == SURROGATE_GENERAL) {      
-      indep = surrogateGeneral(slice, ixy, pvalue);
-    } else if (prefs.depTest == GAMMA_TEST) {
+    } else if (prefs.depTest == DependencyTest.SURROGATE_GAUSS) {
+      indep = surrogateGauss(slice, ixy, prefs.binAlgo, prefs.surrCount, cval);            
+    } else if (prefs.depTest == DependencyTest.SURROGATE_GENERAL) {      
+      indep = surrogateGeneral(slice, ixy, prefs.binAlgo, pvalue);
+    } else if (prefs.depTest == DependencyTest.GAMMA_TEST) {
       indep = gammaTest(ixy, binx, biny, count, pvalue);
     }
     
@@ -78,8 +71,8 @@ public class Similarity {
     }
   }  
   
-  static protected boolean surrogateGauss(DataSlice2D slice, float ixy, 
-                                          int scount, double cvalue) {
+  static protected boolean surrogateGauss(DataSlice2D slice, float ixy,
+                                          int binAlgo, int scount, double cvalue) {
     int sbinx = 0;
     int sbiny = 0;         
     float meani = 0;
@@ -88,7 +81,7 @@ public class Similarity {
     for (int i = 0; i < scount; i++) {
       DataSlice2D surrogate = slice.shuffle();          
       if (i == 0) {
-        int[] sres = BinOptimizer.calculate(surrogate);
+        int[] sres = BinOptimizer.calculate(surrogate, binAlgo);
         sbinx = sres[0];
         sbiny = sres[1];
       }
@@ -98,7 +91,7 @@ public class Similarity {
     }
     meani /= scount;
     meaniSq /= scount;
-    stdi = (float)Math.sqrt(Math.max(0, meaniSq - meani * meani));  // TODO: fix, biased estimate!!      
+    stdi = (float)Math.sqrt(Math.max(0, meaniSq - meani * meani));      
     float zs = (ixy - meani) / stdi;
     if (Float.isNaN(zs) || Float.isInfinite(zs)) {
       return true;
@@ -108,7 +101,7 @@ public class Similarity {
   }
   
   static protected boolean surrogateGeneral(DataSlice2D slice, float ixy, 
-                                            float pvalue) {
+                                            int binAlgo, float pvalue) {
     int sbinx = 0;
     int sbiny = 0;  
     float maxMI = 0;
@@ -116,7 +109,7 @@ public class Similarity {
     for (int i = 0; i < numSurr; i++) {          
       DataSlice2D surrogate = slice.shuffle();
       if (i == 0) {
-        int[] sres = BinOptimizer.calculate(surrogate);
+        int[] sres = BinOptimizer.calculate(surrogate, binAlgo);
         sbinx = sres[0];
         sbiny = sres[1];
       }
@@ -127,44 +120,13 @@ public class Similarity {
   
   static protected boolean gammaTest(float ixy, int binx, int biny, int count, float pvalue) {
     double shapePar = (binx - 1) * (biny - 1) / 2d;
-    double scalePar = 1.0d / count;
-    try {
+    double scalePar = 1d / count;
+    try { 
       GammaDistribution gammaDist = new GammaDistribution(shapePar, scalePar);
       double c = gammaDist.inverseCumulativeProbability(1 - pvalue);            
       return ixy <= c;
     } catch (Exception ex) {
       return true;
     }    
-  }
-  
-  static public String algorithmToString(int algo) {
-    if (algo == NO_TEST) {        
-      return "NO_TEST";
-    } else if (algo == SURROGATE_GAUSS) {
-      return "SURROGATE_GAUSS";
-    } else if (algo == SURROGATE_GENERAL) {
-      return "SURROGATE_GENERAL";
-    } else if (algo == GAMMA_TEST) {
-      return "GAMMA_TEST";
-    }
-    String err = "Unsupported similarity algorithm: " + algo;
-    Log.error(err, new RuntimeException(err));
-    return "unsupported";    
-  }
-  
-  static public int stringToAlgorithm(String name) {
-    name = name.toUpperCase();
-    if (name.equals("NO_TEST")) {
-      return NO_TEST;
-    } else if (name.equals("SURROGATE_GAUSS")) {
-      return SURROGATE_GAUSS;
-    } else if (name.equals("SURROGATE_GENERAL")) {
-      return SURROGATE_GENERAL;
-    } else if (name.equals("GAMMA_TEST")) {
-      return GAMMA_TEST;
-    } 
-    String err = "Unsupported similarity algorithm: " + name;
-    Log.error(err, new RuntimeException(err));
-    return -1;
   }
 }

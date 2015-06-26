@@ -9,6 +9,7 @@ import java.util.Arrays;
 import miralib.math.Numbers;
 import miralib.shannon.BinOptimizer;
 import miralib.utils.Log;
+import miralib.utils.Project;
 import processing.data.Table;
 import processing.data.TableRow;
 
@@ -106,9 +107,9 @@ abstract public class Variable implements DataTree.Item {
     }
   }
   
-  public int getScaling(DataSlice1D slice) {
+  public int getScaling(DataSlice1D slice, Project prefs) {
     int scaling = LINEAR;
-    int bcount = BinOptimizer.calculate(slice);
+    int bcount = BinOptimizer.calculate(slice, prefs.binAlgo);
     if (bcount <= 0) return UNDEFINED;
     
     float bsize = 1.0f / bcount;

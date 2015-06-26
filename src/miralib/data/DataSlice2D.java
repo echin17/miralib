@@ -99,6 +99,36 @@ public class DataSlice2D {
     }
   }
   
+  public double[] getMeanStdX() {
+    double mean = 0;
+    double meanSq = 0;
+    double std = 0; 
+    for (Value2D val: values) { 
+      double x = val.x * val.w;
+      mean += x;
+      meanSq += x * x;
+    }
+    mean /= values.size();
+    meanSq /= values.size();
+    std = Math.sqrt(Math.max(0, meanSq - mean * mean));
+    return new double[] {mean, std};
+  }
+  
+  public double[] getMeanStdY() {
+    double mean = 0;
+    double meanSq = 0;
+    double std = 0; 
+    for (Value2D val: values) { 
+      double y = val.y * val.w;
+      mean += y;
+      meanSq += y * y;
+    }
+    mean /= values.size();
+    meanSq /= values.size();
+    std = Math.sqrt(Math.max(0, meanSq - mean * mean));
+    return new double[] {mean, std};
+  }    
+  
   public DataSlice1D getSliceX() {
     DataSlice1D slice = new DataSlice1D(varx, ranges);
     for (Value2D val: values) {

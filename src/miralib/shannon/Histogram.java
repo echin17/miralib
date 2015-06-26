@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import miralib.data.DataSlice2D;
 import miralib.data.Value2D;
 import miralib.math.Numbers;
+import miralib.utils.Project;
 
 public class Histogram {
-  static public ArrayList<ArrayList<Double>> calculate(DataSlice2D slice) {
-    int[] nbins = BinOptimizer.calculate(slice);
+  static public ArrayList<ArrayList<Double>> calculate(DataSlice2D slice, Project prefs) {
+    int[] nbins = BinOptimizer.calculate(slice, prefs.binAlgo);
     return calculate(slice, nbins[0], nbins[1]);
   }
   
