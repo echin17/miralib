@@ -587,11 +587,11 @@ public class DataSet {
           DataSlice2D slice = getSlice(vx, sortVar, sortRanges);
           float score = 0f;
           if (slice.missing < sortMissingThreshold) {
-//            score = Similarity.calculate(slice, sortPValue, project);
-            float[] res = PValue.calculate(slice, project);
-            score = -(float)Math.log10(res[1]);
-            if (Float.isInfinite(score)) score = 0;
-            System.out.println(slice.varx.getAlias() + " " + slice.vary.getAlias() + " = " + score);       
+            score = Similarity.calculate(slice, sortPValue, project);
+//            float[] res = PValue.calculate(slice, project);
+//            score = -(float)Math.log10(res[1]);
+//            if (Float.isInfinite(score)) score = 0;
+//            System.out.println(slice.varx.getAlias() + " " + slice.vary.getAlias() + " = " + score);       
           }
           scores.set(col, score);
         }
