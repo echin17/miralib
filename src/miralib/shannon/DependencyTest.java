@@ -10,7 +10,8 @@ public class DependencyTest {
   final static public int GAMMA_TEST        = 3;
   
   static public String algorithmToString(int algo) {
-    if (algo == NO_TEST) {        
+//    return "GAMMA_TEST";
+    if (algo == NO_TEST) {
       return "NO_TEST";
     } else if (algo == SURROGATE_GAUSS) {
       return "SURROGATE_GAUSS";
@@ -25,6 +26,7 @@ public class DependencyTest {
   }
   
   static public int stringToAlgorithm(String name) {
+//    return GAMMA_TEST;
     name = name.toUpperCase();
     if (name.equals("NO_TEST")) {
       return NO_TEST;

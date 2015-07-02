@@ -21,6 +21,7 @@ import processing.data.Table;
 import processing.data.TableRow;
 import processing.data.XML;
 import miralib.math.Numbers;
+import miralib.shannon.PValue;
 import miralib.shannon.Similarity;
 import miralib.utils.Fileu;
 import miralib.utils.Log;
@@ -586,7 +587,11 @@ public class DataSet {
           DataSlice2D slice = getSlice(vx, sortVar, sortRanges);
           float score = 0f;
           if (slice.missing < sortMissingThreshold) {
-            score = Similarity.calculate(slice, sortPValue, project);            
+//            score = Similarity.calculate(slice, sortPValue, project);
+            float[] res = PValue.calculate(slice, project);
+            score = -(float)Math.log10(res[1]);
+            if (Float.isInfinite(score)) score = 0;
+            System.out.println(slice.varx.getAlias() + " " + slice.vary.getAlias() + " = " + score);       
           }
           scores.set(col, score);
         }
@@ -1163,12 +1168,14 @@ public class DataSet {
       } else {
         float score = scores.get(col);
         if (0 <= score) return score;  
-        
-        
         Variable vx = columns.get(col);
         DataSlice2D slice = getSlice(vx, sortVar, sortRanges);        
         if (slice.missing < sortMissingThreshold) {
           score = Similarity.calculate(slice, sortPValue, project);
+//          float[] res = PValue.calculate(slice, project);
+//          score = -(float)Math.log10(res[1]);
+//          if (Float.isInfinite(score)) score = 0;
+//          System.out.println(slice.varx.getAlias() + " " + slice.vary.getAlias() + " = " + score);
         } else {
           score = 0f;  
         }
