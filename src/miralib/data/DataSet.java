@@ -587,9 +587,9 @@ public class DataSet {
           DataSlice2D slice = getSlice(vx, sortVar, sortRanges);
           float score = 0f;
           if (slice.missing < sortMissingThreshold) {
-            if (project.sorting == Project.SIMILARITY) {
+            if (project.sortMethod == Project.SIMILARITY) {
               score = Similarity.calculate(slice, sortPValue, project);
-            } else if (project.sorting == Project.PVALUE) { 
+            } else if (project.sortMethod == Project.PVALUE) { 
               float[] res = PValue.calculate(slice, project);
               score = -(float)Math.log10(res[1]);
               if (Float.isInfinite(score)) score = 0;
@@ -1174,9 +1174,9 @@ public class DataSet {
         Variable vx = columns.get(col);
         DataSlice2D slice = getSlice(vx, sortVar, sortRanges);        
         if (slice.missing < sortMissingThreshold) {
-          if (project.sorting == Project.SIMILARITY) {
+          if (project.sortMethod == Project.SIMILARITY) {
             score = Similarity.calculate(slice, sortPValue, project);
-          } else if (project.sorting == Project.PVALUE) { 
+          } else if (project.sortMethod == Project.PVALUE) { 
             float[] res = PValue.calculate(slice, project);
             score = -(float)Math.log10(res[1]);
             if (Float.isInfinite(score)) score = 0;

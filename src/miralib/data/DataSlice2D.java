@@ -155,7 +155,7 @@ public class DataSlice2D {
   }  
   
   public ContingencyTable getContingencyTable(Project prefs) {
-    return new ContingencyTable(this, prefs.binAlgo);
+    return new ContingencyTable(this, prefs.binAlgorithm);
   }
   
   protected void init(Table data, Variable varl) {

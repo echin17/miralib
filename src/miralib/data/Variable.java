@@ -109,7 +109,7 @@ abstract public class Variable implements DataTree.Item {
   
   public int getScaling(DataSlice1D slice, Project prefs) {
     int scaling = LINEAR;
-    int bcount = BinOptimizer.calculate(slice, prefs.binAlgo);
+    int bcount = BinOptimizer.calculate(slice, prefs.binAlgorithm);
     if (bcount <= 0) return UNDEFINED;
     
     float bsize = 1.0f / bcount;

@@ -19,7 +19,7 @@ public class PValue {
     } 
         
     int count = slice.values.size();
-    int[] res = BinOptimizer.calculate(slice, prefs.binAlgo);
+    int[] res = BinOptimizer.calculate(slice, prefs.binAlgorithm);
     int binx = res[0];
     int biny = res[1];
     
@@ -31,9 +31,9 @@ public class PValue {
     } else if (prefs.depTest == DependencyTest.NO_TEST) {
       pval = 0;
     } else if (prefs.depTest == DependencyTest.SURROGATE_GAUSS) {
-      pval = (float)surrogateGauss(slice, ixy, prefs.binAlgo, prefs.surrCount);            
+      pval = (float)surrogateGauss(slice, ixy, prefs.binAlgorithm, prefs.surrCount);            
     } else if (prefs.depTest == DependencyTest.SURROGATE_GENERAL) {      
-      pval = (float)surrogateGeneral(slice, ixy, prefs.binAlgo);
+      pval = (float)surrogateGeneral(slice, ixy, prefs.binAlgorithm);
     } else if (prefs.depTest == DependencyTest.GAMMA_TEST) {
       pval = (float)gammaTest(ixy, binx, biny, count);
     }
@@ -85,6 +85,7 @@ public class PValue {
     double scalePar = 1d / count;
     try {
       GammaDistribution gammaDist = new GammaDistribution(shapePar, scalePar);
+      System.out.println("gamma test");
       return 1 - gammaDist.cumulativeProbability(ixy);
     } catch (Exception ex) {
       return 0;
