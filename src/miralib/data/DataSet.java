@@ -587,11 +587,14 @@ public class DataSet {
           DataSlice2D slice = getSlice(vx, sortVar, sortRanges);
           float score = 0f;
           if (slice.missing < sortMissingThreshold) {
-            score = Similarity.calculate(slice, sortPValue, project);
-//            float[] res = PValue.calculate(slice, project);
-//            score = -(float)Math.log10(res[1]);
-//            if (Float.isInfinite(score)) score = 0;
-//            System.out.println(slice.varx.getAlias() + " " + slice.vary.getAlias() + " = " + score);       
+            if (project.sorting == Project.SIMILARITY) {
+              score = Similarity.calculate(slice, sortPValue, project);
+            } else if (project.sorting == Project.PVALUE) { 
+              float[] res = PValue.calculate(slice, project);
+              score = -(float)Math.log10(res[1]);
+              if (Float.isInfinite(score)) score = 0;
+              System.out.println(slice.varx.getAlias() + " " + slice.vary.getAlias() + " = " + score);  
+            }
           }
           scores.set(col, score);
         }
@@ -1171,11 +1174,14 @@ public class DataSet {
         Variable vx = columns.get(col);
         DataSlice2D slice = getSlice(vx, sortVar, sortRanges);        
         if (slice.missing < sortMissingThreshold) {
-          score = Similarity.calculate(slice, sortPValue, project);
-//          float[] res = PValue.calculate(slice, project);
-//          score = -(float)Math.log10(res[1]);
-//          if (Float.isInfinite(score)) score = 0;
-//          System.out.println(slice.varx.getAlias() + " " + slice.vary.getAlias() + " = " + score);
+          if (project.sorting == Project.SIMILARITY) {
+            score = Similarity.calculate(slice, sortPValue, project);
+          } else if (project.sorting == Project.PVALUE) { 
+            float[] res = PValue.calculate(slice, project);
+            score = -(float)Math.log10(res[1]);
+            if (Float.isInfinite(score)) score = 0;
+            System.out.println(slice.varx.getAlias() + " " + slice.vary.getAlias() + " = " + score);
+          }
         } else {
           score = 0f;  
         }

@@ -65,6 +65,8 @@ public class PValue {
     float zs = Math.abs((ixy - meani) / stdi);
     
     try { 
+      // Not so sure about getting the P-value from the statistic zs in this
+      // way...
       NormalDistribution normDist = new NormalDistribution();
       return 1 - normDist.cumulativeProbability(zs);
     } catch (Exception ex) {
@@ -74,6 +76,7 @@ public class PValue {
   
   static protected double surrogateGeneral(DataSlice2D slice, float ixy, 
                                            int binAlgo) {
+    // We don't have the distribution under the null hypothesis assumption
     return 0;
   }
   

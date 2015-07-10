@@ -34,6 +34,10 @@ public class Project {
   final static public int MISS_80     = 3;
   final static public int MISS_IGNORE = 4; 
   
+  // List of sorting scores
+  final static public int SIMILARITY = 0;
+  final static public int PVALUE     = 1;  
+  
   protected static final Set<String> dataExtensions = 
       new HashSet<String>(Arrays.asList(new String[] { "csv", "tsv", "ods" }));
   
@@ -55,6 +59,7 @@ public class Project {
   public int depTest;
   public int surrCount; 
   public float threshold;
+  public int sorting;
   
   public String dateParsePattern;
   public String datePrintPattern;  
@@ -266,6 +271,7 @@ public class Project {
     }
   }
   
+  
   static public String pvalueToString(int pval) {
     if (pval == P0_001) {        
       return "P0_001";
@@ -284,6 +290,7 @@ public class Project {
     Log.error(err, new RuntimeException(err));
     return "unsupported";    
   }
+
   
   static public int stringToPValue(String name) {
     name = name.toUpperCase();
@@ -340,6 +347,29 @@ public class Project {
     return -1;
   }
   
+  static public int stringToSorting(String name) {
+    name = name.toUpperCase();
+    if (name.equals("SIMILARITY")) {
+      return SIMILARITY;
+    } else if (name.equals("PVALUE")) {
+      return PVALUE;
+    }
+    String err = "Unsupported sorting constant: " + name;
+    Log.error(err, new RuntimeException(err));
+    return -1;
+  }
+  
+  static public String sortingToString(int pval) {
+    if (pval == SIMILARITY) {        
+      return "SIMILARITY";
+    } else if (pval == PVALUE) {
+      return "PVALUE";
+    }
+    String err = "Unsupported sorting constant: " + pval;
+    Log.error(err, new RuntimeException(err));
+    return "unsupported";    
+  }  
+    
   public float pvalue() {
     if (pValue == P0_001) return 0.001f;
     else if (pValue == P0_005) return 0.005f;
