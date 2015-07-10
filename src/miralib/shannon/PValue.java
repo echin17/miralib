@@ -85,7 +85,6 @@ public class PValue {
     double scalePar = 1d / count;
     try {
       GammaDistribution gammaDist = new GammaDistribution(shapePar, scalePar);
-      System.out.println("gamma test");
       return 1 - gammaDist.cumulativeProbability(ixy);
     } catch (Exception ex) {
       return 0;

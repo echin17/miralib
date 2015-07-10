@@ -591,9 +591,10 @@ public class DataSet {
               score = Similarity.calculate(slice, sortPValue, project);
             } else if (project.sortMethod == Project.PVALUE) { 
               float[] res = PValue.calculate(slice, project);
-              score = -(float)Math.log10(res[1]);
-              if (Float.isInfinite(score)) score = 0;
-              System.out.println(slice.varx.getAlias() + " " + slice.vary.getAlias() + " = " + score);  
+              float pval = res[1];
+              if (0 < pval) score = -(float)Math.log10(pval);
+              else score = 0;              
+              if (Float.isNaN(score)) score = 0; 
             }
           }
           scores.set(col, score);
@@ -1178,9 +1179,10 @@ public class DataSet {
             score = Similarity.calculate(slice, sortPValue, project);
           } else if (project.sortMethod == Project.PVALUE) { 
             float[] res = PValue.calculate(slice, project);
-            score = -(float)Math.log10(res[1]);
-            if (Float.isInfinite(score)) score = 0;
-            System.out.println(slice.varx.getAlias() + " " + slice.vary.getAlias() + " = " + score);
+            float pval = res[1];
+            if (0 < pval) score = -(float)Math.log10(pval);
+            else score = 0;            
+            if (Float.isNaN(score)) score = 0;
           }
         } else {
           score = 0f;  

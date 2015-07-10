@@ -2,6 +2,8 @@
 
 package miralib.math;
 
+import java.text.DecimalFormat;
+
 /**
  * Basic utilities to deal with numeric values.
  * 
@@ -10,6 +12,8 @@ package miralib.math;
 public class Numbers {
   static public float FLOAT_EPS   = Float.MIN_VALUE;
   static public double DOUBLE_EPS = Double.MIN_VALUE;
+  
+  protected static DecimalFormat dff = null;
   
   // Calculation of the Machine Epsilon for float precision. From:
   // http://en.wikipedia.org/wiki/Machine_epsilon#Approximation_using_Java
@@ -160,6 +164,11 @@ public class Numbers {
       return new Double(what).doubleValue();
     } catch (NumberFormatException e) { }
     return otherwise;
+  }
+  
+  static public String dfc(double num) {
+    if (dff == null) dff = new DecimalFormat("0.0E0");
+    return dff.format(num);
   }  
 }
 

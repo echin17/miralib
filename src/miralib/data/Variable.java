@@ -413,7 +413,7 @@ abstract public class Variable implements DataTree.Item {
     return nff.format(num);
   }
 
-  static protected String nfc(double num,int decimals) {
+  static protected String nfc(double num, int decimals) {
     if (nfd == null) nfd = NumberFormat.getInstance();
     nfd.setGroupingUsed(true);  
     nfd.setMinimumFractionDigits(0);
