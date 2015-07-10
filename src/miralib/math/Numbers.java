@@ -3,6 +3,7 @@
 package miralib.math;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * Basic utilities to deal with numeric values.
@@ -13,6 +14,11 @@ public class Numbers {
   static public float FLOAT_EPS   = Float.MIN_VALUE;
   static public double DOUBLE_EPS = Double.MIN_VALUE;
   
+  // For number conversion
+  protected static NumberFormat nfi = null;
+  protected static NumberFormat nfl = null;
+  protected static NumberFormat nff = null;
+  protected static NumberFormat nfd = null;  
   protected static DecimalFormat dff = null;
   
   // Calculation of the Machine Epsilon for float precision. From:
@@ -165,6 +171,36 @@ public class Numbers {
     } catch (NumberFormatException e) { }
     return otherwise;
   }
+  
+  static public String nfc(int num) {
+    if (nfi == null) nfi = NumberFormat.getInstance();
+    nfi.setGroupingUsed(false);
+    nfi.setMinimumIntegerDigits(0);
+    return nfi.format(num);
+  }  
+
+  static public String nfc(long num) {
+    if (nfl == null) nfl = NumberFormat.getInstance();
+    nfl.setGroupingUsed(false);
+    nfl.setMinimumIntegerDigits(0);
+    return nfl.format(num);
+  }
+
+  static public String nfc(float num, int decimals) {
+    if (nff == null) nff = NumberFormat.getInstance();  
+    nff.setGroupingUsed(true);
+    nff.setMinimumFractionDigits(0);
+    nff.setMaximumFractionDigits(decimals);
+    return nff.format(num);
+  }
+
+  static public String nfc(double num, int decimals) {
+    if (nfd == null) nfd = NumberFormat.getInstance();
+    nfd.setGroupingUsed(true);  
+    nfd.setMinimumFractionDigits(0);
+    nfd.setMaximumFractionDigits(decimals);
+    return nfd.format(num);
+  }  
   
   static public String dfc(double num) {
     if (dff == null) dff = new DecimalFormat("0.0E0");

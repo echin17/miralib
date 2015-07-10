@@ -220,17 +220,17 @@ public class NumericalRange extends Range {
   public ArrayList<String> getValues() {
     ArrayList<String> values = new ArrayList<String>();
     if (type == Table.INT) {
-      values.add(Variable.nfc(mini));
-      values.add(Variable.nfc(maxi));
+      values.add(Numbers.nfc(mini));
+      values.add(Numbers.nfc(maxi));
     } else if (type == Table.LONG) {
-      values.add(Variable.nfc(minl));
-      values.add(Variable.nfc(maxl));
+      values.add(Numbers.nfc(minl));
+      values.add(Numbers.nfc(maxl));
     } else if (type == Table.FLOAT) {
-      values.add(Variable.nfc(minf, 2));
-      values.add(Variable.nfc(maxf, 2));
+      values.add(Numbers.nfc(minf, 2));
+      values.add(Numbers.nfc(maxf, 2));
     } else if (type == Table.DOUBLE) {
-      values.add(Variable.nfc(mind, 2));
-      values.add(Variable.nfc(maxd, 2));
+      values.add(Numbers.nfc(mind, 2));
+      values.add(Numbers.nfc(maxd, 2));
     }
     return values;
   }
