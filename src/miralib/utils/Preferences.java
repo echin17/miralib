@@ -17,8 +17,9 @@ public class Preferences {
   static final protected int defPValue = Project.P0_05;
   static final protected String defMissingString = "?";
   static final protected int defMissThreshold = Project.MISS_80;
-  static final protected int defBinAlgo = BinOptimizer.CROSSVAL;
-  static final protected int defDepTest = DependencyTest.SURROGATE_GAUSS;
+  static final protected int defBinAlgo = BinOptimizer.POISSON;
+  static final protected int defDepTest = DependencyTest.GAMMA_TEST;
+  static final protected int defSortMethod = Project.PVALUE;
   static final protected int defSurrCount = 100;
   static final protected float defThreshold = 1E-3f;
   
@@ -30,8 +31,9 @@ public class Preferences {
   public int pValue;
   public String missingString; 
   public int missingThreshold;
-  public int binAlgo;
+  public int binAlgorithm;
   public int depTest;
+  public int sortMethod;
   public int surrCount; 
   public float threshold;
   public String dateParsePattern;
@@ -61,13 +63,15 @@ public class Preferences {
       missingThreshold = Project.stringToMissing(settings.get("missing.threshold", 
                          Project.missingToString(defMissThreshold)));
 
-      binAlgo = BinOptimizer.stringToAlgorithm(settings.get("binning.algorithm", 
+      binAlgorithm = BinOptimizer.stringToAlgorithm(settings.get("binning.algorithm", 
                 BinOptimizer.algorithmToString(defBinAlgo)));
       
       pValue = Project.stringToPValue(settings.get("correlation.pvalue", 
                Project.pvalueToString(defPValue)));
       depTest = DependencyTest.stringToAlgorithm(settings.get("correlation.algorithm", 
-                DependencyTest.algorithmToString(defDepTest)));
+                DependencyTest.algorithmToString(defDepTest)));      
+      sortMethod = Project.stringToSorting(settings.get("correlation.sorting", 
+                   Project.sortingToString(defSortMethod)));
       surrCount = settings.getInteger("correlation.surrogates", defSurrCount);
       threshold = settings.getFloat("correlation.threshold", defThreshold);
       
@@ -78,8 +82,9 @@ public class Preferences {
       pValue = defPValue;             
       missingString = defMissingString;
       missingThreshold = defMissThreshold;
-      binAlgo = defBinAlgo;
+      binAlgorithm = defBinAlgo;
       depTest = defDepTest;
+      sortMethod = defSortMethod;
       surrCount = defSurrCount;
       threshold = defThreshold;
       dateParsePattern = defDateParsePattern;
@@ -93,9 +98,10 @@ public class Preferences {
     settings.set("data.folder", projectFolder);
     settings.set("missing.string", missingString);
     settings.set("missing.threshold", Project.missingToString(missingThreshold));    
-    settings.set("binning.algorithm", BinOptimizer.algorithmToString(binAlgo));    
+    settings.set("binning.algorithm", BinOptimizer.algorithmToString(binAlgorithm));    
     settings.set("correlation.pvalue", Project.pvalueToString(pValue));
     settings.set("correlation.algorithm", DependencyTest.algorithmToString(depTest));
+    settings.set("correlation.sorting", Project.sortingToString(sortMethod));    
     settings.setInteger("correlation.surrogates", surrCount);
     settings.setFloat("correlation.threshold", threshold);
     settings.set("dates.parse", dateParsePattern);

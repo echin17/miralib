@@ -14,7 +14,7 @@ import miralib.utils.Project;
 
 public class MutualInformation {
   static public float calculate(DataSlice2D slice, Project prefs) {
-    int[] nbins = BinOptimizer.calculate(slice, prefs.binAlgo);
+    int[] nbins = BinOptimizer.calculate(slice, prefs.binAlgorithm);
     return calculate(slice, nbins[0], nbins[1]);    
   }
   

@@ -48,7 +48,7 @@ public class Similarity {
 	    } 
 	    
 	    int count = slice.values.size();
-	    int[] res = BinOptimizer.calculate(slice, prefs.binAlgo);
+	    int[] res = BinOptimizer.calculate(slice, prefs.binAlgorithm);
 	    int binx = res[0];
 	    int biny = res[1];
 	    
@@ -128,7 +128,7 @@ public class Similarity {
     } 
     
     int count = slice.values.size();
-    int[] res = BinOptimizer.calculate(slice, prefs.binAlgo);
+    int[] res = BinOptimizer.calculate(slice, prefs.binAlgorithm);
     int binx = res[0];
     int biny = res[1];
     
@@ -140,9 +140,9 @@ public class Similarity {
     } else if (prefs.depTest == DependencyTest.NO_TEST || Numbers.equal(pvalue, 1)) {
       indep = ixy <= prefs.threshold;
     } else if (prefs.depTest == DependencyTest.SURROGATE_GAUSS) {
-      indep = surrogateGauss(slice, ixy, prefs.binAlgo, prefs.surrCount, cval);            
+      indep = surrogateGauss(slice, ixy, prefs.binAlgorithm, prefs.surrCount, cval);            
     } else if (prefs.depTest == DependencyTest.SURROGATE_GENERAL) {      
-      indep = surrogateGeneral(slice, ixy, prefs.binAlgo, pvalue);
+      indep = surrogateGeneral(slice, ixy, prefs.binAlgorithm, pvalue);
     } else if (prefs.depTest == DependencyTest.GAMMA_TEST) {
         indep = gammaTest(ixy, binx, biny, count, pvalue);
     }

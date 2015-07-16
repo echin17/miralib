@@ -2,7 +2,6 @@
 
 package miralib.data;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -39,13 +38,7 @@ abstract public class Variable implements DataTree.Item {
   protected boolean column;
   protected boolean covariate;
   protected boolean sortKey;
-  
-  // For number conversion
-  protected static NumberFormat nfi = null;
-  protected static NumberFormat nfl = null;
-  protected static NumberFormat nff = null;
-  protected static NumberFormat nfd = null;
-   
+     
   protected static String missingString;
   
   public Variable(String name, int index) {
@@ -92,7 +85,8 @@ abstract public class Variable implements DataTree.Item {
     missingString = str;
   }
   
-  public Range createRange() { return Range.create(range); }
+  public Range range() { return Range.create(range); }
+  
   abstract public Range createRange(double val0, double val1);
   abstract public Range createRange(double min, double max, boolean normalized);  
   abstract public Range createRange(ArrayList<String> values);
@@ -109,7 +103,7 @@ abstract public class Variable implements DataTree.Item {
   
   public int getScaling(DataSlice1D slice, Project prefs) {
     int scaling = LINEAR;
-    int bcount = BinOptimizer.calculate(slice, prefs.binAlgo);
+    int bcount = BinOptimizer.calculate(slice, prefs.binAlgorithm);
     if (bcount <= 0) return UNDEFINED;
     
     float bsize = 1.0f / bcount;
@@ -389,35 +383,5 @@ abstract public class Variable implements DataTree.Item {
     } else {
       return 1d; 
     }     
-  }
-  
-  static protected String nfc(int num) {
-    if (nfi == null) nfi = NumberFormat.getInstance();
-    nfi.setGroupingUsed(false);
-    nfi.setMinimumIntegerDigits(0);
-    return nfi.format(num);
-  }  
-
-  static protected String nfc(long num) {
-    if (nfl == null) nfl = NumberFormat.getInstance();
-    nfl.setGroupingUsed(false);
-    nfl.setMinimumIntegerDigits(0);
-    return nfl.format(num);
-  }
-
-  static protected String nfc(float num, int decimals) {
-    if (nff == null) nff = NumberFormat.getInstance();  
-    nff.setGroupingUsed(true);
-    nff.setMinimumFractionDigits(0);
-    nff.setMaximumFractionDigits(decimals);
-    return nff.format(num);
-  }
-
-  static protected String nfc(double num,int decimals) {
-    if (nfd == null) nfd = NumberFormat.getInstance();
-    nfd.setGroupingUsed(true);  
-    nfd.setMinimumFractionDigits(0);
-    nfd.setMaximumFractionDigits(decimals);
-    return nfd.format(num);
   }
 }

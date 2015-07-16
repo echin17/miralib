@@ -9,7 +9,7 @@ import miralib.utils.Project;
 
 public class Histogram {
   static public ArrayList<ArrayList<Double>> calculate(DataSlice2D slice, Project prefs) {
-    int[] nbins = BinOptimizer.calculate(slice, prefs.binAlgo);
+    int[] nbins = BinOptimizer.calculate(slice, prefs.binAlgorithm);
     return calculate(slice, nbins[0], nbins[1]);
   }
   

@@ -21,6 +21,7 @@ import processing.data.Table;
 import processing.data.TableRow;
 import processing.data.XML;
 import miralib.math.Numbers;
+import miralib.shannon.PValue;
 import miralib.shannon.Similarity;
 import miralib.utils.Fileu;
 import miralib.utils.Log;
@@ -586,7 +587,15 @@ public class DataSet {
           DataSlice2D slice = getSlice(vx, sortVar, sortRanges);
           float score = 0f;
           if (slice.missing < sortMissingThreshold) {
-            score = Similarity.calculate(slice, sortPValue, project);            
+            if (project.sortMethod == Project.SIMILARITY) {
+              score = Similarity.calculate(slice, sortPValue, project);
+            } else if (project.sortMethod == Project.PVALUE) { 
+              float[] res = PValue.calculate(slice, project);
+              float pval = res[1];
+              if (0 < pval) score = -(float)Math.log10(pval);
+              else score = 0;              
+              if (Float.isNaN(score)) score = 0; 
+            }
           }
           scores.set(col, score);
         }
@@ -1163,12 +1172,18 @@ public class DataSet {
       } else {
         float score = scores.get(col);
         if (0 <= score) return score;  
-        
-        
         Variable vx = columns.get(col);
         DataSlice2D slice = getSlice(vx, sortVar, sortRanges);        
         if (slice.missing < sortMissingThreshold) {
-          score = Similarity.calculate(slice, sortPValue, project);
+          if (project.sortMethod == Project.SIMILARITY) {
+            score = Similarity.calculate(slice, sortPValue, project);
+          } else if (project.sortMethod == Project.PVALUE) { 
+            float[] res = PValue.calculate(slice, project);
+            float pval = res[1];
+            if (0 < pval) score = -(float)Math.log10(pval);
+            else score = 0;            
+            if (Float.isNaN(score)) score = 0;
+          }
         } else {
           score = 0f;  
         }

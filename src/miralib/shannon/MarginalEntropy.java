@@ -14,7 +14,7 @@ import miralib.utils.Project;
 
 public class MarginalEntropy {
   static public float calculate(DataSlice1D slice, Project prefs) {
-    int nbin = BinOptimizer.calculate(slice, prefs.binAlgo);
+    int nbin = BinOptimizer.calculate(slice, prefs.binAlgorithm);
     return calculate(slice, nbin);
   }
   

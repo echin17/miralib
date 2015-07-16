@@ -8,6 +8,7 @@ import java.util.Collections;
 import processing.data.Table;
 import processing.data.TableRow;
 import miralib.math.Numbers;
+import miralib.utils.Project;
 
 /**
  * 2-dimensional data slice, i.e.: all the (normalized) data value pairs for two 
@@ -147,7 +148,15 @@ public class DataSlice2D {
     slice.setCount(county);
     slice.setMissing(missing);
     return slice;
+  }
+
+  public ContingencyTable getContingencyTable(int nbinx, int nbiny) {
+    return new ContingencyTable(this, nbinx, nbiny);
   }  
+  
+  public ContingencyTable getContingencyTable(Project prefs) {
+    return new ContingencyTable(this, prefs.binAlgorithm);
+  }
   
   protected void init(Table data, Variable varl) {
     int ntot = 0;

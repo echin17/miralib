@@ -185,19 +185,19 @@ public class NumericalVariable extends Variable {
     if (type == Table.INT) {
       int value = row.getInt(index);
       if (value == MISSING_INT || specialValue(value)) return "missing";
-      return nfc(value);
+      return Numbers.nfc(value);
     } else if (type == Table.LONG) {
       long value = row.getLong(index);
       if (value == MISSING_LONG || specialValue(value)) return "missing";
-      return nfc(value);
+      return Numbers.nfc(value);
     } else if (type == Table.FLOAT) {
       float value = row.getFloat(index);
       if (value == MISSING_FLOAT || specialValue(value)) return "missing";
-      return nfc(value, 2);
+      return Numbers.nfc(value, 2);
     } else if (type == Table.DOUBLE) {
       double value = row.getDouble(index);
       if (value == MISSING_DOUBLE || specialValue(value)) return "missing";
-      return nfc(value, 2);
+      return Numbers.nfc(value, 2);
     } else {
       return "";
     }
@@ -207,19 +207,19 @@ public class NumericalVariable extends Variable {
     if (type == Table.INT) {
       int ival = normalized ? (int)Math.round(range.denormalize(value)) : (int)Math.round(value);
       if (ival == MISSING_INT || specialValue(ival)) return "missing";
-      return nfc(ival);
+      return Numbers.nfc(ival);
     } else if (type == Table.LONG) {
       long lval = normalized ? Math.round(range.denormalize(value)) : Math.round(value);
       if (lval == MISSING_LONG || specialValue(lval)) return "missing";
-      return nfc(lval);
+      return Numbers.nfc(lval);
     } else if (type == Table.FLOAT) {
       float fval = normalized ? (float)range.denormalize(value) : (float)value;
       if (fval == MISSING_FLOAT || specialValue(fval)) return "missing";
-      return nfc(fval, 2);
+      return Numbers.nfc(fval, 2);
     } else if (type == Table.DOUBLE) {
       double dval = normalized ? range.denormalize(value) : value;      
       if (dval == MISSING_DOUBLE || specialValue(dval)) return "missing";
-      return nfc(dval, 2);
+      return Numbers.nfc(dval, 2);
     } else {
       return "";
     }
@@ -229,19 +229,19 @@ public class NumericalVariable extends Variable {
     if (type == Table.INT) {
       int ival = sel == null ? (int)Math.round(range.denormalize(value)) : (int)Math.round(sel.denormalize(value));
       if (ival == MISSING_INT || specialValue(ival)) return "missing";
-      return nfc(ival);
+      return Numbers.nfc(ival);
     } else if (type == Table.LONG) {
       long lval = sel == null ? Math.round(range.denormalize(value)) : Math.round(sel.denormalize(value));
       if (lval == MISSING_LONG || specialValue(lval)) return "missing";
-      return nfc(lval);
+      return Numbers.nfc(lval);
     } else if (type == Table.FLOAT) {
       float fval = sel == null ? (float)range.denormalize(value) : (float)sel.denormalize(value);
       if (fval == MISSING_FLOAT || specialValue(fval)) return "missing";
-      return nfc(fval, 2);
+      return Numbers.nfc(fval, 2);
     } else if (type == Table.DOUBLE) {
       double dval = sel == null ? range.denormalize(value) : sel.denormalize(value);      
       if (dval == MISSING_DOUBLE || specialValue(dval)) return "missing";
-      return nfc(dval, 2);
+      return Numbers.nfc(dval, 2);
     } else {
       return "";
     }    

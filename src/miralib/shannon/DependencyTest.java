@@ -1,6 +1,12 @@
+/* COPYRIGHT (C) 2014 Fathom Information Design. All Rights Reserved. */
 package miralib.shannon;
 
 import miralib.utils.Log;
+
+/**
+ * Types of dependency tests in Miralib
+ *
+ */
 
 public class DependencyTest {
   // List of accepted dependency-testing algorithms

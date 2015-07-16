@@ -19,7 +19,7 @@ public class PValue {
     } 
         
     int count = slice.values.size();
-    int[] res = BinOptimizer.calculate(slice, prefs.binAlgo);
+    int[] res = BinOptimizer.calculate(slice, prefs.binAlgorithm);
     int binx = res[0];
     int biny = res[1];
     
@@ -31,9 +31,9 @@ public class PValue {
     } else if (prefs.depTest == DependencyTest.NO_TEST) {
       pval = 0;
     } else if (prefs.depTest == DependencyTest.SURROGATE_GAUSS) {
-      pval = (float)surrogateGauss(slice, ixy, prefs.binAlgo, prefs.surrCount);            
+      pval = (float)surrogateGauss(slice, ixy, prefs.binAlgorithm, prefs.surrCount);            
     } else if (prefs.depTest == DependencyTest.SURROGATE_GENERAL) {      
-      pval = (float)surrogateGeneral(slice, ixy, prefs.binAlgo);
+      pval = (float)surrogateGeneral(slice, ixy, prefs.binAlgorithm);
     } else if (prefs.depTest == DependencyTest.GAMMA_TEST) {
       pval = (float)gammaTest(ixy, binx, biny, count);
     }
@@ -65,6 +65,8 @@ public class PValue {
     float zs = Math.abs((ixy - meani) / stdi);
     
     try { 
+      // Not so sure about getting the P-value from the statistic zs in this
+      // way...
       NormalDistribution normDist = new NormalDistribution();
       return 1 - normDist.cumulativeProbability(zs);
     } catch (Exception ex) {
@@ -74,6 +76,7 @@ public class PValue {
   
   static protected double surrogateGeneral(DataSlice2D slice, float ixy, 
                                            int binAlgo) {
+    // We don't have the distribution under the null hypothesis assumption
     return 0;
   }
   

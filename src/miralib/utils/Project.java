@@ -34,6 +34,10 @@ public class Project {
   final static public int MISS_80     = 3;
   final static public int MISS_IGNORE = 4; 
   
+  // List of sorting scores
+  final static public int SIMILARITY = 0;
+  final static public int PVALUE     = 1;  
+  
   protected static final Set<String> dataExtensions = 
       new HashSet<String>(Arrays.asList(new String[] { "csv", "tsv", "ods" }));
   
@@ -51,8 +55,9 @@ public class Project {
   public int missThreshold;  
   public String missString;
   
-  public int binAlgo;
+  public int binAlgorithm;
   public int depTest;
+  public int sortMethod;
   public int surrCount; 
   public float threshold;
   
@@ -98,13 +103,15 @@ public class Project {
       missThreshold = Project.stringToMissing(settings.get("missing.threshold", 
                          Project.missingToString(prefs.missingThreshold)));
      
-      binAlgo = BinOptimizer.stringToAlgorithm(settings.get("binning.algorithm", 
-                BinOptimizer.algorithmToString(prefs.binAlgo)));
+      binAlgorithm = BinOptimizer.stringToAlgorithm(settings.get("binning.algorithm", 
+                BinOptimizer.algorithmToString(prefs.binAlgorithm)));
       
       pValue = Project.stringToPValue(settings.get("correlation.pvalue", 
                Project.pvalueToString(prefs.pValue))); 
       depTest = DependencyTest.stringToAlgorithm(settings.get("correlation.algorithm", 
-                DependencyTest.algorithmToString(prefs.depTest)));
+                DependencyTest.algorithmToString(prefs.depTest)));      
+      sortMethod = Project.stringToSorting(settings.get("correlation.sorting", 
+                   Project.sortingToString(prefs.sortMethod)));      
       surrCount = settings.getInteger("correlation.surrogates", prefs.surrCount);
       threshold = settings.getFloat("correlation.threshold", prefs.threshold);
       
@@ -158,8 +165,9 @@ public class Project {
       pValue = prefs.pValue;
       missString = prefs.missingString;
       missThreshold = prefs.missingThreshold;
-      binAlgo = prefs.binAlgo;
+      binAlgorithm = prefs.binAlgorithm;
       depTest = prefs.depTest;
+      sortMethod = prefs.sortMethod;
       surrCount = prefs.surrCount;
       threshold = prefs.threshold;
       dateParsePattern = prefs.dateParsePattern;
@@ -182,8 +190,9 @@ public class Project {
     this.missThreshold = that.missThreshold;
     
     this.pValue = that.pValue;
-    this.binAlgo = that.binAlgo;
+    this.binAlgorithm = that.binAlgorithm;
     this.depTest = that.depTest;
+    this.sortMethod = that.sortMethod;
     this.surrCount = that.surrCount; 
     this.threshold = that.threshold;
   }  
@@ -248,10 +257,11 @@ public class Project {
         settings.set("missing.string", missString);            
         settings.set("missing.threshold", missingToString(missThreshold));        
         
-        settings.set("binning.algorithm", BinOptimizer.algorithmToString(binAlgo));
+        settings.set("binning.algorithm", BinOptimizer.algorithmToString(binAlgorithm));
         
         settings.set("correlation.pvalue", pvalueToString(pValue));
         settings.set("correlation.algorithm", DependencyTest.algorithmToString(depTest));
+        settings.set("correlation.sorting", pvalueToString(sortMethod));
         settings.setInteger("correlation.surrogates", surrCount);
         settings.setFloat("correlation.threshold", threshold);   
         
@@ -265,6 +275,7 @@ public class Project {
       }      
     }
   }
+  
   
   static public String pvalueToString(int pval) {
     if (pval == P0_001) {        
@@ -284,6 +295,7 @@ public class Project {
     Log.error(err, new RuntimeException(err));
     return "unsupported";    
   }
+
   
   static public int stringToPValue(String name) {
     name = name.toUpperCase();
@@ -340,6 +352,29 @@ public class Project {
     return -1;
   }
   
+  static public int stringToSorting(String name) {
+    name = name.toUpperCase();
+    if (name.equals("SIMILARITY")) {
+      return SIMILARITY;
+    } else if (name.equals("PVALUE")) {
+      return PVALUE;
+    }
+    String err = "Unsupported sorting constant: " + name;
+    Log.error(err, new RuntimeException(err));
+    return -1;
+  }
+  
+  static public String sortingToString(int pval) {
+    if (pval == SIMILARITY) {        
+      return "SIMILARITY";
+    } else if (pval == PVALUE) {
+      return "PVALUE";
+    }
+    String err = "Unsupported sorting constant: " + pval;
+    Log.error(err, new RuntimeException(err));
+    return "unsupported";    
+  }  
+    
   public float pvalue() {
     if (pValue == P0_001) return 0.001f;
     else if (pValue == P0_005) return 0.005f;
