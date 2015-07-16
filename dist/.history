@@ -1,0 +1,322 @@
+PVALUE	2074	1.0
+MISSING	2074	1.0
+PLOT	2074	EIKOSOGRAM
++PAIR	16254 ID:Patient ID	SEX:Gender
++PAIR	16254 AGE:Age at admission	SEX:Gender
++PAIR	16254 SEX:Gender	SEX:Gender
++PAIR	16254 OCCUP:Occupation	SEX:Gender
++PAIR	16254 RESD:Place of residence	SEX:Gender
++PAIR	16256 ID:Patient ID	OCCUP:Occupation
++PAIR	16256 AGE:Age at admission	OCCUP:Occupation
++PAIR	16256 SEX:Gender	OCCUP:Occupation
++PAIR	16256 OCCUP:Occupation	OCCUP:Occupation
++PAIR	16256 RESD:Place of residence	OCCUP:Occupation
++PAIR	16281 ID:Patient ID	TRIBE:Tribe
++PAIR	16281 AGE:Age at admission	TRIBE:Tribe
++PAIR	16281 SEX:Gender	TRIBE:Tribe
++PAIR	16281 OCCUP:Occupation	TRIBE:Tribe
++PAIR	16281 RESD:Place of residence	TRIBE:Tribe
++PAIR	16306 ID:Patient ID	TEMP_Entry:Temperature
++PAIR	16307 AGE:Age at admission	TEMP_Entry:Temperature
++PAIR	16307 SEX:Gender	TEMP_Entry:Temperature
++PAIR	16307 OCCUP:Occupation	TEMP_Entry:Temperature
++PAIR	16307 RESD:Place of residence	TEMP_Entry:Temperature
++PAIR	16336 ID:Patient ID	SBP_Max:Maximum systolic blood pressure
++PAIR	16336 AGE:Age at admission	SBP_Max:Maximum systolic blood pressure
++PAIR	16336 SEX:Gender	SBP_Max:Maximum systolic blood pressure
++PAIR	16336 OCCUP:Occupation	SBP_Max:Maximum systolic blood pressure
++PAIR	16336 RESD:Place of residence	SBP_Max:Maximum systolic blood pressure
++PAIR	16351 ID:Patient ID	BLDING:Bleeding (Severe Disease)
++PAIR	16351 AGE:Age at admission	BLDING:Bleeding (Severe Disease)
++PAIR	16351 SEX:Gender	BLDING:Bleeding (Severe Disease)
++PAIR	16351 OCCUP:Occupation	BLDING:Bleeding (Severe Disease)
++PAIR	16351 RESD:Place of residence	BLDING:Bleeding (Severe Disease)
++PAIR	16367 ID:Patient ID	SRTHROAT:Sore throat
++PAIR	16367 AGE:Age at admission	SRTHROAT:Sore throat
++PAIR	16367 SEX:Gender	SRTHROAT:Sore throat
++PAIR	16367 OCCUP:Occupation	SRTHROAT:Sore throat
++PAIR	16367 RESD:Place of residence	SRTHROAT:Sore throat
++PAIR	16383 ID:Patient ID	DRRH:Diarrhea
++PAIR	16383 AGE:Age at admission	DRRH:Diarrhea
++PAIR	16383 SEX:Gender	DRRH:Diarrhea
++PAIR	16383 OCCUP:Occupation	DRRH:Diarrhea
++PAIR	16383 RESD:Place of residence	DRRH:Diarrhea
++PAIR	16398 ID:Patient ID	ABDPN:Abdominal pain
++PAIR	16398 AGE:Age at admission	ABDPN:Abdominal pain
++PAIR	16398 SEX:Gender	ABDPN:Abdominal pain
++PAIR	16398 OCCUP:Occupation	ABDPN:Abdominal pain
++PAIR	16398 RESD:Place of residence	ABDPN:Abdominal pain
++PAIR	16399 ID:Patient ID	CHSTPN:Chest pain
++PAIR	16399 AGE:Age at admission	CHSTPN:Chest pain
++PAIR	16399 SEX:Gender	CHSTPN:Chest pain
++PAIR	16399 OCCUP:Occupation	CHSTPN:Chest pain
++PAIR	16399 RESD:Place of residence	CHSTPN:Chest pain
++PAIR	16415 ID:Patient ID	WKNSS:Weakness
++PAIR	16415 AGE:Age at admission	WKNSS:Weakness
++PAIR	16415 SEX:Gender	WKNSS:Weakness
++PAIR	16415 OCCUP:Occupation	WKNSS:Weakness
++PAIR	16415 RESD:Place of residence	WKNSS:Weakness
++PAIR	16415 ID:Patient ID	JNDC:Jaundice
++PAIR	16415 AGE:Age at admission	JNDC:Jaundice
++PAIR	16415 SEX:Gender	JNDC:Jaundice
++PAIR	16415 OCCUP:Occupation	JNDC:Jaundice
++PAIR	16415 RESD:Place of residence	JNDC:Jaundice
++PAIR	16430 ID:Patient ID	RDEYES:Red eyes
++PAIR	16430 AGE:Age at admission	RDEYES:Red eyes
++PAIR	16430 SEX:Gender	RDEYES:Red eyes
++PAIR	16430 OCCUP:Occupation	RDEYES:Red eyes
++PAIR	16430 RESD:Place of residence	RDEYES:Red eyes
++PAIR	16431 ID:Patient ID	SWELLING:Facial and neck swelling
++PAIR	16431 AGE:Age at admission	SWELLING:Facial and neck swelling
++PAIR	16431 SEX:Gender	SWELLING:Facial and neck swelling
++PAIR	16431 OCCUP:Occupation	SWELLING:Facial and neck swelling
++PAIR	16431 RESD:Place of residence	SWELLING:Facial and neck swelling
++PAIR	16447 ID:Patient ID	CRMR:Comorbidity
++PAIR	16447 AGE:Age at admission	CRMR:Comorbidity
++PAIR	16447 SEX:Gender	CRMR:Comorbidity
++PAIR	16447 OCCUP:Occupation	CRMR:Comorbidity
++PAIR	16447 RESD:Place of residence	CRMR:Comorbidity
++PAIR	16447 ID:Patient ID	HTN:Hypertension
++PAIR	16447 AGE:Age at admission	HTN:Hypertension
++PAIR	16447 SEX:Gender	HTN:Hypertension
++PAIR	16447 OCCUP:Occupation	HTN:Hypertension
++PAIR	16447 RESD:Place of residence	HTN:Hypertension
++PAIR	16463 ID:Patient ID	ANM:Anaemia
++PAIR	16463 AGE:Age at admission	ANM:Anaemia
++PAIR	16463 SEX:Gender	ANM:Anaemia
++PAIR	16463 OCCUP:Occupation	ANM:Anaemia
++PAIR	16463 RESD:Place of residence	ANM:Anaemia
++PAIR	16479 ID:Patient ID	ARF:Acute renal failure
++PAIR	16479 AGE:Age at admission	ARF:Acute renal failure
++PAIR	16479 SEX:Gender	ARF:Acute renal failure
++PAIR	16479 OCCUP:Occupation	ARF:Acute renal failure
++PAIR	16479 RESD:Place of residence	ARF:Acute renal failure
++PAIR	16479 ID:Patient ID	AKI:Acute kidney infection
++PAIR	16479 AGE:Age at admission	AKI:Acute kidney infection
++PAIR	16479 SEX:Gender	AKI:Acute kidney infection
++PAIR	16479 OCCUP:Occupation	AKI:Acute kidney infection
++PAIR	16479 RESD:Place of residence	AKI:Acute kidney infection
++PAIR	16495 ID:Patient ID	ENCPHPTHY:Encephalopathy
++PAIR	16495 AGE:Age at admission	ENCPHPTHY:Encephalopathy
++PAIR	16495 SEX:Gender	ENCPHPTHY:Encephalopathy
++PAIR	16495 OCCUP:Occupation	ENCPHPTHY:Encephalopathy
++PAIR	16495 RESD:Place of residence	ENCPHPTHY:Encephalopathy
++PAIR	16510 ID:Patient ID	DBTS:Diabetes
++PAIR	16511 AGE:Age at admission	DBTS:Diabetes
++PAIR	16511 SEX:Gender	DBTS:Diabetes
++PAIR	16511 OCCUP:Occupation	DBTS:Diabetes
++PAIR	16511 RESD:Place of residence	DBTS:Diabetes
++PAIR	16527 ID:Patient ID	HRTFL:Heart failure
++PAIR	16527 AGE:Age at admission	HRTFL:Heart failure
++PAIR	16527 SEX:Gender	HRTFL:Heart failure
++PAIR	16527 OCCUP:Occupation	HRTFL:Heart failure
++PAIR	16527 RESD:Place of residence	HRTFL:Heart failure
++PAIR	16542 ID:Patient ID	THROMB:Thrombocytopenia
++PAIR	16542 AGE:Age at admission	THROMB:Thrombocytopenia
++PAIR	16542 SEX:Gender	THROMB:Thrombocytopenia
++PAIR	16542 OCCUP:Occupation	THROMB:Thrombocytopenia
++PAIR	16542 RESD:Place of residence	THROMB:Thrombocytopenia
++PAIR	16559 ID:Patient ID	HPTN:Hypotension
++PAIR	16559 AGE:Age at admission	HPTN:Hypotension
++PAIR	16559 SEX:Gender	HPTN:Hypotension
++PAIR	16559 OCCUP:Occupation	HPTN:Hypotension
++PAIR	16559 RESD:Place of residence	HPTN:Hypotension
++PAIR	16590 ID:Patient ID	RIBTRTMNT:Ribavirin treatment
++PAIR	16590 AGE:Age at admission	RIBTRTMNT:Ribavirin treatment
++PAIR	16590 SEX:Gender	RIBTRTMNT:Ribavirin treatment
++PAIR	16590 OCCUP:Occupation	RIBTRTMNT:Ribavirin treatment
++PAIR	16590 RESD:Place of residence	RIBTRTMNT:Ribavirin treatment
++PAIR	16622 ID:Patient ID	RETRTMNT:Ribavirin re-treatment
++PAIR	16622 AGE:Age at admission	RETRTMNT:Ribavirin re-treatment
++PAIR	16622 SEX:Gender	RETRTMNT:Ribavirin re-treatment
++PAIR	16622 OCCUP:Occupation	RETRTMNT:Ribavirin re-treatment
++PAIR	16622 RESD:Place of residence	RETRTMNT:Ribavirin re-treatment
++PAIR	16655 ID:Patient ID	OUTCOME:Outcome
++PAIR	16655 AGE:Age at admission	OUTCOME:Outcome
++PAIR	16655 SEX:Gender	OUTCOME:Outcome
++PAIR	16655 OCCUP:Occupation	OUTCOME:Outcome
++PAIR	16655 RESD:Place of residence	OUTCOME:Outcome
++PAIR	16703 ID:Patient ID	PREG:Pregnant
++PAIR	16703 AGE:Age at admission	PREG:Pregnant
++PAIR	16703 SEX:Gender	PREG:Pregnant
++PAIR	16703 OCCUP:Occupation	PREG:Pregnant
++PAIR	16703 RESD:Place of residence	PREG:Pregnant
++PAIR	16814 ID:Patient ID	PRTNURIA:Proteinuria
++PAIR	16814 AGE:Age at admission	PRTNURIA:Proteinuria
++PAIR	16814 SEX:Gender	PRTNURIA:Proteinuria
++PAIR	16814 OCCUP:Occupation	PRTNURIA:Proteinuria
++PAIR	16814 RESD:Place of residence	PRTNURIA:Proteinuria
+-PAIR	18282 SEX:Gender	OCCUP:Occupation
+-PAIR	18282 ID:Patient ID	OCCUP:Occupation
+-PAIR	18282 AGE:Age at admission	OCCUP:Occupation
+-PAIR	18282 OCCUP:Occupation	OCCUP:Occupation
+-PAIR	18282 RESD:Place of residence	OCCUP:Occupation
+-PAIR	18282 SEX:Gender	SEX:Gender
+-PAIR	18282 ID:Patient ID	SEX:Gender
+-PAIR	18282 AGE:Age at admission	SEX:Gender
+-PAIR	18282 OCCUP:Occupation	SEX:Gender
+-PAIR	18282 RESD:Place of residence	SEX:Gender
+-PAIR	18320 SEX:Gender	TRIBE:Tribe
+-PAIR	18320 ID:Patient ID	TRIBE:Tribe
+-PAIR	18320 AGE:Age at admission	TRIBE:Tribe
+-PAIR	18320 OCCUP:Occupation	TRIBE:Tribe
+-PAIR	18320 RESD:Place of residence	TRIBE:Tribe
+-PAIR	18321 SEX:Gender	TEMP_Entry:Temperature
+-PAIR	18321 ID:Patient ID	TEMP_Entry:Temperature
+-PAIR	18321 AGE:Age at admission	TEMP_Entry:Temperature
+-PAIR	18321 OCCUP:Occupation	TEMP_Entry:Temperature
+-PAIR	18321 RESD:Place of residence	TEMP_Entry:Temperature
+-PAIR	18352 SEX:Gender	SBP_Max:Maximum systolic blood pressure
+-PAIR	18352 ID:Patient ID	SBP_Max:Maximum systolic blood pressure
+-PAIR	18352 AGE:Age at admission	SBP_Max:Maximum systolic blood pressure
+-PAIR	18352 OCCUP:Occupation	SBP_Max:Maximum systolic blood pressure
+-PAIR	18352 RESD:Place of residence	SBP_Max:Maximum systolic blood pressure
+-PAIR	18368 SEX:Gender	BLDING:Bleeding (Severe Disease)
+-PAIR	18368 ID:Patient ID	BLDING:Bleeding (Severe Disease)
+-PAIR	18368 AGE:Age at admission	BLDING:Bleeding (Severe Disease)
+-PAIR	18368 OCCUP:Occupation	BLDING:Bleeding (Severe Disease)
+-PAIR	18368 RESD:Place of residence	BLDING:Bleeding (Severe Disease)
+-PAIR	18384 SEX:Gender	SRTHROAT:Sore throat
+-PAIR	18384 ID:Patient ID	SRTHROAT:Sore throat
+-PAIR	18384 AGE:Age at admission	SRTHROAT:Sore throat
+-PAIR	18384 OCCUP:Occupation	SRTHROAT:Sore throat
+-PAIR	18384 RESD:Place of residence	SRTHROAT:Sore throat
+-PAIR	18400 SEX:Gender	DRRH:Diarrhea
+-PAIR	18400 ID:Patient ID	DRRH:Diarrhea
+-PAIR	18400 AGE:Age at admission	DRRH:Diarrhea
+-PAIR	18400 OCCUP:Occupation	DRRH:Diarrhea
+-PAIR	18400 RESD:Place of residence	DRRH:Diarrhea
+-PAIR	18417 SEX:Gender	ABDPN:Abdominal pain
+-PAIR	18417 ID:Patient ID	ABDPN:Abdominal pain
+-PAIR	18417 AGE:Age at admission	ABDPN:Abdominal pain
+-PAIR	18417 OCCUP:Occupation	ABDPN:Abdominal pain
+-PAIR	18417 RESD:Place of residence	ABDPN:Abdominal pain
+-PAIR	18417 SEX:Gender	CHSTPN:Chest pain
+-PAIR	18417 ID:Patient ID	CHSTPN:Chest pain
+-PAIR	18417 AGE:Age at admission	CHSTPN:Chest pain
+-PAIR	18417 OCCUP:Occupation	CHSTPN:Chest pain
+-PAIR	18417 RESD:Place of residence	CHSTPN:Chest pain
+-PAIR	18433 SEX:Gender	WKNSS:Weakness
+-PAIR	18433 ID:Patient ID	WKNSS:Weakness
+-PAIR	18433 AGE:Age at admission	WKNSS:Weakness
+-PAIR	18433 OCCUP:Occupation	WKNSS:Weakness
+-PAIR	18433 RESD:Place of residence	WKNSS:Weakness
+-PAIR	18433 SEX:Gender	JNDC:Jaundice
+-PAIR	18433 ID:Patient ID	JNDC:Jaundice
+-PAIR	18433 AGE:Age at admission	JNDC:Jaundice
+-PAIR	18433 OCCUP:Occupation	JNDC:Jaundice
+-PAIR	18433 RESD:Place of residence	JNDC:Jaundice
+-PAIR	18449 SEX:Gender	RDEYES:Red eyes
+-PAIR	18449 ID:Patient ID	RDEYES:Red eyes
+-PAIR	18449 AGE:Age at admission	RDEYES:Red eyes
+-PAIR	18449 OCCUP:Occupation	RDEYES:Red eyes
+-PAIR	18449 RESD:Place of residence	RDEYES:Red eyes
+-PAIR	18465 SEX:Gender	SWELLING:Facial and neck swelling
+-PAIR	18465 ID:Patient ID	SWELLING:Facial and neck swelling
+-PAIR	18465 AGE:Age at admission	SWELLING:Facial and neck swelling
+-PAIR	18465 OCCUP:Occupation	SWELLING:Facial and neck swelling
+-PAIR	18465 RESD:Place of residence	SWELLING:Facial and neck swelling
+-PAIR	18465 SEX:Gender	CRMR:Comorbidity
+-PAIR	18465 ID:Patient ID	CRMR:Comorbidity
+-PAIR	18465 AGE:Age at admission	CRMR:Comorbidity
+-PAIR	18465 OCCUP:Occupation	CRMR:Comorbidity
+-PAIR	18465 RESD:Place of residence	CRMR:Comorbidity
+-PAIR	18481 SEX:Gender	HTN:Hypertension
+-PAIR	18481 ID:Patient ID	HTN:Hypertension
+-PAIR	18481 AGE:Age at admission	HTN:Hypertension
+-PAIR	18481 OCCUP:Occupation	HTN:Hypertension
+-PAIR	18481 RESD:Place of residence	HTN:Hypertension
+-PAIR	18497 SEX:Gender	ANM:Anaemia
+-PAIR	18497 ID:Patient ID	ANM:Anaemia
+-PAIR	18497 AGE:Age at admission	ANM:Anaemia
+-PAIR	18497 OCCUP:Occupation	ANM:Anaemia
+-PAIR	18497 RESD:Place of residence	ANM:Anaemia
+-PAIR	18513 SEX:Gender	ARF:Acute renal failure
+-PAIR	18513 ID:Patient ID	ARF:Acute renal failure
+-PAIR	18513 AGE:Age at admission	ARF:Acute renal failure
+-PAIR	18513 OCCUP:Occupation	ARF:Acute renal failure
+-PAIR	18513 RESD:Place of residence	ARF:Acute renal failure
+-PAIR	18529 SEX:Gender	AKI:Acute kidney infection
+-PAIR	18529 ID:Patient ID	AKI:Acute kidney infection
+-PAIR	18529 AGE:Age at admission	AKI:Acute kidney infection
+-PAIR	18529 OCCUP:Occupation	AKI:Acute kidney infection
+-PAIR	18529 RESD:Place of residence	AKI:Acute kidney infection
+-PAIR	18545 SEX:Gender	ENCPHPTHY:Encephalopathy
+-PAIR	18545 ID:Patient ID	ENCPHPTHY:Encephalopathy
+-PAIR	18545 AGE:Age at admission	ENCPHPTHY:Encephalopathy
+-PAIR	18545 OCCUP:Occupation	ENCPHPTHY:Encephalopathy
+-PAIR	18545 RESD:Place of residence	ENCPHPTHY:Encephalopathy
+-PAIR	18577 SEX:Gender	DBTS:Diabetes
+-PAIR	18577 ID:Patient ID	DBTS:Diabetes
+-PAIR	18577 AGE:Age at admission	DBTS:Diabetes
+-PAIR	18577 OCCUP:Occupation	DBTS:Diabetes
+-PAIR	18577 RESD:Place of residence	DBTS:Diabetes
+-PAIR	18610 SEX:Gender	HRTFL:Heart failure
+-PAIR	18610 ID:Patient ID	HRTFL:Heart failure
+-PAIR	18610 AGE:Age at admission	HRTFL:Heart failure
+-PAIR	18610 OCCUP:Occupation	HRTFL:Heart failure
+-PAIR	18610 RESD:Place of residence	HRTFL:Heart failure
+-PAIR	18643 SEX:Gender	THROMB:Thrombocytopenia
+-PAIR	18643 ID:Patient ID	THROMB:Thrombocytopenia
+-PAIR	18643 AGE:Age at admission	THROMB:Thrombocytopenia
+-PAIR	18643 OCCUP:Occupation	THROMB:Thrombocytopenia
+-PAIR	18643 RESD:Place of residence	THROMB:Thrombocytopenia
+-PAIR	18691 SEX:Gender	HPTN:Hypotension
+-PAIR	18691 ID:Patient ID	HPTN:Hypotension
+-PAIR	18691 AGE:Age at admission	HPTN:Hypotension
+-PAIR	18691 OCCUP:Occupation	HPTN:Hypotension
+-PAIR	18691 RESD:Place of residence	HPTN:Hypotension
+-PAIR	18789 SEX:Gender	RIBTRTMNT:Ribavirin treatment
+-PAIR	18789 ID:Patient ID	RIBTRTMNT:Ribavirin treatment
+-PAIR	18789 AGE:Age at admission	RIBTRTMNT:Ribavirin treatment
+-PAIR	18789 OCCUP:Occupation	RIBTRTMNT:Ribavirin treatment
+-PAIR	18789 RESD:Place of residence	RIBTRTMNT:Ribavirin treatment
+-PAIR	19860 SEX:Gender	RETRTMNT:Ribavirin re-treatment
+-PAIR	19860 ID:Patient ID	RETRTMNT:Ribavirin re-treatment
+-PAIR	19861 AGE:Age at admission	RETRTMNT:Ribavirin re-treatment
+-PAIR	19861 OCCUP:Occupation	RETRTMNT:Ribavirin re-treatment
+-PAIR	19862 RESD:Place of residence	RETRTMNT:Ribavirin re-treatment
++PAIR	29654 TRIBE:Tribe	OUTCOME:Outcome
+-PAIR	29654 ID:Patient ID	OUTCOME:Outcome
++PAIR	29655 TRIBE:Tribe	PREG:Pregnant
+-PAIR	29655 ID:Patient ID	PREG:Pregnant
++PAIR	29655 TRIBE:Tribe	PRTNURIA:Proteinuria
+-PAIR	29655 ID:Patient ID	PRTNURIA:Proteinuria
+SELECT	50088	OCCUP:Occupation	OUTCOME:Outcome
+SELECT	50733	NONE
++PAIR	52726 DOFBP:Days of fever before presentation	OUTCOME:Outcome
++PAIR	52726 DOFBP:Days of fever before presentation	PREG:Pregnant
++PAIR	52726 DOFBP:Days of fever before presentation	PRTNURIA:Proteinuria
++PAIR	52874 DOFA:Date of arrival	OUTCOME:Outcome
++PAIR	52874 DOFA:Date of arrival	PREG:Pregnant
++PAIR	52874 DOFA:Date of arrival	PRTNURIA:Proteinuria
++PAIR	53185 TEMP_Entry:Temperature	OUTCOME:Outcome
++PAIR	53186 TEMP_Entry:Temperature	PREG:Pregnant
++PAIR	53186 TEMP_Entry:Temperature	PRTNURIA:Proteinuria
+-PAIR	54872 AGE:Age at admission	OUTCOME:Outcome
+-PAIR	54873 AGE:Age at admission	PREG:Pregnant
+-PAIR	54873 AGE:Age at admission	PRTNURIA:Proteinuria
+-PAIR	55067 SEX:Gender	OUTCOME:Outcome
+-PAIR	55068 SEX:Gender	PREG:Pregnant
+-PAIR	55068 SEX:Gender	PRTNURIA:Proteinuria
+-PAIR	56382 TEMP_Entry:Temperature	OUTCOME:Outcome
+-PAIR	56382 TEMP_Entry:Temperature	PREG:Pregnant
+-PAIR	56382 TEMP_Entry:Temperature	PRTNURIA:Proteinuria
++PAIR	188843 TEMP_Entry:Temperature	OUTCOME:Outcome
++PAIR	188843 TEMP_Entry:Temperature	PREG:Pregnant
++PAIR	188843 TEMP_Entry:Temperature	PRTNURIA:Proteinuria
++PAIR	188909 SBP_Entry:Systolic blood pressure	OUTCOME:Outcome
++PAIR	188909 SBP_Entry:Systolic blood pressure	PREG:Pregnant
++PAIR	188909 SBP_Entry:Systolic blood pressure	PRTNURIA:Proteinuria
++PAIR	189075 DBP_Entry:Diastolic blood pressure	OUTCOME:Outcome
++PAIR	189075 DBP_Entry:Diastolic blood pressure	PREG:Pregnant
++PAIR	189075 DBP_Entry:Diastolic blood pressure	PRTNURIA:Proteinuria
+-PAIR	190966 OCCUP:Occupation	OUTCOME:Outcome
+-PAIR	190967 OCCUP:Occupation	PREG:Pregnant
+-PAIR	190968 OCCUP:Occupation	PRTNURIA:Proteinuria
+-PAIR	191098 RESD:Place of residence	OUTCOME:Outcome
+-PAIR	191099 RESD:Place of residence	PREG:Pregnant
+-PAIR	191099 RESD:Place of residence	PRTNURIA:Proteinuria
+-PAIR	191228 TRIBE:Tribe	OUTCOME:Outcome
+-PAIR	191229 TRIBE:Tribe	PREG:Pregnant
+-PAIR	191229 TRIBE:Tribe	PRTNURIA:Proteinuria
