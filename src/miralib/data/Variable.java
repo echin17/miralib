@@ -85,7 +85,8 @@ abstract public class Variable implements DataTree.Item {
     missingString = str;
   }
   
-  public Range createRange() { return Range.create(range); }
+  public Range range() { return Range.create(range); }
+  
   abstract public Range createRange(double val0, double val1);
   abstract public Range createRange(double min, double max, boolean normalized);  
   abstract public Range createRange(ArrayList<String> values);
