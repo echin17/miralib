@@ -1,3 +1,9 @@
 /local.properties
 /*.jar
 /javadoc
+/config.mira
+/lassaStuff
+/*.csv
+/*.xml
+/*.py
+/*.bin
