@@ -261,7 +261,7 @@ public class Project {
         
         settings.set("correlation.pvalue", pvalueToString(pValue));
         settings.set("correlation.algorithm", DependencyTest.algorithmToString(depTest));
-        settings.set("correlation.sorting", pvalueToString(sortMethod));
+        settings.set("correlation.sorting", sortingToString(sortMethod));
         settings.setInteger("correlation.surrogates", surrCount);
         settings.setFloat("correlation.threshold", threshold);   
         
